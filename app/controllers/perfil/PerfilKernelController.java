@@ -5,8 +5,6 @@ import play.mvc.Controller;
 
 import javax.xml.transform.Result;
 
-import static play.mvc.Results.ok;
-
 /**
  * Created by Lina8a on 06/09/2015.
  */

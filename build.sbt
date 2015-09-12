@@ -11,7 +11,8 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   jdbc,
-  javaJpa, "org.xerial" % "sqlite-jdbc" % "3.8.9"
+  javaJpa,
+  "org.xerial" % "sqlite-jdbc" % "3.8.9"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

@@ -1,19 +1,20 @@
 package models.perfil;
 
-
-//import javax.persistence.Column;
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
-import javax.persistence.*;
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
+
+import javax.persistence.*;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Lina8a on 05/09/2015.
  * Entidad Usuario.
  */
 @Entity
-public class Usuario {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Usuario extends Model  {
 
     // --------------------------------------------------------------------
     // Atributos
@@ -23,24 +24,24 @@ public class Usuario {
      * Representa la llave primaria de la entidad.
      */
     @Id
-    private long id;
+    public long id;
 
     /**
      * Representa los nombres ingresados por el usuario en el registro.
      */
     @Column(nullable = false)
     @Constraints.Required
-    private String nombres;
+    public String nombres;
 
     /**
      * Representa los apellidos ingresados por el usuario en el registro.
      */
     @Column(nullable = false)
     @Constraints.Required
-    private String apellidos;
+    public String apellidos;
 
     /**
-     * Representa el correo electr�nico ingresado por el usuario en el registro.
+     * Representa el correo electrónico ingresado por el usuario en el registro.
      */
     @Column(unique = true, nullable = false)
     @Constraints.Required
@@ -48,140 +49,40 @@ public class Usuario {
     private String correoElectronico;
 
     /**
-     * Representa la contrasenia ingresada por el usuario en el registro.
+     * Representa la contraseña ingresada por el usuario en el registro.
      */
     @Column(nullable = false)
     @Constraints.Required
-    private String contrasenia;
+    private byte[] contrasenia;
 
     /**
      * Representa la ciudad ingresada por el usuario en el registro.
      */
     @Column(unique = true)
     @Constraints.Required
-    private String ciudad;
+    public String ciudad;
 
     /**
      * Representa el numero de celular ingresado por el usuario en el registro.
      */
     @Column(unique = true, nullable = false)
     @Constraints.Required
-    private String celular;
+    public String celular;
 
-
-    // --------------------------------------------------------------------
-    // Metodos
-    // --------------------------------------------------------------------
 
     /**
-     * Retorna el atributo id.
-     * @return id
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Aigna el valor del atributo id.
-     * @param id
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * Retorna el atributo nombres.
-     * @return nombres
-     */
-    public String getNombres() {
-        return nombres;
-    }
-
-    /**
-     * Aigna el valor del atributo nombres.
-     * @param nombres
-     */
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    /**
-     * Retorna el atributo apellidos.
-     * @return apellidos
-     */
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    /**
-     * Aigna el valor del atributo apellidos.
-     * @param apellidos
-     */
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    /**
-     * Retorna el atributo correo electronico.
-     * @return correoElectronico
-     */
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    /**
-     * Aigna el valor del atributo correo electronico.
-     * @param correoElectronico
-     */
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    /**
-     * Retorna el atributo contrasenia.
-     * @return contrsenia
-     */
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    /**
-     * Aigna el valor del atributo contrasenia.
-     * @param contrasenia
+     * Asigna el valor del atributo contrasenia.
      */
     public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+        this.contrasenia = getSha512(contrasenia);
     }
 
-    /**
-     * Retorna el atributo ciudad
-     * @return ciudad
-     */
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    /**
-     * Aigna el valor del atributo ciudad.
-     * @param ciudad
-     */
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    /**
-     * Retorna el atributo celular.
-     * @return  celular
-     */
-    public String getCelular() {
-        return celular;
-    }
-
-    /**
-     * Aigna el valor del atributo celular.
-     * @param celular
-     */
-    public void setCelular(String celular) {
-        this.celular = celular;
+    private byte[] getSha512(String contrasenia) {
+        try {
+            return MessageDigest.getInstance("SHA-512").digest(contrasenia.getBytes("UTF-8"));
+        }
+        catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
