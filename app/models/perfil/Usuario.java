@@ -1,10 +1,12 @@
 package models.perfil;
 
-import play.data.validation.Constraints;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
+import javax.persistence.*;
+import play.db.ebean.Model;
+import play.data.validation.Constraints;
 
 /**
  * Created by Lina8a on 05/09/2015.
