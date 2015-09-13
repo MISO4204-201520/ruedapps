@@ -1,5 +1,6 @@
 package models.ruta;
 
+import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
  * Entidad Ubicacion
  */
 @Entity
-public class Ubicacion {
+public class Ubicacion extends Model {
 
     /**
      * Representa la llave primaria de la entidad.

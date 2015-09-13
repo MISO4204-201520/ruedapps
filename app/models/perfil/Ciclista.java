@@ -3,9 +3,7 @@ package models.perfil;
 import models.ruta.HistoricoRecorrido;
 import play.data.validation.Constraints;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +34,6 @@ public class Ciclista extends Usuario  {
     /*
      * Representa los recorridos que ha hecho el usuario
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<HistoricoRecorrido> historicoRecorridos;
 }
