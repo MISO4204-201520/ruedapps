@@ -33,9 +33,4 @@ public class Recorrido extends Model {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Ubicacion> secuenciaUbicaciones;
 
-    /*
-     * Histórico de recorridos que se han hecho por la aplicación
-     */
-    @OneToMany(mappedBy = "recorrido")
-    public List<HistoricoRecorrido> historicoRecorridos;
 }

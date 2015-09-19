@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 /**
  * Created by Lina8a on 05/09/2015.
@@ -14,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Usuario extends Model  {
+public abstract class Usuario extends Model {
 
     // --------------------------------------------------------------------
     // Atributos
@@ -46,14 +47,14 @@ public abstract class Usuario extends Model  {
     @Column(unique = true, nullable = false)
     @Constraints.Required
     @Constraints.Email
-    private String correoElectronico;
+    public String correoElectronico;
 
     /**
      * Representa la contraseña ingresada por el usuario en el registro.
      */
     @Column(nullable = false)
     @Constraints.Required
-    private byte[] contrasenia;
+    public String contrasenia;
 
     /**
      * Representa la ciudad ingresada por el usuario en el registro.
@@ -73,9 +74,19 @@ public abstract class Usuario extends Model  {
     /**
      * Asigna el valor del atributo contrasenia.
      */
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = getSha512(contrasenia);
+    public void setContrasenia(String contrasenia)
+    {
+        this.contrasenia = Base64.getEncoder().encodeToString(getSha512(contrasenia));
     }
+
+    /**
+     * Verifica la contraseña del usuario.
+     */
+    public boolean VerificaContrasenia(String contrasenia)
+    {
+        return Base64.getEncoder().encodeToString(this.getSha512(contrasenia)).equals(this.contrasenia);
+    }
+
 
     private byte[] getSha512(String contrasenia) {
         try {
