@@ -10,3 +10,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 # Rutas perfil
 #POST     /login                     controllers.PerfilKernelController.login()
+
+# Routes Rutas
+POST /ruta/ubicacion/add            controllers.ruta.RutaController.SaveUbicacion()

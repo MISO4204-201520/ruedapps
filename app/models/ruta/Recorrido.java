@@ -2,10 +2,7 @@ package models.ruta;
 
 import com.avaje.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -33,7 +30,7 @@ public class Recorrido extends Model {
     /**
      * Descripción de la ruta
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Ubicacion> secuenciaUbicaciones;
 
     /*
