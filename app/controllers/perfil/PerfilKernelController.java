@@ -1,7 +1,8 @@
 package controllers.perfil;
 
 import models.perfil.LoginDTO;
-import play.mvc.Controller;
+import play.mvc.*;
+import views.html.login;
 
 import javax.xml.transform.Result;
 
@@ -10,8 +11,11 @@ import javax.xml.transform.Result;
  */
 public class PerfilKernelController extends Controller {
 
-    public static Result login(LoginDTO loginDTO) {
-        return (Result) ok("Hola");
+    public static Result login() {
+        return (Result)(login.render("is ok"));
+    }
+    public static Result auth(LoginDTO loginDTO) {
+        return null;
     }
 
     public static Result registro(LoginDTO loginDTO) {
