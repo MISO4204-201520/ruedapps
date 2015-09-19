@@ -27,5 +27,5 @@ public class Proveedor extends Usuario  {
      */
     @Column(nullable = false)
     @Constraints.Required
-    public String NombreNegocio;
+    public String nombreNegocio;
 }
