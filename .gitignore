@@ -7,4 +7,9 @@ target
 /.settings
 /RUNNING_PID
 /activator*
-conf
+*.json
+Gruntfile.js
+package.js
+*.less
+*.csslintrc
+/public/*/grunt/*.*
