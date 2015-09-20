@@ -3,15 +3,22 @@
 # ~~~~
 
 # Home page
-GET         /                          controllers.Application.index()
+GET         /                                    controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                        controllers.Assets.versioned(path="/public", file: Asset)
 
 # Rutas perfil
-POST        /login                     controllers.perfil.PerfilKernelController.login()
-POST        /usuario/crear             controllers.perfil.PerfilKernelController.CrearUsuario()
-POST        /usuario/modificar         controllers.perfil.PerfilKernelController.ActualizarUsuario()
+POST        /login                               controllers.perfil.PerfilKernelController.login()
+POST        /usuario/crear                       controllers.perfil.PerfilKernelController.CrearUsuario()
+POST        /usuario/modificar                   controllers.perfil.PerfilKernelController.ActualizarUsuario()
 
 # Routes Rutas
-POST        /ruta/ubicacion/crear        controllers.ruta.RutaController.SaveUbicacion()
+POST        /ruta/ubicacion/crear                controllers.ruta.RutaController.SaveUbicacion()
+
+# Rutas Categoria
+GET         /categoria/categorias                controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
+
+POST        /categoria/registrar                 controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
+
+POST        /categoria/servicio/registrar        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio()

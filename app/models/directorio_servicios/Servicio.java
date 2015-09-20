@@ -12,7 +12,6 @@ import java.util.Date;
  * Entidad de servicio de directorio.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Servicio extends Model{
 
     // --------------------------------------------------------------------
