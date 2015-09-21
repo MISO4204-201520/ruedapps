@@ -3,6 +3,7 @@ package models.perfil;
 import play.data.validation.Constraints;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
  * Entidad Ciclista.
  */
 @Entity
+@DiscriminatorValue("Proveedor")
 public class Proveedor extends Usuario  {
 
     // --------------------------------------------------------------------

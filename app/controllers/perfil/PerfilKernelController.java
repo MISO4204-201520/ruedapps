@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.perfil.Ciclista;
 import models.perfil.LoginDTO;
 import models.perfil.Usuario;
-import models.ruta.Ubicacion;
-import play.api.libs.json.Json;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
+import views.html.login;
+import play.libs.Json;
+
+import java.util.List;
 
 
 /**
@@ -18,17 +20,24 @@ import play.mvc.Results;
  */
 public class PerfilKernelController extends Controller {
 
-    public Result login()
+    public Result LoginPost()
     {
         Form<LoginDTO> postForm = Form.form(LoginDTO.class).bindFromRequest();
-        Usuario usuario = Ebean.find(Usuario.class, postForm.get().getCorreoElectronico());
-        if (usuario != null &&  usuario.VerificaContrasenia(postForm.get().getContrasenia()))
+        String correoLogin = postForm.get().getCorreoElectronico();
+        List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
+
+        if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia()))
         {
-            return (Result) ok("loginOk");
+            return ok("loginOk");
         }
 
-        return (Result) ok("loginFailed");
+        return Results.unauthorized();
     }
+
+    public Result Login() {
+        return ok(login.render("is ok"));
+    }
+
 
     public Result CrearUsuario()
     {
@@ -51,34 +60,33 @@ public class PerfilKernelController extends Controller {
         if (postForm.hasErrors()) {
             return badRequest(postForm.errorsAsJson());
         } else {
+            String correoLogin = postForm.get().correoElectronico;
+            List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
 
-            Ciclista usuario = Ebean.find(Ciclista.class, postForm.get().correoElectronico);
-
-            if (usuario != null) {
-                Ciclista ciclista = new Ciclista();
+            if (usuario != null && usuario.size() > 0) {
+                Ciclista ciclista = (Ciclista)usuario.get(0);
                 SetUsuario(ciclista, postForm);
                 ciclista.update();
+            }
+            else
+            {
+                return Results.notFound();
             }
         }
 
         return Results.created();
     }
 
-    public Result ConsultarUsuario()
+    public Result ConsultarUsuarioPorId(long id)
     {
-        Form<LoginDTO> postForm = Form.form(LoginDTO.class).bindFromRequest();
-        Ciclista usuario = Ebean.find(Ciclista.class, postForm.get().getCorreoElectronico());
-
-        /*
-        TODO Falta revisar error al serializar a json
-        JsonNode personJson = Json.toJson(usuario);
+        Ciclista usuario = Ebean.find(Ciclista.class, id);
 
         if (usuario != null)
         {
             return ok(Json.toJson(usuario));
         }
-*/
-        return (Result) ok("ok");
+
+        return Results.notFound();
     }
 
     private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario)
@@ -88,8 +96,7 @@ public class PerfilKernelController extends Controller {
         usuario.correoElectronico = formUsuario.get().correoElectronico;
         usuario.apellidos = formUsuario.get().apellidos;
         usuario.ciudad = formUsuario.get().ciudad;
-        usuario.ciudad = formUsuario.get().ciudad;
-        usuario.setContrasenia(formUsuario.get().contrasenia);
+        usuario.SetHashedContrasenia(formUsuario.get().contrasenia);
     }
 
 }

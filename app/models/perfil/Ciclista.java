@@ -12,6 +12,7 @@ import java.util.List;
  * Entidad Ciclista.
  */
 @Entity
+@DiscriminatorValue("Ciclista")
 public class Ciclista extends Usuario  {
 
     // --------------------------------------------------------------------

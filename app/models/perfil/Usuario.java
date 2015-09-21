@@ -14,7 +14,11 @@ import java.util.Base64;
  * Entidad Usuario.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+        name="dtype",
+        discriminatorType=DiscriminatorType.STRING
+)
 public abstract class Usuario extends Model {
 
     // --------------------------------------------------------------------
@@ -74,7 +78,7 @@ public abstract class Usuario extends Model {
     /**
      * Asigna el valor del atributo contrasenia.
      */
-    public void setContrasenia(String contrasenia)
+    public void SetHashedContrasenia(String contrasenia)
     {
         this.contrasenia = Base64.getEncoder().encodeToString(getSha512(contrasenia));
     }
@@ -84,7 +88,8 @@ public abstract class Usuario extends Model {
      */
     public boolean VerificaContrasenia(String contrasenia)
     {
-        return Base64.getEncoder().encodeToString(this.getSha512(contrasenia)).equals(this.contrasenia);
+        String hashContrasenia = Base64.getEncoder().encodeToString(this.getSha512(contrasenia));
+        return hashContrasenia.equals(this.contrasenia);
     }
 
 
@@ -96,4 +101,7 @@ public abstract class Usuario extends Model {
             throw new RuntimeException(e);
         }
     }
+
+    public static Finder<Long,Usuario> find = new Finder<>(Usuario.class);
+
 }
