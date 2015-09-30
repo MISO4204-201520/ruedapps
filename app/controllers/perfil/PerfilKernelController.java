@@ -64,7 +64,7 @@ public class PerfilKernelController extends Controller {
             List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
 
             if (usuario != null && usuario.size() > 0) {
-                Ciclista ciclista = (Ciclista)usuario.get(0);
+                Ciclista ciclista = (Ciclista) usuario.get(0);
                 SetUsuario(ciclista, postForm);
                 ciclista.update();
             }
