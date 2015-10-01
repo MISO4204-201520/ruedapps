@@ -35,10 +35,4 @@ public class Ruta extends Model {
      */
     @OneToOne
     public Ubicacion destino;
-
-    /*
-     * Representa los recorridos asociados a esta ruta
-     */
-    @OneToMany(mappedBy = "ruta")
-    public List<Recorrido> recorridos;
 }
