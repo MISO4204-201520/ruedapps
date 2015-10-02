@@ -9,11 +9,11 @@ GET         /                                    controllers.Application.index()
 GET         /assets/*file                        controllers.Assets.versioned(path="/public", file: Asset)
 
 # Rutas perfil
-GET        /login                               controllers.perfil.PerfilKernelController.Login()
-POST       /login                               controllers.perfil.PerfilKernelController.LoginPost()
+GET         /login                               controllers.perfil.PerfilKernelController.Login()
+POST        /login                               controllers.perfil.PerfilKernelController.LoginPost()
 POST        /usuario/crear                       controllers.perfil.PerfilKernelController.CrearUsuario()
 POST        /usuario/modificar                   controllers.perfil.PerfilKernelController.ActualizarUsuario()
-GET        /usuario/:id                   controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
+GET         /usuario/:id                         controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
 
 # Routes Rutas
 POST        /ruta/ubicacion/crear                controllers.ruta.RutaController.SaveUbicacion()
