@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String,moreScripts: Html)(content: Html)
 
 <!DOCTYPE html>
 
@@ -11,6 +11,7 @@
         <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
         <!--Load angular dependencies-->
         <script src="@routes.Assets.versioned("bower_components/jquery/angular/angular.min.js")"></script>
+        <script src="@routes.Assets.versioned("bower_components/jquery/angular/angular-route.min.js")"></script>
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     </head>
