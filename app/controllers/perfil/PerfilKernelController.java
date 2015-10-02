@@ -28,6 +28,7 @@ public class PerfilKernelController extends Controller {
 
         if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia()))
         {
+            session("loggedUser", correoLogin);
             return ok("loginOk");
         }
 
@@ -38,6 +39,10 @@ public class PerfilKernelController extends Controller {
         return ok(login.render("is ok"));
     }
 
+    public Result LogOut() {
+        session().remove("loggedUser");
+        return ok(login.render("is ok"));
+    }
 
     public Result CrearUsuario()
     {
