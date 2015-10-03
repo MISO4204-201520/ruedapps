@@ -7,12 +7,24 @@ ruedapp.config(function($routeProvider){
     $routeProvider
         .when(
         '/',{
-            controller: 'userController',
+            controller: 'perfilController',
             templateUrl: 'assets/frontend/views/index.html'
             }
         )
         .when(
-        '/',{
+        '/login',{
+            controller: 'perfilController',
+            templateUrl: 'assets/frontend/views/perfil/login.html'
+            }
+        )
+        .when(
+        '/register',{
+            controller: 'perfilController',
+            templateUrl: 'assets/frontend/views/perfil/register.html'
+            }
+        )
+        .when(
+        '/ruta',{
             controller: 'recorridoController',
             templateUrl: 'assets/frontend/views/map.html'
             }

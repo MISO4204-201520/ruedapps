@@ -9,7 +9,6 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.login;
 import play.libs.Json;
 
 import java.util.List;
@@ -37,12 +36,12 @@ public class PerfilKernelController extends Controller {
     }
 
     public Result Login() {
-        return ok(login.render("is ok"));
+        return ok();
     }
 
     public Result LogOut() {
         session().remove("loggedUser");
-        return ok(login.render("is ok"));
+        return ok();
     }
 
     public Result CrearUsuario()
