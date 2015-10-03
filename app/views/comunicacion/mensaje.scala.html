@@ -1,0 +1,25 @@
+@(message: String)
+<div class="container-fluid">
+    <div class="row">
+        @message
+    </div>
+    <div class="row">
+        Llene esta forma para enviar su mensaje
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-5">
+            <form role="form" method="post">
+                <div class="form-group">
+                    <label for="text">Para:</label>
+                    <input type="text" class="form-control" name="to" placeholder="Ingrese usuario">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Mensaje:</label>
+                    <input type="text" class="form-control" name="text" placeholder="Ingrese mensaje">
+                </div>
+                <button type="submit" class="btn btn-default">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
