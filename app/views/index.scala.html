@@ -7,20 +7,24 @@
         <title></title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/leaflet.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
             <!--Load angular dependencies-->
         <script src="@routes.Assets.versioned("javascripts/angular.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/angular-route.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/angular-simple-logger.light.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/leaflet.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/angular-leaflet-directive.min.js")"></script>
 
             <!--Load angular App-->
         <script src="@routes.Assets.versioned("frontend/modules/ruedapp.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/controller.js")"></script>
     </head>
+    <!--Do don't style this page style the subpages exteded by angular-->
     <body ng-app="ruedapp">
         <div ng-view>
 
         </div>
-
             <!--Bootstrap styling Below-->
         <script src="@routes.Assets.versioned("javascripts/jquery.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
