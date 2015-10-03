@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Lina8a on 19/09/2015.
@@ -35,5 +36,11 @@ public class Categoria extends Model{
     @Column(nullable = false)
     @Constraints.Required
     public String descripcion;
+
+    /**
+     * Representa la lista de servicios que tiene una categoria.
+     */
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Servicio> servicios;
 
 }

@@ -3,10 +3,13 @@ package controllers.directorio_servicios;
 import com.avaje.ebean.Ebean;
 import models.directorio_servicios.Categoria;
 import models.directorio_servicios.Servicio;
+import models.perfil.Proveedor;
+import models.perfil.Usuario;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static play.libs.Json.toJson;
@@ -23,8 +26,13 @@ public class DirectorioServiciosKernelController extends Controller {
     }
 
     public Result retornarServiciosPorCategoria() {
-        //TODO se debe revisar el modelo, ya que en este, el servicio no tiene ninguna relación con la categoría
-        return (Result) ok("Hola");
+        Form<Categoria> form = Form.form(Categoria.class).bindFromRequest();
+        Categoria categoria = Ebean.find(Categoria.class, form.get().id);
+        List<Servicio> servicios = new ArrayList<>();
+        if (categoria != null) {
+            servicios = Ebean.find(Servicio.class).where().eq("categoria", categoria).findList();
+        }
+        return ok(toJson(servicios));
     }
 
     public Result registrarCategoria() {
@@ -53,16 +61,23 @@ public class DirectorioServiciosKernelController extends Controller {
             servicio.telefono = form.get().telefono;
             servicio.domicilios = form.get().domicilios;
 
-            //TODO el proveedor (Usuario) debe ser tomado de la sesión
-            /*System.out.println("Id de proveedor: " + form.data().get("idProveedor"));
-            Proveedor proveedor = Ebean.find(Proveedor.class, form.data().get("idProveedor"));
-            if (proveedor != null) {
-                servicio.proveedor = proveedor;
-                servicio.save();
-                return created();
+            // Obtiene el usuario que esta registrando el servicio de la sesion
+            String usuarioLogueado = session().get("loggedUser");
+            Usuario usuario = Usuario.find.byId(Long.valueOf(usuarioLogueado));
+
+            // Valida que el usuario exista y que sea un proveedor
+            if (usuario != null && usuario instanceof Proveedor) {
+                servicio.proveedor = (Proveedor) usuario;
             } else {
-                return badRequest("No existe un proveedor con id " + form.data().get("idProveedor"));
-            }*/
+                return badRequest("No existe un proveedor con id " + usuarioLogueado);
+            }
+
+            Categoria categoria = Ebean.find(Categoria.class, form.get().categoria.id);
+            if (categoria != null) {
+                servicio.categoria = categoria;
+            } else {
+                return badRequest("No existe una categoria con id " + form.get().categoria.id);
+            }
 
             servicio.save();
 
@@ -84,7 +99,7 @@ public class DirectorioServiciosKernelController extends Controller {
         return ok();
     }
 
-    public static Result eliminarServicio() {
+    public Result eliminarServicio() {
         Form<Servicio> form = Form.form(Servicio.class).bindFromRequest();
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());
@@ -102,8 +117,8 @@ public class DirectorioServiciosKernelController extends Controller {
         return (Result) ok("Hola");
     }*/
 
-    public static Result registrarUsoServicio() {
-        return (Result) ok("Hola");
+    public Result registrarUsoServicio() {
+        return ok("Hola");
     }
 
 }
