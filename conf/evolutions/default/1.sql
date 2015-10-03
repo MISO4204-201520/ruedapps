@@ -44,7 +44,6 @@ create table servicio (
 
 create table ubicacion (
   id                        integer primary key AUTOINCREMENT,
-  recorrido_id              integer not null,
   nombre                    varchar(255) not null,
   latitud                   float not null,
   longitud                  float not null)
@@ -80,8 +79,6 @@ alter table ruta add constraint fk_ruta_destino_5 foreign key (destino_id) refer
 create index ix_ruta_destino_5 on ruta (destino_id);
 alter table servicio add constraint fk_servicio_proveedor_6 foreign key (proveedor_id) references usuario (id);
 create index ix_servicio_proveedor_6 on servicio (proveedor_id);
-alter table ubicacion add constraint fk_ubicacion_recorrido_7 foreign key (recorrido_id) references recorrido (id);
-create index ix_ubicacion_recorrido_7 on ubicacion (recorrido_id);
 
 
 

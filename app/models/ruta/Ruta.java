@@ -2,10 +2,7 @@ package models.ruta;
 
 import com.avaje.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -27,12 +24,12 @@ public class Ruta extends Model {
     /**
      * Representa el punto inicial de la ruta
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Ubicacion origen;
 
     /**
      * Representa el punto final
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Ubicacion destino;
 }

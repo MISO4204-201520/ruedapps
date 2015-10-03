@@ -42,10 +42,17 @@ public class RutaController extends Controller {
         }
 
         Ruta ruta = new Ruta();
-        ruta.origen = postForm.get().origen;
-        ruta.destino = postForm.get().destino;
-        ruta.save();
+        ruta.origen = new Ubicacion();
+        ruta.origen.latitud = postForm.get().origen.latitud;
+        ruta.origen.longitud = postForm.get().origen.longitud;
+        ruta.origen.nombre = postForm.get().origen.nombre;
 
+        ruta.destino = new Ubicacion();
+        ruta.destino.latitud = postForm.get().destino.latitud;
+        ruta.destino.longitud = postForm.get().destino.longitud;
+        ruta.destino.nombre = postForm.get().destino.nombre;
+
+        ruta.save();
         return Results.created(Json.toJson(ruta));
     }
 

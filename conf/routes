@@ -10,6 +10,7 @@ GET         /assets/*file                        controllers.Assets.versioned(pa
 
 # Rutas perfil
 GET         /login                               controllers.perfil.PerfilKernelController.Login()
+GET         /logout                               controllers.perfil.PerfilKernelController.LogOut()
 POST        /login                               controllers.perfil.PerfilKernelController.LoginPost()
 POST        /usuario/crear                       controllers.perfil.PerfilKernelController.CrearUsuario()
 POST        /usuario/modificar                   controllers.perfil.PerfilKernelController.ActualizarUsuario()
@@ -17,6 +18,7 @@ GET         /usuario/:id                         controllers.perfil.PerfilKernel
 
 # Routes Rutas
 POST        /ruta/ubicacion/crear                controllers.ruta.RutaController.SaveUbicacion()
+POST        /ruta/crear                          controllers.ruta.RutaController.SaveRuta()
 
 # Rutas Categoria
 GET         /categoria/categorias                controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()

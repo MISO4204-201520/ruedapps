@@ -30,7 +30,7 @@ public class Recorrido extends Model {
     /**
      * Descripción de la ruta
      */
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+///    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Ubicacion> secuenciaUbicaciones;
 
 }
