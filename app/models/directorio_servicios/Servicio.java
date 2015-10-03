@@ -12,7 +12,7 @@ import java.util.Date;
  * Entidad de servicio de directorio.
  */
 @Entity
-public class Servicio extends Model{
+public class Servicio extends Model {
 
     // --------------------------------------------------------------------
     // Atributos
@@ -73,4 +73,11 @@ public class Servicio extends Model{
      */
     @ManyToOne
     public Proveedor proveedor;
+
+    /**
+     * Representa la categoria a la que pertenece el servicio.
+     */
+    @ManyToOne
+    public Categoria categoria;
+
 }

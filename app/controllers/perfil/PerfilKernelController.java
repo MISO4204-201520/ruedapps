@@ -28,7 +28,8 @@ public class PerfilKernelController extends Controller {
 
         if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia()))
         {
-            session("loggedUser", correoLogin);
+            //session("loggedUser", correoLogin);
+            session("loggedUser", String.valueOf(usuario.get(0).id));
             return ok("loginOk");
         }
 
