@@ -23,8 +23,11 @@ POST        /ruta/crear                          controllers.ruta.RutaController
 # Rutas Categoria
 GET         /categoria/categorias                controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
 GET         /categoria/servicios                 controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria()
-
 POST        /categoria/registrar                 controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
 POST        /categoria/servicio/registrar        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio()
 POST        /categoria/editar                    controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio()
 POST        /categoria/eliminar                  controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio()
+
+#Rutas Mensajes
+GET         /mensaje                             controllers.comunicacion.MensajeController.Mensaje()
+POST        /mensaje                             controllers.comunicacion.MensajeController.MensajePost()

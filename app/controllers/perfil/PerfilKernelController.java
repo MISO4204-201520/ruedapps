@@ -1,15 +1,16 @@
 package controllers.perfil;
 
 import com.avaje.ebean.Ebean;
-import com.fasterxml.jackson.databind.JsonNode;
 import models.perfil.Ciclista;
 import models.perfil.LoginDTO;
 import models.perfil.Usuario;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.libs.Json;
+import views.html.login;
 
 import java.util.List;
 
@@ -27,21 +28,21 @@ public class PerfilKernelController extends Controller {
 
         if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia()))
         {
-            //session("loggedUser", correoLogin);
-            session("loggedUser", String.valueOf(usuario.get(0).id));
-            return ok("loginOk");
+            session().put("loggedUser", String.valueOf(usuario.get(0).id));
+            return ok("Bienvenido!");
         }
-
-        return Results.unauthorized();
+        else {
+            return Results.unauthorized();
+        }
     }
 
     public Result Login() {
-        return ok();
+        return ok(login.render("Hola, por favor ingrese"));
     }
 
     public Result LogOut() {
         session().remove("loggedUser");
-        return ok();
+        return ok(login.render("Adiós!"));
     }
 
     public Result CrearUsuario()

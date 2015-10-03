@@ -1,5 +1,6 @@
 package models.perfil;
 
+import models.comunicacion.Mensaje;
 import models.ruta.HistoricoRecorrido;
 import play.data.validation.Constraints;
 
@@ -8,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by franciscoluisrv on 09/12/2015.
+ * Created by franciscoluisrv on 10/03/2015.
  * Entidad Ciclista.
  */
 @Entity
@@ -37,4 +38,18 @@ public class Ciclista extends Usuario  {
      */
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<HistoricoRecorrido> historicoRecorridos;
+
+    /*
+     * Mensajes que ha recibido el usuario
+     */
+    @OneToMany(mappedBy = "destinatario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Mensaje> recibidos;
+
+    /*
+     * Mensajes que ha enviado el usuario
+     */
+    @OneToMany(mappedBy = "remitente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Mensaje> enviados;
+
+    public static Finder<Long,Ciclista> findCiclista = new Finder<>(Ciclista.class);
 }
