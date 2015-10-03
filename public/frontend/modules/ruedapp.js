@@ -8,7 +8,8 @@ ruedapp.config(function($routeProvider){
         .when(
         '/',{
             controller: 'ruedappController',
-            templateUrl: 'views/index.html'
-        }
-    )
+            templateUrl: 'assets/frontend/views/index.html'
+            }
+        )
+        .otherwise({ redirectTo: '/'})
 });
