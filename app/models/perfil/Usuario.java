@@ -89,7 +89,7 @@ public abstract class Usuario extends Model {
     public boolean VerificaContrasenia(String contrasenia)
     {
         String hashContrasenia = Base64.getEncoder().encodeToString(this.getSha512(contrasenia));
-        return true || hashContrasenia.equals(this.contrasenia);
+        return hashContrasenia.equals(this.contrasenia);
     }
 
 
