@@ -1,7 +1,7 @@
-# --- Created by Ebean DDL
-# To stop Ebean DDL generation, remove this comment and start using Evolutions
+--- Created by Ebean DDL
+--- To stop Ebean DDL generation, remove this comment and start using Evolutions
 
-# --- !Ups
+--- !Ups
 
 create table categoria (
   id                        integer primary key AUTOINCREMENT,
@@ -18,6 +18,14 @@ create table historico_recorrido (
   duracion                  integer)
 ;
 
+create table mensaje (
+  id                        integer primary key AUTOINCREMENT,
+  fecha_envio               timestamp not null,
+  texto                     varchar(255) not null,
+  remitente_id              integer,
+  destinatario_id           integer)
+;
+
 create table recorrido (
   id                        integer primary key AUTOINCREMENT,
   ruta_id                   integer)
@@ -26,9 +34,7 @@ create table recorrido (
 create table ruta (
   id                        integer primary key AUTOINCREMENT,
   origen_id                 integer,
-  destino_id                integer,
-  constraint uq_ruta_origen_id unique (origen_id),
-  constraint uq_ruta_destino_id unique (destino_id))
+  destino_id                integer)
 ;
 
 create table servicio (
@@ -67,28 +73,35 @@ create table usuario (
   constraint uq_usuario_celular unique (celular))
 ;
 
-alter table historico_recorrido add constraint fk_historico_recorrido_usuario_1 foreign key (ciclista_id) references usuario (id);
+-- Sintaxis ALTER TABLE inválida para SQLite
+-- alter table historico_recorrido add constraint fk_historico_recorrido_usuario_1 foreign key (ciclista_id) references usuario (id);
 create index ix_historico_recorrido_usuario_1 on historico_recorrido (ciclista_id);
-alter table historico_recorrido add constraint fk_historico_recorrido_recorri_2 foreign key (recorrido_id) references recorrido (id);
+-- alter table historico_recorrido add constraint fk_historico_recorrido_recorri_2 foreign key (recorrido_id) references recorrido (id);
 create index ix_historico_recorrido_recorri_2 on historico_recorrido (recorrido_id);
-alter table recorrido add constraint fk_recorrido_ruta_3 foreign key (ruta_id) references ruta (id);
-create index ix_recorrido_ruta_3 on recorrido (ruta_id);
-alter table ruta add constraint fk_ruta_origen_4 foreign key (origen_id) references ubicacion (id);
-create index ix_ruta_origen_4 on ruta (origen_id);
-alter table ruta add constraint fk_ruta_destino_5 foreign key (destino_id) references ubicacion (id);
-create index ix_ruta_destino_5 on ruta (destino_id);
-alter table servicio add constraint fk_servicio_proveedor_6 foreign key (proveedor_id) references usuario (id);
-create index ix_servicio_proveedor_6 on servicio (proveedor_id);
+-- alter table mensaje add constraint fk_mensaje_remitente_3 foreign key (remitente_id) references usuario (id);
+create index ix_mensaje_remitente_3 on mensaje (remitente_id);
+-- alter table mensaje add constraint fk_mensaje_destinatario_4 foreign key (destinatario_id) references usuario (id);
+create index ix_mensaje_destinatario_4 on mensaje (destinatario_id);
+-- alter table recorrido add constraint fk_recorrido_ruta_5 foreign key (ruta_id) references ruta (id);
+create index ix_recorrido_ruta_5 on recorrido (ruta_id);
+-- alter table ruta add constraint fk_ruta_origen_6 foreign key (origen_id) references ubicacion (id);
+create index ix_ruta_origen_6 on ruta (origen_id);
+-- alter table ruta add constraint fk_ruta_destino_7 foreign key (destino_id) references ubicacion (id);
+create index ix_ruta_destino_7 on ruta (destino_id);
+-- alter table servicio add constraint fk_servicio_proveedor_8 foreign key (proveedor_id) references usuario (id);
+create index ix_servicio_proveedor_8 on servicio (proveedor_id);
 
 
 
-# --- !Downs
+--- !Downs
 
 PRAGMA foreign_keys = OFF;
 
 drop table categoria;
 
 drop table historico_recorrido;
+
+drop table mensaje;
 
 drop table recorrido;
 
