@@ -10,7 +10,7 @@ GET         /assets/*file                        controllers.Assets.versioned(pa
 
 # Rutas perfil
 GET         /login                               controllers.perfil.PerfilKernelController.Login()
-GET         /logout                               controllers.perfil.PerfilKernelController.LogOut()
+GET         /logout                              controllers.perfil.PerfilKernelController.LogOut()
 POST        /login                               controllers.perfil.PerfilKernelController.LoginPost()
 POST        /usuario/crear                       controllers.perfil.PerfilKernelController.CrearUsuario()
 POST        /usuario/modificar                   controllers.perfil.PerfilKernelController.ActualizarUsuario()
@@ -22,7 +22,9 @@ POST        /ruta/crear                          controllers.ruta.RutaController
 
 # Rutas Categoria
 GET         /categoria/categorias                controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
+GET         /categoria/servicios                 controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria()
 
 POST        /categoria/registrar                 controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
-
 POST        /categoria/servicio/registrar        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio()
+POST        /categoria/editar                    controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio()
+POST        /categoria/eliminar                  controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio()
