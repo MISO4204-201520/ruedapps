@@ -1,0 +1,12 @@
+.ruedapps-inline-block {
+    display: inline-block;
+}
+
+#ruedapps-navbar {
+    background-color: #0078A8;
+    height: 4em;
+}
+
+.ruedapps-navbar-item {
+    margin: 0.7em;
+}
