@@ -3,6 +3,7 @@ package controllers.perfil;
 import com.avaje.ebean.Ebean;
 import models.perfil.Ciclista;
 import models.perfil.LoginDTO;
+import models.perfil.Proveedor;
 import models.perfil.Usuario;
 import play.data.Form;
 import play.libs.Json;
@@ -31,9 +32,8 @@ public class PerfilKernelController extends Controller {
             session().put("loggedUser", String.valueOf(usuario.get(0).id));
             return ok("Bienvenido!");
         }
-        else {
-            return Results.unauthorized();
-        }
+
+        return Results.unauthorized();
     }
 
     public Result Login() {
@@ -48,17 +48,36 @@ public class PerfilKernelController extends Controller {
     public Result CrearUsuario()
     {
         Form<Ciclista> postForm = Form.form(Ciclista.class).bindFromRequest();
-        if (postForm.hasErrors()) {
+        if (postForm.hasErrors())
+        {
             return badRequest(postForm.errorsAsJson());
-        } else {
-            Ciclista ciclista = new Ciclista();
-            SetUsuario(ciclista, postForm);
-            ciclista.fechaNacimiento = postForm.get().fechaNacimiento;
-            ciclista.save();
         }
+
+        Ciclista ciclista = new Ciclista();
+        SetUsuario(ciclista, postForm);
+        ciclista.fechaNacimiento = postForm.get().fechaNacimiento;
+        ciclista.save();
 
         return Results.created();
     }
+
+    public Result CrearProveedor()
+    {
+        Form<Proveedor> postForm = Form.form(Proveedor.class).bindFromRequest();
+        if (postForm.hasErrors())
+        {
+            return badRequest(postForm.errorsAsJson());
+        }
+
+        Proveedor proveedor = new Proveedor();
+        SetUsuario(proveedor, postForm);
+        proveedor.nit = postForm.get().nit;
+        proveedor.nombreNegocio = postForm.get().nombreNegocio;
+        proveedor.save();
+
+        return Results.created();
+    }
+
 
     public Result ActualizarUsuario()
     {

@@ -1,6 +1,7 @@
 package models.perfil;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
@@ -58,6 +59,7 @@ public abstract class Usuario extends Model {
      */
     @Column(nullable = false)
     @Constraints.Required
+    @JsonIgnore
     public String contrasenia;
 
     /**

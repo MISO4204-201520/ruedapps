@@ -22,7 +22,7 @@ public class Proveedor extends Usuario  {
      */
     @Column(nullable = false)
     @Constraints.Required
-    public String NIT;
+    public String nit;
 
     /**
      * Representa el nombre del local o empresa donde el proveedor presta sus servicios

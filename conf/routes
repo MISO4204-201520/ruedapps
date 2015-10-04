@@ -13,12 +13,17 @@ GET         /login                               controllers.perfil.PerfilKernel
 GET         /logout                              controllers.perfil.PerfilKernelController.LogOut()
 POST        /login                               controllers.perfil.PerfilKernelController.LoginPost()
 POST        /usuario/crear                       controllers.perfil.PerfilKernelController.CrearUsuario()
+POST        /proveedor/crear                     controllers.perfil.PerfilKernelController.CrearProveedor()
 POST        /usuario/modificar                   controllers.perfil.PerfilKernelController.ActualizarUsuario()
 GET         /usuario/:id                         controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
 
 # Routes Rutas
-POST        /ruta/ubicacion/crear                controllers.ruta.RutaController.SaveUbicacion()
+POST        /ubicacion/crear/:id                 controllers.ruta.RutaController.SaveUbicacion(id: Long)
 POST        /ruta/crear                          controllers.ruta.RutaController.SaveRuta()
+POST        /recorrido/crear                     controllers.ruta.RutaController.SaveRecorrido()
+POST        /historico/crear                     controllers.ruta.RutaController.SaveHistoricoRecorrido()
+GET         /historico/:id                       controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
+GET         /historico/usuario/:id               controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
 
 # Rutas Categoria
 GET         /categoria/categorias                controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()

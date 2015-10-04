@@ -1,6 +1,7 @@
 package models.ruta;
 
 import com.avaje.ebean.Model;
+import models.perfil.Ciclista;
 import play.data.validation.Constraints;
 
 import javax.persistence.Column;
@@ -44,4 +45,8 @@ public class HistoricoRecorrido extends Model {
     @Column
     @Constraints.Required
     public int duracion;
+
+    @ManyToOne
+    @Constraints.Required
+    public Ciclista ciclista;
 }
