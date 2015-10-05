@@ -21,8 +21,8 @@ app.directive('login', function(){
                         $scope.auth.isAuthenticated = true;
                         console.log($scope.auth.isAuthenticated)
                         $scope.getPeople();
-                    }).error(function (data) {
-                        console.log("Error: " + $scope.view);
+                    }).error(function (err) {
+                        console.log("Error: " + $scope.view + err);
                     });
                 }
             }

@@ -3,6 +3,7 @@
  */
 var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive']);
 
+
 ruedapp.config(function($routeProvider){
     $routeProvider
         .when(
