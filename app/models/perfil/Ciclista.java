@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Ciclista")
-public class Ciclista extends Usuario  {
+public class Ciclista extends Usuario {
 
     // --------------------------------------------------------------------
     // Atributos

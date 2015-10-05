@@ -1,9 +1,27 @@
+@font-face {
+    font-family: BootstrapGlyphicons;
+    src: url(../fonts/glyphicons-halflings-regular.woff);
+}
+
 img {
-    width: 100%;
+    width: 80%;
+}
+
+.ruedapps-container-gray {
+    background-color: #eee;
+}
+
+.ruedapps-glyphicons {
+    font-size: 10em;
+    padding: 0 1em;
 }
 
 .ruedapps-inline-block {
     display: inline-block;
+}
+
+.ruedapps-navbar-item {
+    margin: 0.7em;
 }
 
 #ruedapps-navbar {
@@ -11,6 +29,3 @@ img {
     height: 4em;
 }
 
-.ruedapps-navbar-item {
-    margin: 0.7em;
-}

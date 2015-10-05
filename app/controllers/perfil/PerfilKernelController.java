@@ -1,18 +1,21 @@
 package controllers.perfil;
 
 import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.JsonNode;
 import models.perfil.Ciclista;
 import models.perfil.LoginDTO;
 import models.perfil.Proveedor;
 import models.perfil.Usuario;
 import play.data.Form;
 import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.libs.Json;
 import views.html.login;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -21,13 +24,18 @@ import java.util.List;
  */
 public class PerfilKernelController extends Controller {
 
+    @BodyParser.Of(play.mvc.BodyParser.Json.class)
     public Result LoginPost()
     {
-        Form<LoginDTO> postForm = Form.form(LoginDTO.class).bindFromRequest();
-        String correoLogin = postForm.get().getCorreoElectronico();
-        List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
+        JsonNode json = request().body().asJson();
+        System.out.println("BODY " + request().body());
+        System.out.println("JSON " + json);
 
-        if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia()))
+//        Form<LoginDTO> postForm = Form.form(LoginDTO.class).bindFromRequest();
+//        String correoLogin = postForm.get().getCorreoElectronico();
+        List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", json.findValue("correoElectronico").toString()).findList();
+
+        if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(json.findValue("contrasenia").toString()))
         {
             session().put("loggedUser", String.valueOf(usuario.get(0).id));
             return ok("Bienvenido!");
@@ -45,17 +53,14 @@ public class PerfilKernelController extends Controller {
         return ok(login.render("Adiós!"));
     }
 
-    public Result CrearUsuario()
+    @BodyParser.Of(play.mvc.BodyParser.Json.class)
+    public Result CrearUsuario( )
     {
-        Form<Ciclista> postForm = Form.form(Ciclista.class).bindFromRequest();
-        if (postForm.hasErrors())
-        {
-            return badRequest(postForm.errorsAsJson());
-        }
-
+        JsonNode json = request().body().asJson();
         Ciclista ciclista = new Ciclista();
-        SetUsuario(ciclista, postForm);
-        ciclista.fechaNacimiento = postForm.get().fechaNacimiento;
+        SetUsuario(ciclista, json);
+        ciclista.fechaNacimiento = new Date();
+        //TODO: Definir fecha desde la vista
         ciclista.save();
 
         return Results.created();
@@ -70,7 +75,7 @@ public class PerfilKernelController extends Controller {
         }
 
         Proveedor proveedor = new Proveedor();
-        SetUsuario(proveedor, postForm);
+        //SetUsuario(proveedor, postForm);
         proveedor.nit = postForm.get().nit;
         proveedor.nombreNegocio = postForm.get().nombreNegocio;
         proveedor.save();
@@ -90,7 +95,7 @@ public class PerfilKernelController extends Controller {
 
             if (usuario != null && usuario.size() > 0) {
                 Ciclista ciclista = (Ciclista) usuario.get(0);
-                SetUsuario(ciclista, postForm);
+                //SetUsuario(ciclista, postForm);
                 ciclista.update();
             }
             else
@@ -114,14 +119,14 @@ public class PerfilKernelController extends Controller {
         return Results.notFound();
     }
 
-    private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario)
+    private static void SetUsuario(Usuario usuario, JsonNode json)
     {
-        usuario.nombres = formUsuario.get().nombres;
-        usuario.celular = formUsuario.get().celular;
-        usuario.correoElectronico = formUsuario.get().correoElectronico;
-        usuario.apellidos = formUsuario.get().apellidos;
-        usuario.ciudad = formUsuario.get().ciudad;
-        usuario.SetHashedContrasenia(formUsuario.get().contrasenia);
+        usuario.nombres = json.findValue("nombres").toString();
+        usuario.celular = json.findValue("celular").toString();
+        usuario.correoElectronico = json.findValue("correoElectronico").toString();
+        usuario.apellidos = json.findValue("apellidos").toString();
+        usuario.ciudad = json.findValue("ciudad").toString();
+        usuario.SetHashedContrasenia(json.findValue("contrasenia").toString());
     }
 
 }
