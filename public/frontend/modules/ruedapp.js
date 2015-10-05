@@ -27,7 +27,13 @@ ruedapp.config(function($routeProvider){
         .when(
         '/ruta',{
             controller: 'recorridoController',
-            templateUrl: 'assets/frontend/views/map.html'
+            templateUrl: 'assets/frontend/views/ruta/mapa.html'
+            }
+        )
+        .when(
+        '/mensaje',{
+            controller: 'perfilController',
+            templateUrl: 'assets/frontend/views/comunicacion/mensaje.html'
             }
         )
         .otherwise({ redirectTo: '/'})
