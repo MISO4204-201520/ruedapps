@@ -3,6 +3,16 @@
  */
 var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies']);
 
+/**
+ * Obtener el id del usuario que inició sesión
+ */
+ruedapp.service("SessionService", [ '$cookies', function($cookies){
+    this.getUserId = function() {
+        var cookie = $cookies.get('PLAY_SESSION');
+        var userId = (cookie.split('='))[1];
+        return userId;
+    }
+}]);
 
 ruedapp.config(function($routeProvider){
     $routeProvider

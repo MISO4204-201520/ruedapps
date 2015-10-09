@@ -2,7 +2,7 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController',[ '$scope','$location', '$http', '$cookies', function($scope, $location, $http, $cookies) {
+ruedapp.controller('perfilController',[ '$scope','$location', '$http', '$cookies', 'SessionService', function($scope, $location, $http, $cookies, SessionService) {
 
     /**
      * Definición datepicker
@@ -28,14 +28,29 @@ ruedapp.controller('perfilController',[ '$scope','$location', '$http', '$cookies
     /**
      * Lógica controlador
      */
-    if($scope.authenticated == true) {
-        $scope.perfilNombres = '';
-        $scope.perfilApellidos = '';
-        $scope.perfilCiudad = '';
-        $scope.perfilCelular = '';
-        $scope.perfilFechaNacimiento = '';
-        $scope.perfilSexo = '';
-        $scope.perfilCorreoElectronico = '';
+    if(SessionService.getUserId()) {
+        var get = {
+            method: 'GET',
+            url: 'http://localhost:9000/usuario/' + userId,
+            headers: { 'Content-Type': 'application/json' }
+        }
+
+        $http(get).success(function (data) {
+            console.log("Obtuvo usuario");
+            $scope.perfilNombres = data.nombres;
+            $scope.perfilApellidos = data.apellidos;
+            $scope.perfilCiudad = data.ciudad;
+            $scope.perfilCelular = data.celular;
+            $scope.perfilFechaNacimiento = data.fechaNacimiento;
+            $scope.perfilSexo = data.sexo;
+            $scope.perfilCorreoElectronico = data.correoElectronico;
+
+        }).error(function (data) {
+            console.log("Error registro.");
+        });
+    }
+    else {
+        console.log("No hay id de usuario.");
     }
 
     $scope.registrar = function() {
@@ -78,18 +93,18 @@ ruedapp.controller('perfilController',[ '$scope','$location', '$http', '$cookies
         }
     }
 
-    $scope.cambiarPerfil = function() {
+    $scope.editarPerfil = function() {
         if($scope.form.$valid) {
             var post = {
                 method: 'POST',
-                url: 'http://localhost:9000/usuario/crear ',
+                url: 'http://localhost:9000/usuario/modificar',
                 headers: { 'Content-Type': 'application/json' },
-                data: JSON.stringify({ nombres: $scope.nombres, apellidos: $scope.apellidos, ciudad: $scope.ciudad,
-                    celular: $scope.celular, correoElectronico: $scope.correoElectronico, contrasenia: $scope.contrasenia})
+                data: JSON.stringify({ nombres: $scope.perfilNombres, apellidos: $scope.perfilApellidos, fechaNacimiento: $scope.perfilFechaNacimiento, sexo: $scope.perfilSexo,
+                    ciudad: $scope.perfilCiudad, celular: $scope.perfilCelular, correoElectronico: $scope.perfilCorreoElectronico, contrasenia: $scope.perfilContrasenia})
             }
 
             $http(post).success(function (data) {
-                console.log("Registró");
+                console.log("Modificó");
                 window.location.replace('/');
 
             }).error(function (data) {
