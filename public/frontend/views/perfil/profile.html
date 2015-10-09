@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <div class="row text-center">
+        <h1>Mi Perfil</h1>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form name="form" role="form" ng-controller = "perfilController">
+                <div class="form-group" required>
+                    <label for="nombres">Nombres:</label>
+                    <input name="nombres" ng-model="perfilNombres" class="form-control" id="nombres" placeholder="eg. Juan">
+                </div>
+                <div class="form-group" required>
+                    <label for="apellidos">Apellidos:</label>
+                    <input name="apellidos" ng-model="perfilApellidos" class="form-control" id="apellidos" placeholder="eg. Casas">
+                </div>
+                <div class="form-group" required>
+                    <label for="ciudad">Ciudad:</label>
+                    <input name="ciudad" ng-model="perfilCiudad" class="form-control" id="ciudad" placeholder="eg. Bogotá">
+                </div>
+                <div class="form-group" required>
+                    <label for="celular">Celular:</label>
+                    <input name="celular" ng-model="perfilCelular" class="form-control" id="celular" placeholder="eg. 3002555556">
+                </div>
+                <div class="form-group" required>
+                    <label for="correoElectronico">Correo electrónico:</label>
+                    <input name="correoElectronico" ng-model="perfilCorreoElectronico" type="email" class="form-control" id="correoElectronico" placeholder="eg. usuario@ejemplo.com">
+                </div>
+                <div class="form-group" required>
+                    <label for="fechaNacimiento">Fecha de nacimiento:</label>
+                    <input name="fechaNacimiento" ng-model="perfilFechaNacimiento" class="form-control" id="fechaNacimiento" placeholder="eg. 3002555556">
+                </div>
+                <div class="form-group" required>
+                    <label for="sexo">Sexo:</label>
+                    <input name="sexo" ng-model="perfilSexo" class="form-control" id="sexo" placeholder="eg. 3002555556">
+                </div>
+                <div class="form-group" required>
+                    <label for="contrasenia">Nueva contraseña:</label>
+                    <input name="contrasenia" ng-model="perfilContrasenia" type="password" class="form-control" id="contrasenia" placeholder="eg. *********">
+                </div>
+                <div class="form-group" required>
+                    <label for="confirmarContrasenia">Confirmar nueva contraseña:</label>
+                    <input name="confirmarContrasenia" ng-model="perfilConfirmarContrasenia" type="password" class="form-control" id="confirmarContrasenia" placeholder="eg. *********">
+                </div>
+                <button type="submit" class="btn btn-info center-block" ng-click="registrar()">Registrar</button>
+            </form>
+            <br/>
+            <form method="get" action="#/">
+                <button type="submit" class="btn btn-primary center-block">Cancelar</button>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

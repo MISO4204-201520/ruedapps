@@ -7,9 +7,16 @@
         <title></title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/ui-bootstrap-csp.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/leaflet.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/leaflet-routing-machine.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    </head>
+    <!--Do don't style this page style the subpages exteded by angular-->
+    <body ng-app="ruedapp">
+        <div ng-view>
+
+        </div>
 
             <!--Load angular dependencies-->
         <script src="@routes.Assets.versioned("javascripts/leaflet.js")"></script>
@@ -19,19 +26,17 @@
         <script src="@routes.Assets.versioned("javascripts/angular-simple-logger.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/angular-route.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/angular-leaflet-directive.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/angular-cookies.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/ui-bootstrap.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/ui-bootstrap-tpls.min.js")"></script>
+
+            <!--Bootstrap styling Below-->
+        <script src="@routes.Assets.versioned("javascripts/jquery.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
 
             <!--Load angular App-->
         <script src="@routes.Assets.versioned("frontend/modules/ruedapp.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/controller.js")"></script>
-    </head>
-    <!--Do don't style this page style the subpages exteded by angular-->
-    <body ng-app="ruedapp">
-        <div ng-view>
-
-        </div>
-            <!--Bootstrap styling Below-->
-        <script src="@routes.Assets.versioned("javascripts/jquery.min.js")"></script>
-        <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
 
         </body>
 </html>

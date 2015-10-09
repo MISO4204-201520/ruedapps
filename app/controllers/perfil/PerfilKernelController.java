@@ -55,7 +55,7 @@ public class PerfilKernelController extends Controller {
 
         Ciclista ciclista = new Ciclista();
         SetUsuario(ciclista, postForm);
-        ciclista.fechaNacimiento = postForm.get().fechaNacimiento;
+        //ciclista.fechaNacimiento = postForm.get().fechaNacimiento;
         ciclista.save();
 
         return Results.created();
