@@ -2,117 +2,83 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController',[ '$scope','$location', '$http', '$cookies', 'SessionService', function($scope, $location, $http, $cookies, SessionService) {
+ruedapp.controller('perfilController',[ '$scope','$rootScope','$location', '$http', '$cookies', 'AUTH_EVENTS','AuthFactory',
+    function($scope, $rootScope , $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
+        /**
+         * Definición datepicker
+         * @type {Date}
+         */
+        var today = new Date();
+        $scope.minDate = '1900/01/01';
+        $scope.maxDate = today;
 
-    /**
-     * Definición datepicker
-     * @type {Date}
-     */
-    var today = new Date();
-    $scope.minDate = '1900/01/01';
-    $scope.maxDate = today;
+        $scope.open = function($event) {
+            $scope.status.opened = true;
+        };
 
-    $scope.open = function($event) {
-        $scope.status.opened = true;
-    };
+        $scope.status = {
+            opened: false
+        };
 
-    $scope.status = {
-        opened: false
-    };
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
 
-    $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-    };
+        $scope.registrar = function() {
+            if($scope.form.$valid) {
+                var userInfo = $scope.userInfo;
+                var post = {
+                    method: 'POST',
+                    url: 'http://localhost:9000/usuario/crear ',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: JSON.stringify(userInfo)
+                };
 
-    /**
-     * Lógica controlador
-     */
-    if(SessionService.getUserId()) {
-        var get = {
-            method: 'GET',
-            url: 'http://localhost:9000/usuario/' + userId,
-            headers: { 'Content-Type': 'application/json' }
-        }
+                $http(post).success(function (data) {
+                    console.log("Registró");
+                    console.log("data: "+ data);
+                    window.location.replace('/');
 
-        $http(get).success(function (data) {
-            console.log("Obtuvo usuario");
-            $scope.perfilNombres = data.nombres;
-            $scope.perfilApellidos = data.apellidos;
-            $scope.perfilCiudad = data.ciudad;
-            $scope.perfilCelular = data.celular;
-            $scope.perfilFechaNacimiento = data.fechaNacimiento;
-            $scope.perfilSexo = data.sexo;
-            $scope.perfilCorreoElectronico = data.correoElectronico;
-
-        }).error(function (data) {
-            console.log("Error registro.");
-        });
-    }
-    else {
-        console.log("No hay id de usuario.");
-    }
-
-    $scope.registrar = function() {
-        if($scope.form.$valid) {
-            var post = {
-                method: 'POST',
-                url: 'http://localhost:9000/usuario/crear ',
-                headers: { 'Content-Type': 'application/json' },
-                data: JSON.stringify({ nombres: $scope.nombres, apellidos: $scope.apellidos, fechaNacimiento: $scope.fechaNacimiento, sexo: $scope.sexo,
-                    ciudad: $scope.ciudad, celular: $scope.celular, correoElectronico: $scope.correoElectronico, contrasenia: $scope.contrasenia})
+                }).error(function (data) {
+                    console.log("Error registro.");
+                    console.log("data: "+ data);
+                });
             }
+        };
 
-            $http(post).success(function (data) {
-                console.log("Registró");
-                window.location.replace('/');
+        $scope.login = function() {
+            var credentials = $scope.credentials;
+            if($scope.form.$valid) {
+                AuthFactory.login(credentials).then(function (res) {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 
-            }).error(function (data) {
-                console.log("Error registro.");
-            });
-        }
-    }
-
-    $scope.login = function() {
-        if($scope.form.$valid) {
-            var post = {
-                method: 'POST',
-                url: 'http://localhost:9000/login ',
-                headers: { 'Content-Type': 'application/json' },
-                data: JSON.stringify({correoElectronico: $scope.correoElectronico, contrasenia: $scope.contrasenia})
+                    //SessionFactory.create(res);
+                }, function () {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                });
             }
+        };
 
-            $http(post).success(function (data) {
-                console.log("Inició sesión");
-                $scope.authenticated = true;
-                window.location.replace('/');
+        $scope.editarPerfil = function() {
+            if($scope.form.$valid) {
+                var post = {
+                    method: 'POST',
+                    url: 'http://localhost:9000/usuario/modificar',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: JSON.stringify(user)
+                }
 
-            }).error(function (data) {
-                console.log("Error registro.");
-            });
-        }
-    }
+                $http(post).success(function (data) {
+                    console.log("Modificó");
+                    window.location.replace('/');
 
-    $scope.editarPerfil = function() {
-        if($scope.form.$valid) {
-            var post = {
-                method: 'POST',
-                url: 'http://localhost:9000/usuario/modificar',
-                headers: { 'Content-Type': 'application/json' },
-                data: JSON.stringify({ nombres: $scope.perfilNombres, apellidos: $scope.perfilApellidos, fechaNacimiento: $scope.perfilFechaNacimiento, sexo: $scope.perfilSexo,
-                    ciudad: $scope.perfilCiudad, celular: $scope.perfilCelular, correoElectronico: $scope.perfilCorreoElectronico, contrasenia: $scope.perfilContrasenia})
+                }).error(function (data) {
+                    console.log("Error registro.");
+                });
             }
-
-            $http(post).success(function (data) {
-                console.log("Modificó");
-                window.location.replace('/');
-
-            }).error(function (data) {
-                console.log("Error registro.");
-            });
         }
-    }
-}]);
+    }]);
 
 
 ruedapp.controller('recorridoController',[ '$scope','leafletData', function($scope,leafletData) {
