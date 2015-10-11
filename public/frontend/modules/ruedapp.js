@@ -1,4 +1,4 @@
-/**
+/*
  * Created by jasmo2 on 9/19/15.
  */
 var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies'])
@@ -21,11 +21,11 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
     /**/
 //Factories
     .factory('SessionFactory', ['$rootScope','$http','$cookies',
-        function ($rootScope,$http, $cookies) {
+        function ($rootScope, $http, $cookies) {
             var sessionFactory = {
                 create: function (credentials) {
                     this.cookie = $cookies.get('PLAY_SESSION');
-                    var userId = this.cookie.split("User=")[1];
+                    var userId = this.cookie ? this.cookie.split("User=")[1] : credentials.correoElectronico;
                     var authdata = Base64.encode(credentials.correoElectronico + ':' + credentials.contrasenia);
                     $rootScope.globals = {
                         'currentUser': {
@@ -39,24 +39,11 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 },
                 destroy: function () {
                     this.cookie = null;
-                    this.userId = null;
                     return null;
                 }
             };
 
-
-            //authFactory.destroy = function () {
-            //    $rootScope.globals = {};
-            //    $cookies.remove('globals');
-            //    $http.defaults.headers.common.Authorization = 'Basic ';
-            //};
-            //authFactory.isAuthenticated = function () {
-            //    return !!Session.userId;
-            //};
-
-
             return sessionFactory;
-
         }])
     .factory('AuthFactory', ['$http', 'SessionFactory',
         function ($http, SessionFactory){
@@ -64,11 +51,15 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 login: function (credentials) {
                     return $http
                         .post('http://localhost:9000/login', JSON.stringify(credentials))
-                        .then(function (res) {
+                        .success(function () {
                             console.log("Inició sesión");
                             SessionFactory.create(credentials);
                             return credentials;
-                        }, console.log("Error registro."));
+                        }).error(function (res) {
+                            console.log("Error login.");
+                            console.log("data: "+ res);
+                            return null;
+                        });
                 }
             };
             return authFactory;
@@ -92,14 +83,13 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
     .run(['$rootScope', '$location', '$cookies', '$http',
         function($rootScope, $location, $cookies, $http) {
             // keep user logged in after page refresh
-            var currentUser = $cookies.get('globals') || {};
-            if (currentUser != {}) {currentUser = JSON.parse(currentUser)}
-            $rootScope.globals= currentUser;
+            var globals = $cookies.get('globals');
+            $rootScope.globals = (globals ? JSON.parse(globals) : null) || {};
             if ($rootScope.globals.currentUser) {
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
             }
 
-            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            $rootScope.$on('$locationChangeStart', function () {
                 // redirect to login page if not logged in and trying to access a restricted page
                 var restrictedPage = $.inArray($location.path(), ['','/','/login','/register']) === -1;
                 var loggedIn = $rootScope.globals.currentUser;
