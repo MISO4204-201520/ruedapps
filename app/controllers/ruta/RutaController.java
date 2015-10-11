@@ -62,8 +62,37 @@ public class RutaController extends Controller {
         ruta.destino.nombre = postForm.get().destino.nombre;
 
         ruta.save();
-        return Results.created(Json.toJson(ruta));
+        return Results.created(Json.toJson(ruta.id));
     }
+
+
+    public Result SaveRutaRecorrido() {
+
+        Form<Ruta> postForm = Form.form(Ruta.class).bindFromRequest();
+
+        if (postForm.hasErrors()) {
+            return badRequest(postForm.errorsAsJson());
+        }
+
+        Ruta ruta = new Ruta();
+        ruta.origen = new Ubicacion();
+        ruta.origen.latitud = postForm.get().origen.latitud;
+        ruta.origen.longitud = postForm.get().origen.longitud;
+        ruta.origen.nombre = postForm.get().origen.nombre;
+
+        ruta.destino = new Ubicacion();
+        ruta.destino.latitud = postForm.get().destino.latitud;
+        ruta.destino.longitud = postForm.get().destino.longitud;
+        ruta.destino.nombre = postForm.get().destino.nombre;
+        ruta.save();
+
+        Recorrido recorrido = new Recorrido();
+        recorrido.ruta = ruta;
+        recorrido.save();
+
+        return Results.created(Json.toJson(recorrido.id));
+    }
+
 
 
     public Result SaveRecorrido() {

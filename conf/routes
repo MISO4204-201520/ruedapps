@@ -20,7 +20,7 @@ GET         /usuario/:id                         controllers.perfil.PerfilKernel
 # Routes Rutas
 POST        /ubicacion/crear/:id                 controllers.ruta.RutaController.SaveUbicacion(id: Long)
 POST        /ruta/crear                          controllers.ruta.RutaController.SaveRuta()
-POST        /recorrido/crear                     controllers.ruta.RutaController.SaveRecorrido()
+POST        /recorrido/crear                     controllers.ruta.RutaController.SaveRutaRecorrido()
 POST        /historico/crear                     controllers.ruta.RutaController.SaveHistoricoRecorrido()
 GET         /historico/:id                       controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
 GET         /historico/usuario/:id               controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
