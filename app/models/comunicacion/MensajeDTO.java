@@ -10,29 +10,7 @@ public class MensajeDTO {
     // Atributos
     // --------------------------------------------------------------------
 
-    private String to;
+    public String destinatario;
 
-    private String text;
-
-    /**
-     * Destinatario del mensaje
-     */
-    public String getTo() {
-        return to;
-    }
-
-    /**
-     * Texto del mensaje
-     */
-    public String getText() {
-        return text;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
+    public String mensaje;
 }

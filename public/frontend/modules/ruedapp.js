@@ -129,6 +129,12 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
             }
         )
             .when(
+            '/perfil',{
+                controller: 'perfilController',
+                templateUrl: 'assets/frontend/views/perfil/profile.html'
+            }
+        )
+            .when(
             '/ruta',{
                 controller: 'recorridoController',
                 templateUrl: 'assets/frontend/views/ruta/mapa.html'
@@ -136,14 +142,8 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         )
             .when(
             '/mensaje',{
-                controller: 'perfilController',
+                controller: 'mensajeController',
                 templateUrl: 'assets/frontend/views/comunicacion/mensaje.html'
-            }
-        )
-            .when(
-            '/perfil',{
-                controller: 'perfilController',
-                templateUrl: 'assets/frontend/views/perfil/profile.html'
             }
         )
             .otherwise({ redirectTo: '/'})

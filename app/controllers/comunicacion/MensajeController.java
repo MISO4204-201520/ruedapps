@@ -6,27 +6,27 @@ import models.perfil.Ciclista;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.comunicacion.mensaje;
+import play.mvc.Results;
 
 import java.util.Date;
 import java.util.List;
 
-/**
+//import views.html.comunicacion.mensaje;
+
+/*
  * Created by franciscoluisrv on 10/03/2015.
  */
 public class MensajeController extends Controller {
 
-    public Result MensajePost()
-    {
+    public Result MensajePost() {
         Form<MensajeDTO> postForm = Form.form(MensajeDTO.class).bindFromRequest();
-        String to = postForm.get().getTo();
-        String text = postForm.get().getText();
+        String to = postForm.get().destinatario;
+        String text = postForm.get().mensaje;
 
         Ciclista ciclistaFrom = Ciclista.findCiclista.byId(Long.parseLong(session("loggedUser")));
         List<Ciclista> ciclistaTo = Ciclista.findCiclista.where().eq("correoElectronico", to).findList();
 
-        if (ciclistaFrom != null && ciclistaTo != null && ciclistaTo.size() == 1)
-        {
+        if (ciclistaFrom != null && ciclistaTo != null && ciclistaTo.size() == 1) {
             // TODO: Enviar mensaje
 
             // Guardar mensaje
@@ -37,15 +37,13 @@ public class MensajeController extends Controller {
             nuevoMensaje.texto = text;
             nuevoMensaje.save();
 
-            return ok(mensaje.render("Mensaje enviado"));
-        }
-        else
-        {
-            return ok(mensaje.render("Usuario no encontrado"));
+            return Results.created("Mensaje enviado");
+        } else {
+            return Results.notFound("Usuario no encontrado");
         }
     }
 
     public Result Mensaje() {
-        return ok(mensaje.render(""));
+        return ok("");
     }
 }

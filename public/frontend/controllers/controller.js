@@ -1,4 +1,4 @@
-/**
+/*
  * Created by lina on 9/30/15.
  */
 
@@ -12,7 +12,7 @@ ruedapp.controller('perfilController',[ '$scope','$rootScope','$location', '$htt
         $scope.minDate = '1900/01/01';
         $scope.maxDate = today;
 
-        $scope.open = function($event) {
+        $scope.open = function() {
             $scope.status.opened = true;
         };
 
@@ -50,10 +50,9 @@ ruedapp.controller('perfilController',[ '$scope','$rootScope','$location', '$htt
         $scope.login = function() {
             var credentials = $scope.credentials;
             if($scope.form.$valid) {
-                AuthFactory.login(credentials).then(function (res) {
+                AuthFactory.login(credentials).then(function () {
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-
-                    //SessionFactory.create(res);
+                    window.location.replace('/');
                 }, function () {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
@@ -67,14 +66,15 @@ ruedapp.controller('perfilController',[ '$scope','$rootScope','$location', '$htt
                     url: 'http://localhost:9000/usuario/modificar',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(user)
-                }
+                };
 
-                $http(post).success(function (data) {
+                $http(post).success(function () {
                     console.log("Modificó");
                     window.location.replace('/');
 
                 }).error(function (data) {
                     console.log("Error registro.");
+                    console.log("data: "+ data);
                 });
             }
         }
@@ -90,7 +90,7 @@ ruedapp.controller('recorridoController',[ '$scope','leafletData', function($sco
             ], {
                 createMarker: function (i, wp) {
                     return L.marker(wp.latLng, {
-                        draggable: true,
+                        draggable: true
                     });
                 },
                 geocoder: L.Control.Geocoder.nominatim(),
@@ -110,3 +110,26 @@ ruedapp.controller('recorridoController',[ '$scope','leafletData', function($sco
     })
 
 }]);
+
+ruedapp.controller('mensajeController',[ '$scope', '$http', '$cookies',
+    function($scope, $http) {
+        $scope.enviarMensaje = function() {
+            if ($scope.form.$valid) {
+                var post = {
+                    method: 'POST',
+                    url: 'http://localhost:9000/mensaje',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: JSON.stringify($scope.mensajeInfo)
+                };
+
+                $http(post).success(function () {
+                    console.log("Mensaje enviado");
+                    window.location.replace('/');
+
+                }).error(function (data) {
+                    console.log("Error al enviar mensaje.");
+                    console.log("data: "+ data);
+                });
+            }
+        }
+    }]);

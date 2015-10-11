@@ -8,21 +8,18 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <p>Llene esta forma para enviar su mensaje.</p>
-            <form name="form" role="form" method="post">
-                <div class="form-group">
+            <form name="form" role="form" ng-controller = "mensajeController">
+                <div class="form-group" required>
                     <label for="destinatario">Para:</label>
-                    <input name="destinatario" ng-model="destinatario" type="email" class="form-control" id="destinatario" placeholder="Ingrese usuario">
+                    <input name="destinatario" ng-model="mensajeInfo.destinatario" type="email" class="form-control" id="destinatario" placeholder="Ingrese usuario">
                 </div>
-                <div class="form-group">
+                <div class="form-group" required>
                     <label for="mensaje">Mensaje:</label>
-                    <textarea name="mensaje" ng-model="mensaje" type="text" class="form-control" id="mensaje" placeholder="Ingrese mensaje"></textarea>
+                    <textarea name="mensaje" ng-model="mensajeInfo.mensaje" class="form-control" id="mensaje" placeholder="Ingrese mensaje"></textarea>
                 </div>
-                <button type="submit" class="btn btn-info center-block" ng-click="enviarMensaje()">Entrar</button>
+                <button type="submit" class="btn btn-info center-block" ng-click="enviarMensaje()">Enviar</button>
             </form>
             <br/>
-            <form method="get" action="#/">
-                <button type="submit" class="btn btn-primary center-block">Cancelar</button>
-            </form>
         </div>
         <div class="col-md-4"></div>
     </div>
