@@ -10,13 +10,12 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
-import play.libs.Json;
 import views.html.login;
 
 import java.util.List;
 
 
-/**
+/*
  * Created by Lina8a on 06/09/2015.
  */
 public class PerfilKernelController extends Controller {
@@ -27,13 +26,13 @@ public class PerfilKernelController extends Controller {
         String correoLogin = postForm.get().getCorreoElectronico();
         List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
 
-        if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia()))
-        {
+        if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia())) {
             session().put("loggedUser", String.valueOf(usuario.get(0).id));
             return ok("Bienvenido!");
         }
-
-        return Results.unauthorized();
+        else {
+            return Results.unauthorized("El usuario y la clave no coinciden");
+        }
     }
 
     public Result Login() {
