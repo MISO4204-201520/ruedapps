@@ -47,6 +47,7 @@ public class RegistroDTO {
 
     /**
      * Retorna el atributo nombres.
+     *
      * @return nombres
      */
     public String getNombres() {
@@ -55,7 +56,8 @@ public class RegistroDTO {
 
     /**
      * Aigna el valor del atributo nombres.
-     * @param nombres
+     *
+     * @param nombres Nuevo nombre
      */
     public void setNombres(String nombres) {
         this.nombres = nombres;
@@ -63,6 +65,7 @@ public class RegistroDTO {
 
     /**
      * Retorna el atributo apellidos.
+     *
      * @return apellidos
      */
     public String getApellidos() {
@@ -71,7 +74,8 @@ public class RegistroDTO {
 
     /**
      * Aigna el valor del atributo apellidos.
-     * @param apellidos
+     *
+     * @param apellidos Nuevo apellido
      */
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
@@ -79,6 +83,7 @@ public class RegistroDTO {
 
     /**
      * Retorna el atributo correo electronico.
+     *
      * @return correoElectronico
      */
     public String getCorreoElectronico() {
@@ -86,8 +91,9 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo correo electronico.
-     * @param correoElectronico
+     * Aigna el valor del atributo correo electrónico.
+     *
+     * @param correoElectronico Nuevo correo electrónico
      */
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
@@ -95,6 +101,7 @@ public class RegistroDTO {
 
     /**
      * Retorna el atributo contrasenia.
+     *
      * @return contrsenia
      */
     public String getContrasenia() {
@@ -102,8 +109,9 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo contrasenia.
-     * @param contrasenia
+     * Aigna el valor del atributo contraseña.
+     *
+     * @param contrasenia Nueva contraseña
      */
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
@@ -111,6 +119,7 @@ public class RegistroDTO {
 
     /**
      * Retorna el atributo ciudad
+     *
      * @return ciudad
      */
     public String getCiudad() {
@@ -119,7 +128,8 @@ public class RegistroDTO {
 
     /**
      * Aigna el valor del atributo ciudad.
-     * @param ciudad
+     *
+     * @param ciudad Nueva ciudad
      */
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
@@ -127,7 +137,8 @@ public class RegistroDTO {
 
     /**
      * Retorna el atributo celular.
-     * @return  celular
+     *
+     * @return celular
      */
     public String getCelular() {
         return celular;
@@ -135,7 +146,8 @@ public class RegistroDTO {
 
     /**
      * Aigna el valor del atributo celular.
-     * @param celular
+     *
+     * @param celular Nuevo celular
      */
     public void setCelular(String celular) {
         this.celular = celular;

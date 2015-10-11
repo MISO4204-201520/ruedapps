@@ -17,8 +17,8 @@ import java.util.Base64;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
-        name="dtype",
-        discriminatorType=DiscriminatorType.STRING
+        name = "dtype",
+        discriminatorType = DiscriminatorType.STRING
 )
 public abstract class Usuario extends Model {
 
@@ -80,16 +80,14 @@ public abstract class Usuario extends Model {
     /**
      * Asigna el valor del atributo contrasenia.
      */
-    public void SetHashedContrasenia(String contrasenia)
-    {
+    public void SetHashedContrasenia(String contrasenia) {
         this.contrasenia = Base64.getEncoder().encodeToString(getSha512(contrasenia));
     }
 
     /**
      * Verifica la contraseña del usuario.
      */
-    public boolean VerificaContrasenia(String contrasenia)
-    {
+    public boolean VerificaContrasenia(String contrasenia) {
         String hashContrasenia = Base64.getEncoder().encodeToString(this.getSha512(contrasenia));
         return hashContrasenia.equals(this.contrasenia);
     }
@@ -98,12 +96,11 @@ public abstract class Usuario extends Model {
     private byte[] getSha512(String contrasenia) {
         try {
             return MessageDigest.getInstance("SHA-512").digest(contrasenia.getBytes("UTF-8"));
-        }
-        catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Finder<Long,Usuario> find = new Finder<>(Usuario.class);
+    public static Finder<Long, Usuario> find = new Finder<>(Usuario.class);
 
 }

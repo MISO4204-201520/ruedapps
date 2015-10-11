@@ -55,5 +55,5 @@ public class Ciclista extends Usuario {
     @JsonIgnore
     public List<Mensaje> enviados;
 
-    public static Finder<Long,Ciclista> findCiclista = new Finder<>(Ciclista.class);
+    public static Finder<Long, Ciclista> findCiclista = new Finder<>(Ciclista.class);
 }

@@ -11,7 +11,7 @@ import java.util.List;
  * Entidad categoria de servicio de directorio.
  */
 @Entity
-public class Categoria extends Model{
+public class Categoria extends Model {
 
     // --------------------------------------------------------------------
     // Atributos

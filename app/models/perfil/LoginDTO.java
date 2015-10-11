@@ -27,6 +27,7 @@ public class LoginDTO {
 
     /**
      * Retorna el atributo correo electronico
+     *
      * @return correoElectronico
      */
     public String getCorreoElectronico() {
@@ -34,24 +35,27 @@ public class LoginDTO {
     }
 
     /**
-     * Aigna el valor del atributo correo electronico
-     * @param correoElectronico
+     * Asigna el valor del atributo correo electronico
+     *
+     * @param correoElectronico Nuevo correo
      */
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
     }
 
     /**
-     * Retorna el atributo contrasenia
-     * @return contrasenia
+     * Retorna el atributo contraseña
+     *
+     * @return contraseña
      */
     public String getContrasenia() {
         return contrasenia;
     }
 
     /**
-     * Aigna el valor del atributo contrasenia
-     * @param contrasenia
+     * Asigna el valor del atributo contraseña
+     *
+     * @param contrasenia Nueva contraseña
      */
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;

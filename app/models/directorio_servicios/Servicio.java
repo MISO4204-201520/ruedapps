@@ -4,8 +4,10 @@ import com.avaje.ebean.Model;
 import models.perfil.Proveedor;
 import play.data.validation.Constraints;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by Lina8a on 19/09/2015.

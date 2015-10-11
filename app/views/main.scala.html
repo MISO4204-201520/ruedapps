@@ -1,4 +1,4 @@
-@(title: String,moreScripts: Html)(content: Html)
+@(title: String, moreScripts: Html)(content: Html)
 
 <!DOCTYPE html>
 
@@ -9,7 +9,7 @@
         <script src="@routes.Assets.versioned("")" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
 
-        <!--Load angular dependencies-->
+            <!--Load angular dependencies-->
         <script src="@routes.Assets.versioned("javascripts/angular.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/angular-route.min.js")"></script>
 
@@ -17,11 +17,11 @@
     </head>
     <body ng-app="ruedapp">
         @content
-        <!--Bootstrap styling Below-->
+            <!--Bootstrap styling Below-->
         <script src="@routes.Assets.versioned("javascripts/jquery.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
 
-        <!--Load angular App-->
+            <!--Load angular App-->
         <script src="@routes.Assets.versioned("javascript/Angular/Modules/ruedapp.js")"></script>
         <script src="@routes.Assets.versioned("javascript/Angular/Controllers/controller.js")"></script>
     </body>

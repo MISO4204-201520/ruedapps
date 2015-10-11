@@ -2,7 +2,6 @@ package controllers.ruta;
 
 import com.avaje.ebean.Ebean;
 import models.perfil.Ciclista;
-import models.perfil.Usuario;
 import models.ruta.HistoricoRecorrido;
 import models.ruta.Recorrido;
 import models.ruta.Ruta;
@@ -12,20 +11,17 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
-import views.html.index;
 
 import java.util.List;
 
-/**
+/**\
  * Created by Juan on 9/12/2015.
  */
 public class RutaController extends Controller {
 
-    public Result SaveUbicacion(long id)
-    {
+    public Result SaveUbicacion(long id) {
         Recorrido recorrido = Ebean.find(Recorrido.class, id);
-        if (recorrido == null)
-        {
+        if (recorrido == null) {
             return Results.notFound("Recorrido no encontrado");
         }
 
@@ -47,8 +43,7 @@ public class RutaController extends Controller {
     }
 
 
-    public Result SaveRuta()
-    {
+    public Result SaveRuta() {
         Form<Ruta> postForm = Form.form(Ruta.class).bindFromRequest();
 
         if (postForm.hasErrors()) {
@@ -71,18 +66,15 @@ public class RutaController extends Controller {
     }
 
 
-    public Result SaveRecorrido()
-    {
+    public Result SaveRecorrido() {
         Form<Recorrido> postForm = Form.form(Recorrido.class).bindFromRequest();
 
-        if (postForm.hasErrors() || postForm.get().ruta == null)
-        {
+        if (postForm.hasErrors() || postForm.get().ruta == null) {
             return badRequest(postForm.errorsAsJson());
         }
 
         Ruta ruta = Ebean.find(Ruta.class, postForm.get().ruta.id);
-        if (ruta == null)
-        {
+        if (ruta == null) {
             return Results.notFound("Ruta no encontrada ");
         }
 
@@ -94,20 +86,17 @@ public class RutaController extends Controller {
     }
 
 
-    public Result SaveHistoricoRecorrido()
-    {
+    public Result SaveHistoricoRecorrido() {
         //session().put("loggedUser", "2");
 
         Form<HistoricoRecorrido> postForm = Form.form(HistoricoRecorrido.class).bindFromRequest();
 
-        if (postForm.hasErrors() || postForm.get().recorrido == null)
-        {
+        if (postForm.hasErrors() || postForm.get().recorrido == null) {
             return badRequest(postForm.errorsAsJson());
         }
 
         Recorrido recorrido = Ebean.find(Recorrido.class, postForm.get().recorrido.id);
-        if (recorrido == null)
-        {
+        if (recorrido == null) {
             return Results.notFound("Recorrido no encontrado");
         }
 
@@ -125,11 +114,9 @@ public class RutaController extends Controller {
         return Results.created(Json.toJson(historico));
     }
 
-    public Result ConsutaHistoricoPorId(long id)
-    {
+    public Result ConsutaHistoricoPorId(long id) {
         HistoricoRecorrido historico = Ebean.find(HistoricoRecorrido.class, id);
-        if (historico != null)
-        {
+        if (historico != null) {
             return ok(Json.toJson(historico));
         }
 
@@ -137,8 +124,7 @@ public class RutaController extends Controller {
     }
 
 
-    public Result ConsultarHistoricoPorUsusario(long id)
-    {
+    public Result ConsultarHistoricoPorUsusario(long id) {
         List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).findList();
         return ok(Json.toJson(historicoRecorridos));
     }

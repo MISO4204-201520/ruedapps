@@ -20,8 +20,7 @@ import java.util.List;
  */
 public class PerfilKernelController extends Controller {
 
-    public Result LoginPost()
-    {
+    public Result LoginPost() {
         Form<LoginDTO> postForm = Form.form(LoginDTO.class).bindFromRequest();
         String correoLogin = postForm.get().getCorreoElectronico();
         List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
@@ -29,8 +28,7 @@ public class PerfilKernelController extends Controller {
         if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia())) {
             session().put("loggedUser", String.valueOf(usuario.get(0).id));
             return ok("Bienvenido!");
-        }
-        else {
+        } else {
             return Results.unauthorized("El usuario y la clave no coinciden");
         }
     }
@@ -44,11 +42,9 @@ public class PerfilKernelController extends Controller {
         return ok(login.render("Adiós!"));
     }
 
-    public Result CrearUsuario()
-    {
+    public Result CrearUsuario() {
         Form<Ciclista> postForm = Form.form(Ciclista.class).bindFromRequest();
-        if (postForm.hasErrors())
-        {
+        if (postForm.hasErrors()) {
             return badRequest(postForm.errorsAsJson());
         }
 
@@ -60,11 +56,9 @@ public class PerfilKernelController extends Controller {
         return Results.created();
     }
 
-    public Result CrearProveedor()
-    {
+    public Result CrearProveedor() {
         Form<Proveedor> postForm = Form.form(Proveedor.class).bindFromRequest();
-        if (postForm.hasErrors())
-        {
+        if (postForm.hasErrors()) {
             return badRequest(postForm.errorsAsJson());
         }
 
@@ -78,8 +72,7 @@ public class PerfilKernelController extends Controller {
     }
 
 
-    public Result ActualizarUsuario()
-    {
+    public Result ActualizarUsuario() {
         Form<Ciclista> postForm = Form.form(Ciclista.class).bindFromRequest();
         if (postForm.hasErrors()) {
             return badRequest(postForm.errorsAsJson());
@@ -91,9 +84,7 @@ public class PerfilKernelController extends Controller {
                 Ciclista ciclista = (Ciclista) usuario.get(0);
                 SetUsuario(ciclista, postForm);
                 ciclista.update();
-            }
-            else
-            {
+            } else {
                 return Results.notFound();
             }
         }
@@ -101,20 +92,17 @@ public class PerfilKernelController extends Controller {
         return Results.created();
     }
 
-    public Result ConsultarUsuarioPorId(long id)
-    {
+    public Result ConsultarUsuarioPorId(long id) {
         Ciclista usuario = Ebean.find(Ciclista.class, id);
 
-        if (usuario != null)
-        {
+        if (usuario != null) {
             return ok(Json.toJson(usuario));
         }
 
         return Results.notFound();
     }
 
-    private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario)
-    {
+    private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario) {
         usuario.nombres = formUsuario.get().nombres;
         usuario.celular = formUsuario.get().celular;
         usuario.correoElectronico = formUsuario.get().correoElectronico;

@@ -12,7 +12,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("Proveedor")
-public class Proveedor extends Usuario  {
+public class Proveedor extends Usuario {
 
     // --------------------------------------------------------------------
     // Atributos
