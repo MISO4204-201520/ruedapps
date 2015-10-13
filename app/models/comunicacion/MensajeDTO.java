@@ -10,6 +10,8 @@ public class MensajeDTO {
     // Atributos
     // --------------------------------------------------------------------
 
+    public String remitente;
+
     public String destinatario;
 
     public String mensaje;

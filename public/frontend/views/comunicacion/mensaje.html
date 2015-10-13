@@ -5,10 +5,27 @@
     <br/>
     <br/>
     <div class="row">
-        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p>Aquí verá los mensajes enviados por otros ciclistas.</p>
+
+            <form name="frmRecibidos" role="form" ng-controller="mensajeController">
+                <button id="btnConectar" type="button" class="btn btn-info center-block" ng-click="conectar()">
+                    Conectar
+                </button>
+                <button id="btnDesconectar" type="button" class="btn btn-info center-block" ng-click="desconectar()"
+                        disabled>Desconectar
+                </button>
+            </form>
+            <br/>
+
+            <div class="form-group" required>
+                <textarea id="mensajesRecibidos" class="form-control" placeholder="Mensajes recibidos"></textarea>
+            </div>
+        </div>
         <div class="col-md-4">
             <p>Llene esta forma para enviar su mensaje.</p>
-            <form name="form" role="form" ng-controller = "mensajeController">
+
+            <form name="frmEnviar" role="form" ng-controller="mensajeController">
                 <div class="form-group" required>
                     <label for="destinatario">Para:</label>
                     <input name="destinatario" ng-model="mensajeInfo.destinatario" type="email" class="form-control" id="destinatario" placeholder="Ingrese usuario">
@@ -17,7 +34,9 @@
                     <label for="mensaje">Mensaje:</label>
                     <textarea name="mensaje" ng-model="mensajeInfo.mensaje" class="form-control" id="mensaje" placeholder="Ingrese mensaje"></textarea>
                 </div>
-                <button type="submit" class="btn btn-info center-block" ng-click="enviarMensaje()">Enviar</button>
+                <button id="btnEnviar" type="submit" class="btn btn-info center-block" ng-click="enviarMensaje()"
+                        disabled>Enviar
+                </button>
             </form>
             <br/>
         </div>

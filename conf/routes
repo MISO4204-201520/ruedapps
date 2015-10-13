@@ -36,3 +36,4 @@ POST        /categoria/eliminar                  controllers.directorio_servicio
 #Rutas Comunicacion
 GET         /mensaje                             controllers.comunicacion.MensajeController.Mensaje()
 POST        /mensaje                             controllers.comunicacion.MensajeController.MensajePost()
+GET        /mensajeSocket        controllers.comunicacion.MensajeController.MensajeSocket()

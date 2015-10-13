@@ -2,7 +2,7 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController',[ '$scope','$rootScope','$location', '$http', '$cookies', 'AUTH_EVENTS','AuthFactory',
+ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
     function($scope, $rootScope , $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
         /**
          * Definición datepicker
@@ -170,15 +170,15 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
             }).error(function (data) {
                 console.log("Error ubicacion/crear data: "+ data);
             });
-        }
+        };
 
         $scope.iniciarecorrido = function () {
 
-            leafletData.getMap('ruedappmap').then(function (map) {
+            leafletData.getMap('ruedappmap').then(function () {
 
                 var wayPoints = control.getWaypoints();
                 if (wayPoints.length < 2 || wayPoints[0].latLng == null || wayPoints[1].latLng == null) {
-                    alert('Debe seleccionar el punto de origen y destino antes de iniciar el recorrido.')
+                    alert('Debe seleccionar el punto de origen y destino antes de iniciar el recorrido.');
                     return;
                 }
 
@@ -254,25 +254,70 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
         }
     }]);
 
-ruedapp.controller('mensajeController',[ '$scope', '$http', '$cookies',
-    function($scope, $http) {
+ruedapp.controller('mensajeController', ['$scope', '$rootScope',
+    function ($scope, $rootScope) {
+        $scope.conectar = function () {
+            // Abrir socket
+            var websocket = new WebSocket("ws://localhost:9000/mensajeSocket");
+            websocket.onopen = function (evt) {
+                onOpen(evt)
+            };
+            websocket.onclose = function (evt) {
+                onClose(evt)
+            };
+            websocket.onmessage = function (evt) {
+                onMessage(evt)
+            };
+            websocket.onerror = function (evt) {
+                onError(evt)
+            };
+
+            // Todos los eventos que el socket atiende
+
+            function onOpen() {
+                console.log("CONNECTED");
+            }
+
+            function onClose() {
+                console.log("DISCONNECTED");
+            }
+
+            function onMessage(evt) {
+                console.log("MENSAJE: " + evt.data);
+
+                var dto = JSON.parse(evt.data);
+                var recibidos = $('#mensajesRecibidos');
+                recibidos.prop('value', recibidos.prop('value') + (dto.remitente + ": " + dto.mensaje + "\n"));
+            }
+
+            function onError(evt) {
+                console.log("ERROR: " + evt.data);
+            }
+
+            $rootScope.mensajeSocket = websocket;
+
+            $('#btnConectar').prop('disabled', true);
+            $('#btnDesconectar').prop('disabled', false);
+            $('#btnEnviar').prop('disabled', false);
+        };
+
+        $scope.desconectar = function () {
+            // Cerrar socket
+            $rootScope.mensajeSocket.close();
+
+            $('#btnConectar').prop('disabled', false);
+            $('#btnDesconectar').prop('disabled', true);
+            $('#btnEnviar').prop('disabled', true);
+        };
+
         $scope.enviarMensaje = function() {
-            if ($scope.form.$valid) {
-                var post = {
-                    method: 'POST',
-                    url: 'http://localhost:9000/mensaje',
-                    headers: { 'Content-Type': 'application/json' },
-                    data: JSON.stringify($scope.mensajeInfo)
-                };
+            if ($scope.frmEnviar.$valid) {
+                // Correo de usuario actual
+                $scope.mensajeInfo.remitente = $rootScope.globals.currentUser.userId;
 
-                $http(post).success(function () {
-                    console.log("Mensaje enviado");
-                    window.location.replace('/');
-
-                }).error(function (data) {
-                    console.log("Error al enviar mensaje.");
-                    console.log("data: "+ data);
-                });
+                // Mandar mensaje a socket
+                var dto = JSON.stringify($scope.mensajeInfo);
+                $rootScope.mensajeSocket.send(dto);
             }
         }
     }]);
