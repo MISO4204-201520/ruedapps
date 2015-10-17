@@ -6,7 +6,7 @@ import play.data.validation.Constraints;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 /**
@@ -28,13 +28,13 @@ public class UsoServicio extends Model {
     /**
      * Representa al ciclista que solicitó el servicio.
      */
-    @OneToOne
+    @ManyToOne
     public Ciclista ciclista;
 
     /**
      * Representa el servicio solicitado por el ciclista.
      */
-    @OneToOne
+    @ManyToOne
     public Servicio servicio;
 
     /**

@@ -80,14 +80,14 @@ public abstract class Usuario extends Model {
     /**
      * Asigna el valor del atributo contrasenia.
      */
-    public void SetHashedContrasenia(String contrasenia) {
+    public void hashContrasenia(String contrasenia) {
         this.contrasenia = Base64.getEncoder().encodeToString(getSha512(contrasenia));
     }
 
     /**
      * Verifica la contraseña del usuario.
      */
-    public boolean VerificaContrasenia(String contrasenia) {
+    public boolean verificaContrasenia(String contrasenia) {
         String hashContrasenia = Base64.getEncoder().encodeToString(this.getSha512(contrasenia));
         return hashContrasenia.equals(this.contrasenia);
     }

@@ -25,7 +25,7 @@ public class PerfilKernelController extends Controller {
         String correoLogin = postForm.get().getCorreoElectronico();
         List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
 
-        if (usuario != null && usuario.size() > 0 && usuario.get(0).VerificaContrasenia(postForm.get().getContrasenia())) {
+        if (usuario != null && usuario.size() > 0 && usuario.get(0).verificaContrasenia(postForm.get().getContrasenia())) {
             session().put("loggedUser", String.valueOf(usuario.get(0).id));
             return ok("Bienvenido!");
         } else {
@@ -108,7 +108,7 @@ public class PerfilKernelController extends Controller {
         usuario.correoElectronico = formUsuario.get().correoElectronico;
         usuario.apellidos = formUsuario.get().apellidos;
         usuario.ciudad = formUsuario.get().ciudad;
-        usuario.SetHashedContrasenia(formUsuario.get().contrasenia);
+        usuario.hashContrasenia(formUsuario.get().contrasenia);
     }
 
 }

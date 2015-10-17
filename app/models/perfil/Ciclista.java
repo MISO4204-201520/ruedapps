@@ -37,7 +37,7 @@ public class Ciclista extends Usuario {
     /*
      * Representa los recorridos que ha hecho el usuario
      */
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ciclista", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     public List<HistoricoRecorrido> historicoRecorridos;
 
