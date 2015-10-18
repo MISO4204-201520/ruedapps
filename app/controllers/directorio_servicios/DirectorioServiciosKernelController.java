@@ -25,9 +25,8 @@ public class DirectorioServiciosKernelController extends Controller {
         return ok(toJson(categorias));
     }
 
-    public Result retornarServiciosPorCategoria() {
-        Form<Categoria> form = Form.form(Categoria.class).bindFromRequest();
-        Categoria categoria = Ebean.find(Categoria.class, form.get().id);
+    public Result retornarServiciosPorCategoria(long idCategoria) {
+        Categoria categoria = Ebean.find(Categoria.class, idCategoria);
         List<Servicio> servicios = new ArrayList<>();
         if (categoria != null) {
             servicios = Ebean.find(Servicio.class).where().eq("categoria", categoria).findList();
@@ -48,7 +47,7 @@ public class DirectorioServiciosKernelController extends Controller {
         return created();
     }
 
-    public Result registrarServicio() {
+    public Result registrarServicio(long idCategoria) {
         Form<Servicio> form = Form.form(Servicio.class).bindFromRequest();
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());
@@ -66,13 +65,14 @@ public class DirectorioServiciosKernelController extends Controller {
             Usuario usuario = Usuario.find.byId(Long.valueOf(usuarioLogueado));
 
             // Valida que el usuario exista y que sea un proveedor
-            if (usuario != null && usuario instanceof Proveedor) {
+            /*if (usuario != null && usuario instanceof Proveedor) {
                 servicio.proveedor = (Proveedor) usuario;
             } else {
                 return badRequest("No existe un proveedor con id " + usuarioLogueado);
-            }
+            }*/
 
-            Categoria categoria = Ebean.find(Categoria.class, form.get().categoria.id);
+            //Categoria categoria = Ebean.find(Categoria.class, form.get().categoria.id);
+            Categoria categoria = Ebean.find(Categoria.class, idCategoria);
             if (categoria != null) {
                 servicio.categoria = categoria;
             } else {

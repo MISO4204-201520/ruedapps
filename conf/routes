@@ -3,37 +3,37 @@
 # ~~~~
 
 # Home page
-GET         /                                    controllers.Application.index()
+GET         /                                                   controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                                       controllers.Assets.versioned(path="/public", file: Asset)
 
 # Rutas perfil
-GET         /login                               controllers.perfil.PerfilKernelController.Login()
-GET         /logout                              controllers.perfil.PerfilKernelController.LogOut()
-POST        /login                               controllers.perfil.PerfilKernelController.LoginPost()
-POST        /usuario/crear                       controllers.perfil.PerfilKernelController.CrearUsuario()
-POST        /proveedor/crear                     controllers.perfil.PerfilKernelController.CrearProveedor()
-POST        /usuario/modificar                   controllers.perfil.PerfilKernelController.ActualizarUsuario()
-GET         /usuario/:id                         controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
+GET         /login                                              controllers.perfil.PerfilKernelController.Login()
+GET         /logout                                             controllers.perfil.PerfilKernelController.LogOut()
+POST        /login                                              controllers.perfil.PerfilKernelController.LoginPost()
+POST        /usuario/crear                                      controllers.perfil.PerfilKernelController.CrearUsuario()
+POST        /proveedor/crear                                    controllers.perfil.PerfilKernelController.CrearProveedor()
+POST        /usuario/modificar                                  controllers.perfil.PerfilKernelController.ActualizarUsuario()
+GET         /usuario/:id                                        controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
 
 # Routes Rutas
-POST        /ubicacion/crear/:id                 controllers.ruta.RutaController.SaveUbicacion(id: Long)
-POST        /ruta/crear                          controllers.ruta.RutaController.SaveRuta()
-POST        /recorrido/crear                     controllers.ruta.RutaController.SaveRutaRecorrido()
-POST        /historico/crear                     controllers.ruta.RutaController.SaveHistoricoRecorrido()
-GET         /historico/:id                       controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
-GET         /historico/usuario/:id               controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
+POST        /ubicacion/crear/:id                                controllers.ruta.RutaController.SaveUbicacion(id: Long)
+POST        /ruta/crear                                         controllers.ruta.RutaController.SaveRuta()
+POST        /recorrido/crear                                    controllers.ruta.RutaController.SaveRutaRecorrido()
+POST        /historico/crear                                    controllers.ruta.RutaController.SaveHistoricoRecorrido()
+GET         /historico/:id                                      controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
+GET         /historico/usuario/:id                              controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
 
 # Rutas Categoria
-GET         /categoria/categorias                controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
-GET         /categoria/servicios                 controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria()
-POST        /categoria/registrar                 controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
-POST        /categoria/servicio/registrar        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio()
-POST        /categoria/editar                    controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio()
-POST        /categoria/eliminar                  controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio()
+GET         /categoria/categorias                               controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
+GET         /categoria/servicios/:idCategoria                   controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(idCategoria: Long)
+POST        /categoria/registrar                                controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
+POST        /categoria/servicio/registrar/:idCategoria          controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio(idCategoria: Long)
+POST        /categoria/editar                                   controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio()
+POST        /categoria/eliminar                                 controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio()
 
 #Rutas Comunicacion
-GET         /mensaje                             controllers.comunicacion.MensajeController.Mensaje()
-POST        /mensaje                             controllers.comunicacion.MensajeController.MensajePost()
-GET        /mensajeSocket        controllers.comunicacion.MensajeController.MensajeSocket()
+GET         /mensaje                                            controllers.comunicacion.MensajeController.Mensaje()
+POST        /mensaje                                            controllers.comunicacion.MensajeController.MensajePost()
+GET         /mensajeSocket                                      controllers.comunicacion.MensajeController.MensajeSocket()

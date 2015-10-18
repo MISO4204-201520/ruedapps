@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="row text-center">
+        <h1>Registrar Categoría</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form name="form" role="form" ng-controller="directorioServiciosController">
+                <div class="form-group" required>
+                    <label for="nombre">Nombre:</label>
+                    <input name="nombre" ng-model="categoria.nombre" class="form-control" id="nombre">
+                </div>
+                <div class="form-group" required>
+                    <label for="descripcion">Descripción:</label>
+                    <input name="descripcion" ng-model="categoria.descripcion" class="form-control" id="descripcion">
+                </div>
+                <button type="submit" class="btn btn-info center-block" ng-click="registrarCategoria()">Registrar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

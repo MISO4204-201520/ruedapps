@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <div class="row text-center">
+        <h1>Servicios</h1>
+    </div>
+    <div class="row">
+        <form name="form" role="form" ng-controller="directorioServiciosController"
+              ng-init="retornarServiciosPorCategoria()">
+            <output>{{categoriaSeleccionada.nombre}}</output>
+            <div class="servicio" ng-repeat="servicio in serviciosPorCategoria">
+                <a href="" ng-model="collapsed" ng-click="collapsed = !collapsed">
+                    <h3>- {{servicio.nombre}}</h3>
+                </a>
+
+                <div ng-show="collapsed">
+                    <p style="text-indent: 1em;"><strong>Descripción: {{servicio.descripcion}}</strong></p>
+                    <p style="text-indent: 1em;"><strong>Horario: {{servicio.horario}}</strong></p>
+                    <p style="text-indent: 1em;"><strong>Precio: {{servicio.precio}}</strong></p>
+                    <p style="text-indent: 1em;"><strong>Teléfono: {{servicio.telefono}}</strong></p>
+                    <p style="text-indent: 1em;"><strong>Domicilios: {{servicio.domicilios}}</strong></p>
+                </div>
+            </div>
+
+        </form>
+        <form method="get" action="#/categoria/servicios/registrarServicio">
+            <button class="btn btn-info center-block">Adicionar Servicio</button>
+        </form>
+        <br/>
+        <form method="get" action="#/categorias">
+            <button type="submit" class="btn btn-primary center-block">Cancelar</button>
+        </form>
+    </div>
+</div>

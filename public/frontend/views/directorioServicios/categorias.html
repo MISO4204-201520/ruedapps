@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="row text-center">
+        <h1>Categorías</h1>
+    </div>
+    <div class="row">
+        <form name="form" role="form" ng-controller="directorioServiciosController" ng-init="retornarCategorias()">
+            <div class="categoria" ng-repeat="categoria in categorias">
+                <a href="" ng-model="collapsed" ng-click="collapsed = !collapsed">
+                    <h3>- {{categoria.nombre}}</h3>
+                </a>
+
+                <div ng-show="collapsed">
+                    <table>
+                        <tr>
+                            <td>
+                                <p style="text-indent: 1em;"><strong>{{categoria.descripcion}}</strong></p>
+                            </td>
+                            <td>
+                                <p style="text-indent: 1em;">
+                                    <a href="#/categoria/servicios" ng-click="seleccionarCategoria(categoria)">
+                                        Ver Servicios
+                                    </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+        <form method="get" action="#/">
+            <button type="submit" class="btn btn-primary center-block">Regresar</button>
+        </form>
+    </div>
+</div>

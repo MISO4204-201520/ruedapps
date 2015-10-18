@@ -146,5 +146,29 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 templateUrl: 'assets/frontend/views/comunicacion/mensaje.html'
             }
         )
+            .when(
+            '/registrarCategoria',{
+                controller: 'directorioServiciosController',
+                templateUrl: 'assets/frontend/views/directorioServicios/registrarCategoria.html'
+            }
+        )
+            .when(
+            '/categorias',{
+                controller: 'directorioServiciosController',
+                templateUrl: 'assets/frontend/views/directorioServicios/categorias.html'
+            }
+        )
+            .when(
+            '/categoria/servicios',{
+                controller: 'directorioServiciosController',
+                templateUrl: 'assets/frontend/views/directorioServicios/serviciosPorCategoria.html'
+            }
+        )
+            .when(
+            '/categoria/servicios/registrarServicio', {
+                controller: 'directorioServiciosController',
+                templateUrl: 'assets/frontend/views/directorioServicios/registrarServicio.html'
+            }
+        )
             .otherwise({ redirectTo: '/'})
     }]);

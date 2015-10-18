@@ -40,7 +40,7 @@ public class Categoria extends Model {
     /**
      * Representa la lista de servicios que tiene una categoria.
      */
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public List<Servicio> servicios;
+    /*@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Servicio> servicios;*/
 
 }
