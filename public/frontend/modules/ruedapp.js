@@ -60,6 +60,20 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                             console.log("data: "+ res);
                             return null;
                         });
+                },
+
+                logout: function() {
+                    return $http.get('/logout')
+                        .success(function() {
+                            console.log("Cerrar sesión");
+                            SessionFactory.destroy();
+                            return null;
+                        })
+                        .error(function(res) {
+                            console.log("Error logout.");
+                            console.log("data: "+ res);
+                            return null;
+                        })
                 }
             };
             return authFactory;
@@ -85,8 +99,9 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
             // keep user logged in after page refresh
             var globals = $cookies.get('globals');
             $rootScope.globals = (globals ? JSON.parse(globals) : null) || {};
+
             if ($rootScope.globals.currentUser) {
-                $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
             }
 
             $rootScope.$on('$locationChangeStart', function () {

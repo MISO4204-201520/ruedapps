@@ -51,12 +51,26 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
             var credentials = $scope.credentials;
             if($scope.form.$valid) {
                 AuthFactory.login(credentials).then(function () {
+                    $rootScope.loggedIn = true;
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                    window.location.replace('/');
+                    window.location.replace('#/ruta');
                 }, function () {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
             }
+        };
+
+        $rootScope.logout = function() {
+            AuthFactory.logout.then(function () {
+                $rootScope.$apply(function(){
+                    $rootScope.loggedIn = false;
+                })
+
+                $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+                window.location.replace('/');
+            }, function () {
+                console.error("Error logout.");
+            });
         };
 
         $scope.editarPerfil = function() {

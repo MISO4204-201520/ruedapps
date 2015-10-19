@@ -14,7 +14,34 @@
     </head>
         <!--Do don't style this page style the subpages exteded by angular-->
     <body ng-app="ruedapp">
+
+        <nav class="navbar navbar-default navbar-fixed-top" ng-show="loggedIn">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/ruta">Ruedapps {{loggedIn}}</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/ruta">Mapa</a></li>
+                                <li><a href="#">Directorio</a></li>
+                                <li><a href="#/ruta/hist">Histórico</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#/mensaje">Mensajería</a></li>
+                                <li><a href="#/perfil">Mi Perfil</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><button ng-click="logout()">Logout</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div ng-view>
+
 
         </div>
 
