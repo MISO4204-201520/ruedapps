@@ -11,14 +11,23 @@ import play.mvc.Results;
 import play.mvc.WebSocket;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
  * Created by franciscoluisrv on 10/03/2015.
  */
 public class MensajeController extends Controller {
+    private static Map<String, WebSocket.Out<JsonNode>> conectados = new HashMap<>();
+
     public WebSocket<JsonNode> MensajeSocket() {
-        return WebSocket.whenReady((in, out) -> {
+        final String user = session().get("loggedUser");
+
+        return WebSocket.whenReady((WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) -> {
+            // Agregar canal de salida a listado de usuarios conectados
+            conectados.put(user, out);
+
             // Recibir mensaje desde forma Angular
             in.onMessage(node -> {
                 // Crear mensaje desde nodo Json
@@ -28,13 +37,19 @@ public class MensajeController extends Controller {
                     // Guardar mensaje enviado
                     mensaje.save();
 
-                    // Reenviar mensaje que llegó
-                    out.write(node);
+                    // Encontrar canal de salida del usuario conectado
+                    WebSocket.Out<JsonNode> conectado = conectados.get(String.valueOf(mensaje.destinatario.id));
+
+                    // Enviar mensaje
+                    conectado.write(node);
                 }
             });
 
             // Registrar cierre de socket
-            in.onClose(() -> System.out.println("Cerrado mensaje socket"));
+            in.onClose(() -> {
+                conectados.remove(user);
+                System.out.println("Cerrado mensaje socket");
+            });
         });
     }
 
@@ -69,7 +84,6 @@ public class MensajeController extends Controller {
 
         return nuevoMensaje;
     }
-
 
     private Ciclista BuscarCiclistaPorCorreo(String correo) {
         List<Ciclista> ciclistas = Ciclista.findCiclista.where().eq("correoElectronico", correo).findList();
