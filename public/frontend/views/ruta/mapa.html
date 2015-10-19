@@ -1,4 +1,3 @@
-<div class="container-fluid">
 <style>
     html, body {
         margin: 0;
@@ -6,13 +5,29 @@
         height: 100%;
     }
     #ruedappmap {
-        float: left;
-        margin: 0;
-        width: 100%;
-        height: 100%;
+        position: absolute;
+        top: 0px;
+        bottom: 35px;
+        width:100%;
+    }
+
+    body {
+        margin:0;
+    }
+
+    .footer {
+        height: 35px;
+        position: absolute;
+        bottom: 0;
+        width:100%;
     }
 </style>
-    <leaflet id="ruedappmap" defaults="defaults" height="500px" width="100%"></leaflet>
+<leaflet id="ruedappmap" defaults="defaults"></leaflet>
+<div class="container-fluid footer" ng-init="loadmap()">
     <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="iniciarecorrido()">Iniciar recorrido</button>
-    <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Guardar Hist&oacute;rico</button>
+    <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar recorrido</button>
+    <form class="ruedapps-inline-block" method="get" action="#/ruta/hist">
+        <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="">Consulta Hist&oacute;rico</button>
+    </form>
 </div>
+

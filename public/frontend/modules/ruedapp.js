@@ -50,7 +50,7 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
             var authFactory = {
                 login: function (credentials) {
                     return $http
-                        .post('http://localhost:9000/login', JSON.stringify(credentials))
+                        .post('/login', JSON.stringify(credentials))
                         .success(function () {
                             console.log("Inició sesión");
                             SessionFactory.create(credentials);
@@ -138,6 +138,12 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
             '/ruta',{
                 controller: 'recorridoController',
                 templateUrl: 'assets/frontend/views/ruta/mapa.html'
+            }
+        )
+            .when(
+            '/ruta/hist',{
+                controller: 'recorridoController',
+                templateUrl: 'assets/frontend/views/ruta/historico.html'
             }
         )
             .when(

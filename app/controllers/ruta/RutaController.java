@@ -12,6 +12,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import java.util.Date;
 import java.util.List;
 
 /**\
@@ -134,7 +135,7 @@ public class RutaController extends Controller {
 
         HistoricoRecorrido historico = new HistoricoRecorrido();
         historico.duracion = postForm.get().duracion;
-        historico.fecha = postForm.get().fecha;
+        historico.fecha = new Date();
         historico.recorrido = recorrido;
         historico.ciclista = usuario;
 
@@ -154,6 +155,12 @@ public class RutaController extends Controller {
 
 
     public Result ConsultarHistoricoPorUsusario(long id) {
+
+        if (id == 0)
+        {
+            id = Long.valueOf(session().get("loggedUser"));
+        }
+
         List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).findList();
         return ok(Json.toJson(historicoRecorridos));
     }

@@ -1,0 +1,26 @@
+<div class="container-fluid" ng-init="consultahistorico()">
+    <div class="row text-center">
+        <h1>Mis Recorridos</h1>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Duración (Min)</th>
+            <th>Ruta Origen</th>
+            <th>Ruta Destino</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in historicoUsuario">
+            <td>{{row.fecha | date:'medium'}}</td>
+            <td>{{row.duracion}}</td>
+            <td>{{row.recorrido.ruta.origen.nombre + ' (Lt:' + row.recorrido.ruta.origen.latitud + ') (Lg:' + row.recorrido.ruta.origen.longitud + ')' }}</td>
+            <td>{{row.recorrido.ruta.destino.nombre + ' (Lt:' + row.recorrido.ruta.destino.latitud + ') (Lg:' + row.recorrido.ruta.destino.longitud + ')'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <form class="ruedapps-inline-block" method="get" action="#/ruta/">
+        <button class="btn btn-default">Regresar</button>
+    </form>
+</div>

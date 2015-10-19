@@ -91,54 +91,57 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
         var inicioRecorrido;
         $scope.hideHistorico = true;
 
-        leafletData.getMap('ruedappmap').then(function (map) {
+        $scope.loadmap = function () {
 
-            map.locate({setView: true, maxZoom: 16});
-            map.on('locationfound', onLocationFound);
+            leafletData.getMap('ruedappmap').then(function (map) {
 
-            control = L.Routing.control({
-                plan: L.Routing.plan([], {
-                    createMarker: function (i, wp) {
-                        return L.marker(wp.latLng, {
-                            draggable: true
-                        });
-                    },
-                    geocoder: L.Control.Geocoder.nominatim(),
-                    routeWhileDragging: true
-                }),
-                routeWhileDragging: true,
-                routeDragTimeout: 250,
-                showAlternatives: true,
-                altLineOptions: {
-                    styles: [
-                        {color: 'black', opacity: 0.15, weight: 9},
-                        {color: 'white', opacity: 0.8, weight: 6},
-                        {color: 'blue', opacity: 0.5, weight: 2}
-                    ]
-                }
-            }).addTo(map);
+                map.locate({setView: true, maxZoom: 16});
+                map.on('locationfound', onLocationFound);
 
-            map.on('click', function (e) {
-                var container = L.DomUtil.create('div'),
-                    startBtn = createButton('Punto de origen', container),
-                    destBtn = createButton('Punto de destino', container);
+                control = L.Routing.control({
+                    plan: L.Routing.plan([], {
+                        createMarker: function (i, wp) {
+                            return L.marker(wp.latLng, {
+                                draggable: true
+                            });
+                        },
+                        geocoder: L.Control.Geocoder.nominatim(),
+                        routeWhileDragging: true
+                    }),
+                    routeWhileDragging: true,
+                    routeDragTimeout: 250,
+                    showAlternatives: true,
+                    altLineOptions: {
+                        styles: [
+                            {color: 'black', opacity: 0.15, weight: 9},
+                            {color: 'white', opacity: 0.8, weight: 6},
+                            {color: 'blue', opacity: 0.5, weight: 2}
+                        ]
+                    }
+                }).addTo(map);
 
-                L.popup()
-                    .setContent(container)
-                    .setLatLng(e.latlng)
-                    .openOn(map);
+                map.on('click', function (e) {
+                    var container = L.DomUtil.create('div'),
+                        startBtn = createButton('Punto de origen', container),
+                        destBtn = createButton('Punto de destino', container);
 
-                L.DomEvent.on(startBtn, 'click', function () {
-                    control.spliceWaypoints(0, 1, e.latlng);
-                    map.closePopup();
-                });
+                    L.popup()
+                        .setContent(container)
+                        .setLatLng(e.latlng)
+                        .openOn(map);
 
-                L.DomEvent.on(destBtn, 'click', function () {
-                    control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
-                    map.closePopup();
+                    L.DomEvent.on(startBtn, 'click', function () {
+                        control.spliceWaypoints(0, 1, e.latlng);
+                        map.closePopup();
+                    });
+
+                    L.DomEvent.on(destBtn, 'click', function () {
+                        control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+                        map.closePopup();
+                    });
                 });
             });
-        });
+        };
 
         $scope.guardahistorico = function () {
 
@@ -169,6 +172,22 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
                 $scope.hideHistorico = true;
             }).error(function (data) {
                 console.log("Error ubicacion/crear data: "+ data);
+            });
+        };
+
+        $scope.consultahistorico = function() {
+
+            var post = {
+                method: 'get',
+                url: '/historico/usuario/0',
+                headers: {'Content-Type': 'application/json'},
+            };
+
+            $http(post).success(function (data) {
+                console.log("consulta ok");
+                $scope.historicoUsuario = data;
+            }).error(function (data) {
+                console.log("Error consultahistorico : " + data);
             });
         };
 
