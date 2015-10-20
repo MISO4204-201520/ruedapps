@@ -60,12 +60,11 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
             }
         };
 
-        $rootScope.logout = function() {
+        $scope.logout = function() {
             AuthFactory.logout.then(function () {
                 $rootScope.$apply(function(){
                     $rootScope.loggedIn = false;
                 })
-
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
                 window.location.replace('/');
             }, function () {

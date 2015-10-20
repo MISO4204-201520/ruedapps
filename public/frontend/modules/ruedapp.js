@@ -12,6 +12,7 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         notAuthenticated: 'auth-not-authenticated',
         notAuthorized: 'auth-not-authorized'
     })
+    .constant('ALLOW_ROUTES', ['','/','/login','/register'])
 /**
 
  */
@@ -39,6 +40,12 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 },
                 destroy: function () {
                     this.cookie = null;
+                    $rootScope.globals = {
+                        'currentUser': {
+                            'userId': null,
+                            'authdata': null
+                        }
+                    };
                     return null;
                 }
             };
@@ -75,7 +82,7 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                             return null;
                         })
                 }
-            };
+            }
             return authFactory;
         }])
     .factory('AuthInterceptor', ['$rootScope','$q', 'AUTH_EVENTS',
@@ -94,8 +101,8 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         }])
     /**/
 //Run
-    .run(['$rootScope', '$location', '$cookies', '$http',
-        function($rootScope, $location, $cookies, $http) {
+    .run(['$rootScope', '$location', '$cookies', '$http','ALLOW_ROUTES',
+        function($rootScope, $location, $cookies, $http,ALLOW_ROUTES) {
             // keep user logged in after page refresh
             var globals = $cookies.get('globals');
             $rootScope.globals = (globals ? JSON.parse(globals) : null) || {};
@@ -106,7 +113,7 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
 
             $rootScope.$on('$locationChangeStart', function () {
                 // redirect to login page if not logged in and trying to access a restricted page
-                var restrictedPage = $.inArray($location.path(), ['','/','/login','/register']) === -1;
+                var restrictedPage = $.inArray($location.path(),ALLOW_ROUTES) === -1;
                 var loggedIn = $rootScope.globals.currentUser;
                 if (restrictedPage && !loggedIn) {
                     $location.path('/login');
