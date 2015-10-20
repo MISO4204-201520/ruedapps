@@ -74,11 +74,12 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
         $scope.editarPerfil = function() {
             if($scope.form.$valid) {
+                var userInfo = $scope.userInfo;
                 var post = {
                     method: 'POST',
                     url: 'http://localhost:9000/usuario/modificar',
                     headers: { 'Content-Type': 'application/json' },
-                    data: JSON.stringify(user)
+                    data: JSON.stringify(userInfo)
                 };
 
                 $http(post).success(function () {

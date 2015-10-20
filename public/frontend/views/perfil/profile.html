@@ -10,16 +10,16 @@
             <form name="form" role="form" ng-controller = "perfilController">
                 <div class="form-group" required>
                     <label for="nombres">Nombres:</label>
-                    <input name="nombres" ng-model="perfilNombres" class="form-control" id="nombres" placeholder="eg. Juan">
+                    <input name="nombres" ng-model="userInfo.nombres" class="form-control" id="nombres" placeholder="eg. Juan">
                 </div>
                 <div class="form-group" required>
                     <label for="apellidos">Apellidos:</label>
-                    <input name="apellidos" ng-model="perfilApellidos" class="form-control" id="apellidos" placeholder="eg. Casas">
+                    <input name="apellidos" ng-model="userInfo.apellidos" class="form-control" id="apellidos" placeholder="eg. Casas">
                 </div>
                 <div class="form-group" required>
                     <label for="fechaNacimiento">Fecha de nacimiento:</label>
                     <p class="input-group">
-                        <input name="fechaNacimiento" ng-model="perfilFechaNacimiento" type="text" class="form-control" is-open="status.opened"
+                        <input name="fechaNacimiento" ng-model="userInfo.fechaNacimiento" type="text" class="form-control" is-open="status.opened"
                                datepicker-options="dateOptions" uib-datepicker-popup="yyyy/MM/dd" id="fechaNacimiento" min-date="minDate" max-date="maxDate"
                                ng-required="true" close-text="Close" placeholder="eg. 1990/01/01" />
                         <span class="input-group-btn">
@@ -29,14 +29,14 @@
                 </div>
                 <div class="form-group" required>
                     <label for="sexo">Sexo:</label>
-                    <select name="sexo" ng-model="perfilSexo" class="form-control" id="sexo" placeholder="eg. Masculino">
+                    <select name="sexo" ng-model="userInfo.sexo" class="form-control" id="sexo" placeholder="eg. Masculino">
                         <option value="F">Femenino</option>
                         <option value="M" selected>Masculino</option>
                     </select>
                 </div>
                 <div class="form-group" required>
                     <label for="ciudad">Ciudad:</label>
-                    <select name="ciudad" ng-model="perfilCiudad" class="form-control" id="ciudad" placeholder="eg. Bogotá">
+                    <select name="ciudad" ng-model="userInfo.ciudad" class="form-control" id="ciudad" placeholder="eg. Bogotá">
                         <option>Armenia</option>
                         <option value="Bogotá" selected="selected">Bogotá</option>
                         <option>Cali</option>
@@ -46,19 +46,19 @@
                 </div>
                 <div class="form-group" required>
                     <label for="celular">Celular:</label>
-                    <input name="celular" ng-model="perfilCelular" class="form-control" id="celular" placeholder="eg. 3002555556">
+                    <input name="celular" ng-model="userInfo.celular" class="form-control" id="celular" placeholder="eg. 3002555556">
                 </div>
                 <div class="form-group" required>
                     <label for="correoElectronico">Correo electrónico:</label>
-                    <input name="correoElectronico" ng-model="perfilCorreoElectronico" type="email" class="form-control" id="correoElectronico" placeholder="eg. usuario@ejemplo.com">
+                    <input name="correoElectronico" ng-model="userInfo.correoElectronico" type="email" class="form-control" id="correoElectronico" placeholder="eg. usuario@ejemplo.com">
                 </div>
                 <div class="form-group" required>
                     <label for="contrasenia">Nueva contraseña:</label>
-                    <input name="contrasenia" ng-model="perfilContrasenia" type="password" class="form-control" id="contrasenia" placeholder="eg. *********">
+                    <input name="contrasenia" ng-model="userInfo.contrasenia" type="password" class="form-control" id="contrasenia" placeholder="eg. *********">
                 </div>
                 <div class="form-group" required>
                     <label for="confirmarContrasenia">Confirmar nueva contraseña:</label>
-                    <input name="confirmarContrasenia" ng-model="perfilConfirmarContrasenia" type="password" class="form-control" id="confirmarContrasenia" placeholder="eg. *********">
+                    <input name="confirmarContrasenia" ng-model="userInfo.confirmarContrasenia" type="password" class="form-control" id="confirmarContrasenia" placeholder="eg. *********">
                 </div>
                 <button type="submit" class="btn btn-info center-block" ng-click="editarPerfil()">Modificar</button>
             </form>
