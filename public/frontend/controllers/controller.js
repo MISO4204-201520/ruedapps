@@ -30,7 +30,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 var userInfo = $scope.userInfo;
                 var post = {
                     method: 'POST',
-                    url: 'http://localhost:9000/usuario/crear ',
+                    url: '/usuario/crear ',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(userInfo)
                 };
@@ -77,7 +77,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 var userInfo = $scope.userInfo;
                 var post = {
                     method: 'POST',
-                    url: 'http://localhost:9000/usuario/modificar',
+                    url: '/usuario/modificar',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(userInfo)
                 };
