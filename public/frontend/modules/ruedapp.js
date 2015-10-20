@@ -40,6 +40,7 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 },
                 destroy: function () {
                     this.cookie = null;
+                    $cookies.remove('globals');
                     $rootScope.globals = {
                         'currentUser': {
                             'userId': null,
