@@ -2,10 +2,7 @@ package controllers.ruta;
 
 import com.avaje.ebean.Ebean;
 import models.perfil.Ciclista;
-import models.ruta.HistoricoRecorrido;
-import models.ruta.Recorrido;
-import models.ruta.Ruta;
-import models.ruta.Ubicacion;
+import models.ruta.*;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -163,6 +160,101 @@ public class RutaController extends Controller {
 
         List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).findList();
         return ok(Json.toJson(historicoRecorridos));
+    }
+
+
+    public Result SaveProgramacionRecorrido() {
+        Form<ProgramacionRecorrido> postForm = Form.form(ProgramacionRecorrido.class).bindFromRequest();
+
+        if (postForm.hasErrors() || postForm.get().recorrido == null) {
+            return badRequest(postForm.errorsAsJson());
+        }
+
+        Recorrido recorrido = Ebean.find(Recorrido.class, postForm.get().recorrido.id);
+        if (recorrido == null) {
+            return Results.notFound("Recorrido no encontrado ");
+        }
+
+        String usuarioLogueado = session().get("loggedUser");
+        Ciclista organizador = Ebean.find(Ciclista.class, Long.valueOf(usuarioLogueado));
+        if (recorrido == null) {
+            return Results.notFound("Ciclista no encontrado ");
+        }
+
+        ProgramacionRecorrido programacionRecorrido = new ProgramacionRecorrido();
+        programacionRecorrido.organizador = organizador;
+        programacionRecorrido.recorrido = recorrido;
+        programacionRecorrido.descripcion = postForm.get().descripcion;
+        programacionRecorrido.fechaInicio = postForm.get().fechaInicio;
+        programacionRecorrido.save();
+
+        return Results.created(Json.toJson(recorrido));
+    }
+
+
+    public Result AddCiclistaProgramacionRecorrido(long idCiclista) {
+        Form<ProgramacionRecorrido> postForm = Form.form(ProgramacionRecorrido.class).bindFromRequest();
+
+        /*
+        if (postForm.hasErrors()) {
+            return badRequest(postForm.errorsAsJson());
+        }
+        */
+
+        ProgramacionRecorrido programacionRecorrido = Ebean.find(ProgramacionRecorrido.class, postForm.get().id);
+        if (programacionRecorrido == null) {
+            return Results.notFound("Programacion Recorrido no encontrada");
+        }
+
+        Ciclista ciclista = Ebean.find(Ciclista.class, idCiclista);
+        if (ciclista == null) {
+            return Results.notFound("Ciclista no encontrado ");
+        }
+
+        programacionRecorrido.participantes.add(ciclista);
+        programacionRecorrido.save();
+
+        return Results.created(Json.toJson(idCiclista));
+    }
+
+    public Result ConsultaProgramacionRecorrido(long id) {
+
+        ProgramacionRecorrido programacionRecorrido = Ebean.find(ProgramacionRecorrido.class, id);
+        if (programacionRecorrido == null) {
+            return Results.notFound("Programacion Recorrido no encontrada");
+        }
+
+        return Results.ok(Json.toJson(programacionRecorrido));
+    }
+
+    public Result ListaProgramacionRecorridoPorOrganizador(long id) {
+
+        if (id == 0)
+        {
+            id = Long.valueOf(session().get("loggedUser"));
+        }
+
+        List<ProgramacionRecorrido> programacionRecorrido = Ebean.find(ProgramacionRecorrido.class).where().eq("organizador.id", id).findList();
+        if (programacionRecorrido == null) {
+            return Results.notFound("Programacion Recorrido no encontrada");
+        }
+
+        return Results.ok(Json.toJson(programacionRecorrido));
+    }
+
+    public Result ListaProgramacionRecorridoPorParticipante(long id) {
+
+        if (id == 0)
+        {
+            id = Long.valueOf(session().get("loggedUser"));
+        }
+
+        List<ProgramacionRecorrido> programacionRecorrido = Ebean.find(ProgramacionRecorrido.class).where().eq("organizador.id", id).findList();
+        if (programacionRecorrido == null) {
+            return Results.notFound("Programacion Recorrido no encontrada");
+        }
+
+        return Results.ok(Json.toJson(programacionRecorrido));
     }
 
 }

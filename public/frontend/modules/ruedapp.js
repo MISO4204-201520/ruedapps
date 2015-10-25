@@ -205,5 +205,11 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 templateUrl: 'assets/frontend/views/directorioServicios/registrarServicio.html'
             }
         )
+            .when(
+            '/recorridos',{
+                controller: 'recorridoController',
+                templateUrl: 'assets/frontend/views/ruta/programacion.html'
+            }
+        )
             .otherwise({ redirectTo: '/'})
     }]);
