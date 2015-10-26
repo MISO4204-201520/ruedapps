@@ -24,6 +24,11 @@ POST        /recorrido/crear                                    controllers.ruta
 POST        /historico/crear                                    controllers.ruta.RutaController.SaveHistoricoRecorrido()
 GET         /historico/:id                                      controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
 GET         /historico/usuario/:id                              controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
+POST        /recorrido/programacion                             controllers.ruta.RutaController.SaveProgramacionRecorrido()
+POST        /recorrido/programacion/ciclista/:id                controllers.ruta.RutaController.AddCiclistaProgramacionRecorrido(id: Long)
+GET         /recorrido/programacion/:id                         controllers.ruta.RutaController.ConsultaProgramacionRecorrido(id: Long)
+GET         /recorrido/programacion/organizador/:id             controllers.ruta.RutaController.ListaProgramacionRecorridoPorOrganizador(id: Long)
+GET         /recorrido/programacion/participante/:id            controllers.ruta.RutaController.ListaProgramacionRecorridoPorParticipante(id: Long)
 
 # Rutas Categoria
 GET         /categoria/categorias                               controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()

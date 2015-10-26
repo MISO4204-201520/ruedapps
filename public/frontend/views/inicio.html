@@ -1,0 +1,40 @@
+<style>
+    html, body {
+        top: 50px;
+        width: 100%;
+        height: 100%;
+        padding-right: 10px;
+    }
+
+    #ruedappmap {
+        width: 100%;
+        min-height: 300px;
+    }
+
+    .footer {
+        position: absolute;
+        top: 400px;
+        width: 100%;
+        height: 35px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6" ng-controller="recorridoController">
+            <h2>Rutas</h2>
+
+            <div><a href="#">Más >></a></div>
+            <leaflet id="ruedappmap" defaults="defaults"></leaflet>
+            <div class="footer" ng-init="loadmap()">
+                <b>Recorrido</b>
+                <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="iniciarecorrido()">Iniciar</button>
+                <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Amigos</h2>
+
+            <h2>Servicios</h2>
+        </div>
+    </div>
+</div>

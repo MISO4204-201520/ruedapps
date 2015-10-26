@@ -83,7 +83,7 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                             return null;
                         })
                 }
-            }
+            };
             return authFactory;
         }])
     .factory('AuthInterceptor', ['$rootScope','$q', 'AUTH_EVENTS',
@@ -135,8 +135,14 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         $routeProvider
             .when(
             '/',{
-                controller: 'perfilController',
+                controller: 'inicioController',
                 templateUrl: 'assets/frontend/views/index.html'
+            }
+        )
+            .when(
+            '/inicio', {
+                controller: 'inicioController',
+                templateUrl: 'assets/frontend/views/inicio.html'
             }
         )
             .when(
@@ -197,6 +203,12 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
             '/categoria/servicios/registrarServicio', {
                 controller: 'directorioServiciosController',
                 templateUrl: 'assets/frontend/views/directorioServicios/registrarServicio.html'
+            }
+        )
+            .when(
+            '/recorridos',{
+                controller: 'recorridoController',
+                templateUrl: 'assets/frontend/views/ruta/programacion.html'
             }
         )
             .otherwise({ redirectTo: '/'})

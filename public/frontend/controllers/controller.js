@@ -2,6 +2,11 @@
  * Created by lina on 9/30/15.
  */
 
+ruedapp.controller('inicioController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
+    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
+
+    }]);
+
 ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
     function($scope, $rootScope , $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
         /**
@@ -53,7 +58,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 AuthFactory.login(credentials).then(function () {
                     $rootScope.loggedIn = true;
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                    window.location.replace('#/ruta');
+                    window.location.replace('#/inicio');
                 }, function () {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
@@ -92,9 +97,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
         }
     }]);
 
-
 ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
-
     function($scope, $http, leafletData) {
 
         var recorridoInterval = 10000;
@@ -134,8 +137,8 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
 
                 map.on('click', function (e) {
                     var container = L.DomUtil.create('div'),
-                        startBtn = createButton('Punto de origen', container),
-                        destBtn = createButton('Punto de destino', container);
+                        startBtn = createMapButton('Punto de origen', container),
+                        destBtn = createMapButton('Punto de destino', container);
 
                     L.popup()
                         .setContent(container)
@@ -192,14 +195,14 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
             var post = {
                 method: 'get',
                 url: '/historico/usuario/0',
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json'}
             };
 
             $http(post).success(function (data) {
                 console.log("consulta ok");
                 $scope.historicoUsuario = data;
             }).error(function (data) {
-                console.log("Error consultahistorico : " + data);
+                console.log("Error consulta historico : " + data);
             });
         };
 
@@ -241,7 +244,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
                     setTimeout(timeoutLocation, recorridoInterval);
                     console.log("inicio recorrido id: " + data);
                 }).error(function (data) {
-                    console.log("Error data: " + data);
+                    console.log("Error inicio recorrido: " + data);
                 });
             });
         };
@@ -282,6 +285,13 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
 
                 setTimeout(timeoutLocation, recorridoInterval);
             }
+        }
+
+        function createMapButton(label, container) {
+            var btn = L.DomUtil.create('button', '', container);
+            btn.setAttribute('type', 'button');
+            btn.innerHTML = label;
+            return btn;
         }
     }]);
 
@@ -353,14 +363,6 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope',
         }
     }]);
 
-
-function createButton(label, container) {
-    var btn = L.DomUtil.create('button', '', container);
-    btn.setAttribute('type', 'button');
-    btn.innerHTML = label;
-    return btn;
-}
-
 ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$http', '$cookies',
     function ($scope, $rootScope, $http, $cookies) {
 
@@ -414,7 +416,7 @@ ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$h
         $scope.seleccionarCategoria = function (value) {
             console.log("Se va a adicionar la categoria " + value.id + " a la sesión");
             $cookies.put('idCategoriaSeleccionada', value.id);
-        }
+        };
 
         $scope.retornarServiciosPorCategoria = function () {
 
