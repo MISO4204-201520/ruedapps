@@ -112,7 +112,6 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
 
                 map.locate({setView: true, maxZoom: 16});
                 map.on('locationfound', onLocationFound);
-
                 control = L.Routing.control({
                     plan: L.Routing.plan([], {
                         createMarker: function (i, wp) {
@@ -363,13 +362,20 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope',
         }
     }]);
 
-ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$http', '$cookies',
-    function ($scope, $rootScope, $http, $cookies) {
+ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$http', '$cookies','leafletData',
+    function ($scope, $rootScope, $http, $cookies,leafletData) {
 
         $scope.categorias = null;
         $scope.serviciosPorCategoria = null;
         $scope.categoriaSeleccionada = null;
 
+        $scope.loadmap = function () {
+            // ToDo drag del marker y Onclick get LatLog en el Disable input
+            leafletData.getMap('ubicacion-map').then(function (map) {
+                map.locate({setView: true, maxZoom: 16});
+                L.Control.geocoder().addTo(map);
+            });
+        };
         $scope.registrarCategoria = function () {
 
             if($scope.form.$valid) {

@@ -13,3 +13,4 @@ package.js
 *.less
 *.csslintrc
 /public/*/grunt/*.*
+/bower_components/*

@@ -2,12 +2,14 @@ package models.directorio_servicios;
 
 import com.avaje.ebean.Model;
 import models.perfil.Proveedor;
+import models.ruta.Ubicacion;
 import play.data.validation.Constraints;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  * Created by Lina8a on 19/09/2015.
@@ -81,5 +83,9 @@ public class Servicio extends Model {
      */
     @ManyToOne
     public Categoria categoria;
+
+
+    @OneToOne
+    public Ubicacion ubicacion;
 
 }

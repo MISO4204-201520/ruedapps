@@ -2,11 +2,18 @@
     <div class="row text-center">
         <h1>Servicio</h1>
     </div>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <form name="form" role="form" ng-controller="directorioServiciosController"
+    <form name="form" role="form" ng-controller="directorioServiciosController"
                   ng-init="obtenerCategoriaSeleccionada()">
+        <div class="row">
+            <div class="col-md-push-6 col-md-3 col-xs-12">
+                <button type="submit" class="btn btn-info btn-block" ng-click="registrarServicio()">Registrar</button>
+            </div>
+            <div class="col-md-push-6 col-md-3  col-xs-12">
+                <button type="submit" class="btn btn-primary btn-block" ng-click="cancelarServicio()">Cancelar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
                 <div class="form-group" required>
                     <label for="nombre">Nombre:</label>
                     <input name="nombre" ng-model="servicio.nombre" class="form-control" id="nombre">
@@ -32,13 +39,20 @@
                     <input type="checkbox" name="domicilios" ng-model="servicio.domicilios" class="form-control"
                            id="domicilios">
                 </div>
-                <button type="submit" class="btn btn-info center-block" ng-click="registrarServicio()">Registrar
-                </button>
-            </form>
-            <br/>
-            <form method="get" action="#/categoria/servicios">
-                <button type="submit" class="btn btn-primary center-block">Cancelar</button>
-            </form>
+                <div class="form-group" required>
+                    <label for="ubicacion">ubicación:</label>
+                    <input name="ubicacion" ng-model="servicio.ubicacion" class="form-control" id="ubicacion" disabled>
+
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="form-group" required>
+                    <label for="ubicacion-map">Ubicación:</label>
+                    <div ng-init="loadmap()"></div>
+                    <leaflet style="min-height: 540px;" name="ubicacion" id="ubicacion-map" defaults="defaults"></leaflet>
+                </div>
+            </div>
         </div>
-    </div>
+    </form>
+            <br/>
 </div>
