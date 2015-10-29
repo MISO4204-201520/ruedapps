@@ -46,7 +46,8 @@ create table servicio (
   telefono                  varchar(255),
   domicilios                integer(1) not null,
   proveedor_id              integer,
-  categoria_id              integer)
+  categoria_id              integer,
+  ubicacion_id              integer)
 ;
 
 create table ubicacion (
@@ -93,6 +94,8 @@ create index ix_ruta_destino_7 on ruta (destino_id);
 create index ix_servicio_proveedor_8 on servicio (proveedor_id);
 alter table servicio add constraint fk_servicio_categoria_9 foreign key (categoria_id) references categoria (id);
 create index ix_servicio_categoria_9 on servicio (categoria_id);
+alter table servicio add constraint fk_servicio_ubicacion_10 foreign key (ubicacion_id) references usuario (id);
+create index ix_servicio_ubicacion_10 on servicio (ubicacion_id);
 
 
 

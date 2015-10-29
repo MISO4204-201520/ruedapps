@@ -49,6 +49,7 @@ public class DirectorioServiciosKernelController extends Controller {
 
     public Result registrarServicio(long idCategoria) {
         Form<Servicio> form = Form.form(Servicio.class).bindFromRequest();
+        System.out.println("Datos del form: " + form.data());
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());
         } else {
