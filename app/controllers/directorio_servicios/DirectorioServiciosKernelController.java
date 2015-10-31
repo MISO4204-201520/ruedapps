@@ -5,6 +5,7 @@ import models.directorio_servicios.Categoria;
 import models.directorio_servicios.Servicio;
 import models.perfil.Proveedor;
 import models.perfil.Usuario;
+import models.ruta.Ubicacion;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -49,7 +50,6 @@ public class DirectorioServiciosKernelController extends Controller {
 
     public Result registrarServicio(long idCategoria) {
         Form<Servicio> form = Form.form(Servicio.class).bindFromRequest();
-        System.out.println("Datos del form: " + form.data());
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());
         } else {
@@ -61,7 +61,7 @@ public class DirectorioServiciosKernelController extends Controller {
             servicio.telefono = form.get().telefono;
             servicio.domicilios = form.get().domicilios;
 
-            // Obtiene el usuario que esta registrando el servicio de la sesion
+            // Obtiene el usuario que esta registrado el servicio de la sesion
             String usuarioLogueado = session().get("loggedUser");
             Usuario usuario = Usuario.find.byId(Long.valueOf(usuarioLogueado));
 
@@ -72,13 +72,19 @@ public class DirectorioServiciosKernelController extends Controller {
                 return badRequest("No existe un proveedor con id " + usuarioLogueado);
             }*/
 
-            //Categoria categoria = Ebean.find(Categoria.class, form.get().categoria.id);
             Categoria categoria = Ebean.find(Categoria.class, idCategoria);
             if (categoria != null) {
                 servicio.categoria = categoria;
             } else {
                 return badRequest("No existe una categoria con id " + form.get().categoria.id);
             }
+
+            // Crea y guarda la ubicación del servicio a partir de los datos ingresados en la forma
+            Ubicacion ubicacion = new Ubicacion();
+            ubicacion.nombre = form.get().ubicacion.nombre;
+            ubicacion.latitud = form.get().ubicacion.latitud;
+            ubicacion.longitud = form.get().ubicacion.longitud;
+            ubicacion.save();
 
             servicio.save();
 
