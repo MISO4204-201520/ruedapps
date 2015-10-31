@@ -97,14 +97,37 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
         }
     }]);
 
-ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
-    function($scope, $http, leafletData) {
+ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData', 'ngTableParams',
+    function($scope, $http, leafletData, ngTableParams) {
 
         var recorridoInterval = 10000;
         var control;
         var recorridoId = 0;
         var inicioRecorrido;
+
+        var today = new Date();
+
+        $scope.amigosruta = [];
         $scope.hideHistorico = true;
+        $scope.minDate = today;
+        $scope.maxDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+        $scope.programacion = {
+            hora: today,
+            fecha: today
+        };
+
+        $scope.open = function() {
+            $scope.status.opened = true;
+        };
+
+        $scope.status = {
+            opened: false
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
 
         $scope.loadmap = function () {
 
@@ -205,6 +228,22 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
             });
         };
 
+        $scope.consultaamigos = function() {
+
+            var post = {
+                method: 'get',
+                url: '/ciclistas',
+                headers: {'Content-Type': 'application/json'}
+            };
+
+            $http(post).success(function (data) {
+                console.log("consulta ok");
+                $scope.amigos = data;
+            }).error(function (data) {
+                console.log("Error consulta amigos : " + data);
+            });
+        };
+
         $scope.iniciarecorrido = function () {
 
             leafletData.getMap('ruedappmap').then(function () {
@@ -292,6 +331,66 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData',
             btn.innerHTML = label;
             return btn;
         }
+
+        $scope.creaprogramacion = function() {
+
+            var wayPoints = control.getWaypoints();
+            if (wayPoints.length < 2 || wayPoints[0].latLng == null || wayPoints[1].latLng == null) {
+                alert('Debe seleccionar el punto de origen y destino antes de crear el recorrido.');
+                return;
+            }
+
+            var programacion = $scope.programacion;
+
+            programacion.ruta = {
+                origen: {
+                    latitud: wayPoints[0].latLng.lat,
+                    longitud: wayPoints[0].latLng.lng,
+                    nombre: wayPoints[0].name
+                },
+                destino: {
+                    latitud: wayPoints[wayPoints.length - 1].latLng.lat,
+                    longitud: wayPoints[wayPoints.length - 1].latLng.lng,
+                    nombre: wayPoints[wayPoints.length - 1].name
+                }
+            };
+
+            programacion.fechaInicio = programacion.fecha;
+            programacion.fechaInicio.setMinutes(programacion.hora.getMinutes());
+            programacion.fechaInicio.setHours(programacion.hora.getHours());
+            programacion.participantes = $scope.amigosruta;
+
+            var post = {
+                method: 'post',
+                url: '/recorrido/programacion',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(programacion)
+            };
+
+            $http(post).success(function (data) {
+                console.log("crea programacion ok");
+                alert('Programación Creada')
+                window.location.replace('#/inicio');
+            }).error(function (data) {
+                console.log("Error crea programacion : " + data);
+            });
+        };
+
+        $scope.addAmigo = function() {
+
+            if ( typeof($scope.programacion.amigo) != 'undefined') {
+                var result = $.grep($scope.amigosruta, function (e) {
+                    return e.id == $scope.programacion.amigo.id;
+                });
+                if (result.length == 0) {
+                    $scope.amigosruta.push({
+                        nombre: $scope.programacion.amigo.nombres,
+                        id: $scope.programacion.amigo.id
+                    });
+                }
+            }
+        };
+        
     }]);
 
 ruedapp.controller('mensajeController', ['$scope', '$rootScope',
