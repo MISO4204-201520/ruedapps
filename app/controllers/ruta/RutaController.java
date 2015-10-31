@@ -3,6 +3,7 @@ package controllers.ruta;
 import com.avaje.ebean.Ebean;
 import models.perfil.Ciclista;
 import models.ruta.*;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -163,47 +164,58 @@ public class RutaController extends Controller {
     }
 
 
-    public Result SaveProgramacionRecorrido() {
-        Form<ProgramacionRecorrido> postForm = Form.form(ProgramacionRecorrido.class).bindFromRequest();
+    public Result SaveProgramacionRuta() {
+        Form<ProgramacionRuta> postForm = Form.form(ProgramacionRuta.class).bindFromRequest();
 
-        if (postForm.hasErrors() || postForm.get().recorrido == null) {
+        if (postForm.hasErrors() || postForm.get().ruta == null) {
             return badRequest(postForm.errorsAsJson());
-        }
-
-        Recorrido recorrido = Ebean.find(Recorrido.class, postForm.get().recorrido.id);
-        if (recorrido == null) {
-            return Results.notFound("Recorrido no encontrado ");
         }
 
         String usuarioLogueado = session().get("loggedUser");
         Ciclista organizador = Ebean.find(Ciclista.class, Long.valueOf(usuarioLogueado));
-        if (recorrido == null) {
-            return Results.notFound("Ciclista no encontrado ");
+        if (organizador == null) {
+            return Results.notFound("organizador no encontrado ");
         }
 
-        ProgramacionRecorrido programacionRecorrido = new ProgramacionRecorrido();
-        programacionRecorrido.organizador = organizador;
-        programacionRecorrido.recorrido = recorrido;
-        programacionRecorrido.descripcion = postForm.get().descripcion;
-        programacionRecorrido.fechaInicio = postForm.get().fechaInicio;
-        programacionRecorrido.save();
+        Ruta ruta = new Ruta();
+        ruta.origen = new Ubicacion();
+        ruta.origen.latitud  = postForm.get().ruta.origen.latitud;
+        ruta.origen.longitud  = postForm.get().ruta.origen.longitud;
+        ruta.origen.nombre  = postForm.get().ruta.origen.nombre;
 
-        return Results.created(Json.toJson(recorrido));
+        ruta.destino = new Ubicacion();
+        ruta.destino.latitud  = postForm.get().ruta.destino.latitud;
+        ruta.destino.longitud  = postForm.get().ruta.destino.longitud;
+        ruta.destino.nombre  = postForm.get().ruta.destino.nombre;
+        ruta.save();
+
+        ProgramacionRuta programacionRuta = new ProgramacionRuta();
+        programacionRuta.organizador = organizador;
+        programacionRuta.ruta = ruta;
+        programacionRuta.descripcion = postForm.get().descripcion;
+        programacionRuta.fechaInicio = postForm.get().fechaInicio;
+        programacionRuta.nombre= postForm.get().nombre;
+
+        if (postForm.get().participantes != null) {
+            for (Ciclista ciclista : postForm.get().participantes) {
+                Ciclista participante = Ebean.find(Ciclista.class, ciclista.id);
+                if (participante != null) {
+                    programacionRuta.participantes.add(participante);
+                }
+            }
+        }
+
+        programacionRuta.save();
+        return Results.created();
     }
 
 
-    public Result AddCiclistaProgramacionRecorrido(long idCiclista) {
-        Form<ProgramacionRecorrido> postForm = Form.form(ProgramacionRecorrido.class).bindFromRequest();
+    public Result AddCiclistaProgramacionRuta(long idCiclista) {
 
-        /*
-        if (postForm.hasErrors()) {
-            return badRequest(postForm.errorsAsJson());
-        }
-        */
-
-        ProgramacionRecorrido programacionRecorrido = Ebean.find(ProgramacionRecorrido.class, postForm.get().id);
-        if (programacionRecorrido == null) {
-            return Results.notFound("Programacion Recorrido no encontrada");
+        DynamicForm postForm = Form.form().bindFromRequest();
+        ProgramacionRuta programacionRuta = Ebean.find(ProgramacionRuta.class, postForm.get("id"));
+        if (programacionRuta == null) {
+            return Results.notFound("Programacion Ruta no encontrada");
         }
 
         Ciclista ciclista = Ebean.find(Ciclista.class, idCiclista);
@@ -211,15 +223,15 @@ public class RutaController extends Controller {
             return Results.notFound("Ciclista no encontrado ");
         }
 
-        programacionRecorrido.participantes.add(ciclista);
-        programacionRecorrido.save();
+        programacionRuta.participantes.add(ciclista);
+        programacionRuta.save();
 
-        return Results.created(Json.toJson(idCiclista));
+        return Results.created();
     }
 
-    public Result ConsultaProgramacionRecorrido(long id) {
+    public Result ConsultaProgramacionRuta(long id) {
 
-        ProgramacionRecorrido programacionRecorrido = Ebean.find(ProgramacionRecorrido.class, id);
+        ProgramacionRuta programacionRecorrido = Ebean.find(ProgramacionRuta.class, id);
         if (programacionRecorrido == null) {
             return Results.notFound("Programacion Recorrido no encontrada");
         }
@@ -227,14 +239,14 @@ public class RutaController extends Controller {
         return Results.ok(Json.toJson(programacionRecorrido));
     }
 
-    public Result ListaProgramacionRecorridoPorOrganizador(long id) {
+    public Result ListaProgramacionRutaPorOrganizador(long id) {
 
         if (id == 0)
         {
             id = Long.valueOf(session().get("loggedUser"));
         }
 
-        List<ProgramacionRecorrido> programacionRecorrido = Ebean.find(ProgramacionRecorrido.class).where().eq("organizador.id", id).findList();
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("organizador.id", id).findList();
         if (programacionRecorrido == null) {
             return Results.notFound("Programacion Recorrido no encontrada");
         }
@@ -242,19 +254,18 @@ public class RutaController extends Controller {
         return Results.ok(Json.toJson(programacionRecorrido));
     }
 
-    public Result ListaProgramacionRecorridoPorParticipante(long id) {
+    public Result ListaProgramacionRutaPorParticipante(long id) {
 
         if (id == 0)
         {
             id = Long.valueOf(session().get("loggedUser"));
         }
 
-        List<ProgramacionRecorrido> programacionRecorrido = Ebean.find(ProgramacionRecorrido.class).where().eq("organizador.id", id).findList();
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("participantes.id", id).findList();
         if (programacionRecorrido == null) {
             return Results.notFound("Programacion Recorrido no encontrada");
         }
 
         return Results.ok(Json.toJson(programacionRecorrido));
     }
-
 }

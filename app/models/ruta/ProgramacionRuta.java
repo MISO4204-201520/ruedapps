@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Juan on 10/25/2015.
  */
 @Entity
-public class ProgramacionRecorrido  extends Model {
+public class ProgramacionRuta  extends Model {
 
     // --------------------------------------------------------------------
     // Atributos
@@ -41,23 +41,31 @@ public class ProgramacionRecorrido  extends Model {
 
 
     /*
+* Fecha y hora inicio del recorrido
+*/
+    @Column
+    @Constraints.Required
+    public String nombre;
+
+
+    /*
  * Fecha y hora inicio del recorrido
  */
     /*
      * Recorrido programado
      */
     @ManyToOne
-    public Recorrido recorrido;
+    public Ruta ruta;
 
 
     /*
  * ciclistas participantes
  */
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Ciclista> participantes;
 
     /*
- * Mensajes que ha recibido el usuario
+ * Ciclista organizador
  */
     @ManyToOne
     public Ciclista organizador;

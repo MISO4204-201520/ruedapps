@@ -102,6 +102,12 @@ public class PerfilKernelController extends Controller {
         return Results.notFound();
     }
 
+    public Result Ciclistas() {
+        List<Ciclista> ciclistas = Ebean.find(Ciclista.class).findList();
+        return ok(Json.toJson(ciclistas));
+    }
+
+
     private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario) {
         usuario.nombres = formUsuario.get().nombres;
         usuario.celular = formUsuario.get().celular;
