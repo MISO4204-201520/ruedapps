@@ -32,3 +32,31 @@ img {
 .margin-top-navbar{
     margin-top: 5rem;
 }
+
+.ruedapps-selectable {
+    list-style-type: none;
+    border: solid 1px #adadad;
+    border-radius: 1rem;
+    padding: 0 !important;
+}
+
+.ruedapps-selectable li {
+    margin: 0.4rem;
+    padding-left: 2rem !important;
+    height: 2rem;
+    border-radius: 1rem;
+}
+
+.ruedapps-selectable ol {
+    margin: 0;
+    padding: 0 !important;
+}
+
+.ruedapps-selectable .ui-selecting {
+    background: #fbec88;
+}
+
+.ruedapps-selectable .ui-selected {
+    background: #ffaf0f;
+    color: white;
+}

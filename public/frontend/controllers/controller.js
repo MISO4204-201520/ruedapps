@@ -30,6 +30,14 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
             startingDay: 1
         };
 
+        /**
+         * Definición selectable mis amigos
+         */
+        $(function() {
+            $( "#ruedapps-selectable-amigos").selectable();
+            $( "#ruedapps-selectable-ciclistas").selectable();
+        });
+
         $scope.registrar = function() {
             if($scope.form.$valid) {
                 var userInfo = $scope.userInfo;

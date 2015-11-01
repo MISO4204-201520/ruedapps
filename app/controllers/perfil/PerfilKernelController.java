@@ -117,4 +117,5 @@ public class PerfilKernelController extends Controller {
         usuario.hashContrasenia(formUsuario.get().contrasenia);
     }
 
+
 }

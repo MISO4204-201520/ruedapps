@@ -164,6 +164,12 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
             }
         )
             .when(
+            '/amigos',{
+                controller: 'perfilController',
+                templateUrl: 'assets/frontend/views/perfil/amigos.html'
+            }
+        )
+            .when(
             '/ruta',{
                 controller: 'recorridoController',
                 templateUrl: 'assets/frontend/views/ruta/mapa.html'
