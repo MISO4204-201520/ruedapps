@@ -102,6 +102,29 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                     console.log("data: "+ data);
                 });
             }
+        };
+
+        $scope.agregarAmigo = function() {
+            var amigos = {
+                usuarioId: 7,
+                amigoId: 2
+            };
+
+            var post = {
+                method: 'POST',
+                url: '/amigo',
+                headers: { 'Content-Type': 'application/json' },
+                data: JSON.stringify(amigos)
+            };
+
+            $http(post).success(function () {
+                console.log("Creó amigos");
+                window.location.replace('/');
+
+            }).error(function (data) {
+                console.log("Error creación amigos.");
+                console.log("data: "+ data);
+            });
         }
     }]);
 

@@ -1,10 +1,7 @@
 package controllers.perfil;
 
 import com.avaje.ebean.Ebean;
-import models.perfil.Ciclista;
-import models.perfil.LoginDTO;
-import models.perfil.Proveedor;
-import models.perfil.Usuario;
+import models.perfil.*;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -107,6 +104,33 @@ public class PerfilKernelController extends Controller {
         return ok(Json.toJson(ciclistas));
     }
 
+    public Result AgregarAmigo() {
+        Form<AmigoDTO> postForm = Form.form(AmigoDTO.class).bindFromRequest();
+        long usuario_id = postForm.get().usuarioId;
+        long amigo_id = postForm.get().amigoId;
+
+        Ciclista usuario = Ebean.find(Ciclista.class, usuario_id);
+        Ciclista amigo = Ebean.find(Ciclista.class, amigo_id);
+
+        if (usuario != null && amigo != null) {
+            usuario.amigos.add(amigo);
+            usuario.save();
+            return ok(Json.toJson(usuario));
+        }
+
+        return Results.notFound();
+    }
+
+    public Result Amigos(long id) {
+        Ciclista usuario = Ebean.find(Ciclista.class, id);
+
+        if (usuario != null) {
+            List<Ciclista> amigos = usuario.amigos;
+            return ok(Json.toJson(amigos));
+        }
+
+        return Results.notFound();
+    }
 
     private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario) {
         usuario.nombres = formUsuario.get().nombres;

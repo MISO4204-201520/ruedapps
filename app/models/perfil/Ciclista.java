@@ -55,5 +55,10 @@ public class Ciclista extends Usuario {
     @JsonIgnore
     public List<Mensaje> enviados;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "amigos", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "amigo_id"))
+    @JsonIgnore
+    public List<Ciclista> amigos;
+
     public static Finder<Long, Ciclista> findCiclista = new Finder<>(Ciclista.class);
 }
