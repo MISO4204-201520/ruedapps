@@ -41,8 +41,8 @@ GET         /categoria                                        controllers.direct
 GET         /categoria/:id/servicio                           controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(id: Long)
 PUT         /categoria                                        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
 PUT         /categoria/:id/servicio                           controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio(id: Long)
-POST        /servicio/:id                                     controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio()
-DELETE      /servicio/:id                                     controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio()
+POST        /servicio/:id                                     controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio(id: Long)
+DELETE      /servicio/:id                                     controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio(id: Long)
 
 #Rutas Comunicacion
 GET         /mensaje                                          controllers.comunicacion.MensajeController.Mensaje()
