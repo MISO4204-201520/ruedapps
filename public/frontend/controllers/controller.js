@@ -359,8 +359,8 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
             };
 
             var post = {
-                method: 'POST',
-                url: '/historico/crear',
+                method: 'PUT',
+                url: '/historico',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(historico)
             };
@@ -460,8 +460,8 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
                 };
 
                 var post = {
-                    method: 'POST',
-                    url: '/recorrido/crear',
+                    method: 'PUT',
+                    url: '/recorrido',
                     headers: {'Content-Type': 'application/json'},
                     data: JSON.stringify(ruta)
                 };
@@ -501,8 +501,8 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
                 };
 
                 var post = {
-                    method: 'POST',
-                    url: '/ubicacion/crear/' + recorridoId,
+                    method: 'PUT',
+                    url: '/ubicacion/' + recorridoId,
                     headers: {'Content-Type': 'application/json'},
                     data: JSON.stringify(ubicacion)
                 };
@@ -553,7 +553,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
             programacion.participantes = $scope.amigosruta;
 
             var post = {
-                method: 'post',
+                method: 'put',
                 url: '/recorrido/programacion',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(programacion)

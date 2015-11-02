@@ -16,8 +16,8 @@
         <tr ng-repeat="row in rutasUsuario">
             <td>{{row.fechaInicio | date:'medium'}}</td>
             <td>{{row.nombre}}</td>
-            <td>{{row.ruta.origen.nombre + ' (Lt:' + row.recorrido.ruta.origen.latitud + ') (Lg:' + row.recorrido.ruta.origen.longitud + ')' }}</td>
-            <td>{{row.ruta.destino.nombre + ' (Lt:' + row.recorrido.ruta.destino.latitud + ') (Lg:' + row.recorrido.ruta.destino.longitud + ')'}}</td>
+            <td>{{row.ruta.origen.nombre + ' (Lt:' + row.ruta.origen.latitud + ') (Lg:' + row.ruta.origen.longitud + ')' }}</td>
+            <td>{{row.ruta.destino.nombre + ' (Lt:' + row.ruta.destino.latitud + ') (Lg:' + row.ruta.destino.longitud + ')'}}</td>
             <td><a href="#/ruta" ng-click="">
                 Iniciar
             </a>
