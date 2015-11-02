@@ -10,13 +10,9 @@
             <div>
                 <h2>Amigos</h2>
                 <ol class="ruedapps-selectable" id="ruedapps-selectable-amigos">
-                    <li class="ui-widget-content">Item 1</li>
-                    <li class="ui-widget-content">Item 2</li>
-                    <li class="ui-widget-content">Item 3</li>
-                    <li class="ui-widget-content">Item 4</li>
-                    <li class="ui-widget-content">Item 5</li>
-                    <li class="ui-widget-content">Item 6</li>
-                    <li class="ui-widget-content">Item 7</li>
+                    <li class="ui-widget-content" ng-repeat="x in amigos" value="{{x.id}}">
+                        {{ x.nombres }}
+                    </li>
                 </ol>
                 <button type="submit" class="btn btn-default center-block">Eliminar</button>
             </div>
@@ -25,13 +21,9 @@
             <div>
                 <h2>Otros Ciclistas</h2>
                 <ol class="ruedapps-selectable" id="ruedapps-selectable-ciclistas">
-                    <li class="ui-widget-content">Item 1</li>
-                    <li class="ui-widget-content">Item 2</li>
-                    <li class="ui-widget-content">Item 3</li>
-                    <li class="ui-widget-content">Item 4</li>
-                    <li class="ui-widget-content">Item 5</li>
-                    <li class="ui-widget-content">Item 6</li>
-                    <li class="ui-widget-content">Item 7</li>
+                    <li class="ui-widget-content" ng-repeat="x in noAmigos" value="{{x.id}}">
+                        {{ x.nombres }}
+                    </li>
                 </ol>
                 <button type="submit" class="btn btn-info center-block" ng-click="agregarAmigo()">Agregar</button>
             </div>

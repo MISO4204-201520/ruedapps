@@ -16,9 +16,11 @@ POST        /usuario/crear                                    controllers.perfil
 POST        /proveedor/crear                                  controllers.perfil.PerfilKernelController.CrearProveedor()
 POST        /usuario/modificar                                controllers.perfil.PerfilKernelController.ActualizarUsuario()
 GET         /usuario/:id                                      controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
+GET         /ciclista/:email                                  controllers.perfil.PerfilKernelController.ConsultarUsuarioPorEmail(email: String)
 GET         /ciclistas                                        controllers.perfil.PerfilKernelController.Ciclistas()
 GET         /amigo/:id                                        controllers.perfil.PerfilKernelController.Amigos(id: Long)
 POST        /amigo                                            controllers.perfil.PerfilKernelController.AgregarAmigo()
+GET         /no-amigo/:id                                     controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
 
 # Routes Rutas
 POST        /ubicacion/crear/:id                              controllers.ruta.RutaController.SaveUbicacion(id: Long)

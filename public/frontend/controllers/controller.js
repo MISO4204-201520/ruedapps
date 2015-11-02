@@ -34,8 +34,68 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
          * Definición selectable mis amigos
          */
         $(function() {
-            $( "#ruedapps-selectable-amigos").selectable();
-            $( "#ruedapps-selectable-ciclistas").selectable();
+            $scope.amigosSeleccionados = [];
+            $scope.noAmigosSeleccionados = [];
+
+            $( "#ruedapps-selectable-amigos").selectable({
+                selected: function(event, ui){
+                    $scope.amigosSeleccionados.push(ui.selected.value);
+                }
+            });
+            $( "#ruedapps-selectable-amigos" ).on( "selectableselected", function( event, ui ) {} );
+
+            $( "#ruedapps-selectable-ciclistas").selectable({
+                selected: function(event, ui){
+                    $scope.noAmigosSeleccionados.push(ui.selected.value);
+                }
+            });
+            $( "#ruedapps-selectable-ciclistas" ).on( "selectableselected", function( event, ui ) {} );
+        });
+
+        /**
+         * Obtención de amigos y usuarios de la plataforma.
+         */
+        $(function() {
+            var get = {
+                method: 'GET',
+                url: '/ciclista/' + $rootScope.globals.currentUser.userId
+            };
+
+            $http(get).success(function (data) {
+                console.log("Obtuvo usuario");
+                console.log("data: "+ data);
+                $scope.userGlobalId = data;
+
+                var get1 = {
+                    method: 'GET',
+                    url: '/amigo/' + $scope.userGlobalId
+                };
+                $http(get1).success(function (data) {
+                    $scope.amigos = data;
+
+                }).error(function (data) {
+                    console.log("Error amigos.");
+                    console.log("data: "+ data);
+                });
+
+                var get2 = {
+                    method: 'GET',
+                    url: '/no-amigo/7'
+                };
+                $http(get2).success(function (data) {
+                    $scope.noAmigos = data;
+
+                }).error(function (data) {
+                    console.log("Error no amigos.");
+                    console.log("data: "+ data);
+                });
+
+            }).error(function (data) {
+                console.log("Error obtención id.");
+                console.log("data: "+ data);
+            });
+
+
         });
 
         $scope.registrar = function() {
@@ -105,25 +165,27 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
         };
 
         $scope.agregarAmigo = function() {
-            var amigos = {
-                usuarioId: 7,
-                amigoId: 2
-            };
+            $scope.noAmigosSeleccionados.forEach(function(element){
+                var amigos = {
+                    usuarioId: $scope.userGlobalId,
+                    amigoId: element
+                };
 
-            var post = {
-                method: 'POST',
-                url: '/amigo',
-                headers: { 'Content-Type': 'application/json' },
-                data: JSON.stringify(amigos)
-            };
+                var post = {
+                    method: 'POST',
+                    url: '/amigo',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: JSON.stringify(amigos)
+                };
 
-            $http(post).success(function () {
-                console.log("Creó amigos");
-                window.location.replace('/');
+                $http(post).success(function () {
+                    console.log("Creó amigo");
+                    window.location.replace('/');
 
-            }).error(function (data) {
-                console.log("Error creación amigos.");
-                console.log("data: "+ data);
+                }).error(function (data) {
+                    console.log("Error creación amigo.");
+                    console.log("data: "+ data);
+                });
             });
         }
     }]);

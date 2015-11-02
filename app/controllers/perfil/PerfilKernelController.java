@@ -9,6 +9,7 @@ import play.mvc.Result;
 import play.mvc.Results;
 import views.html.login;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -104,6 +105,22 @@ public class PerfilKernelController extends Controller {
         return ok(Json.toJson(ciclistas));
     }
 
+    public Result ConsultarUsuarioPorEmail(String email) {
+        if(email != null) {
+            List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", email).findList();
+
+            if (usuario != null && usuario.size() > 0) {
+                Ciclista ciclista = (Ciclista) usuario.get(0);
+                return ok(Json.toJson(ciclista.id));
+            }
+            else {
+                return Results.notFound();
+            }
+        }
+
+        return Results.notFound();
+    }
+
     public Result AgregarAmigo() {
         Form<AmigoDTO> postForm = Form.form(AmigoDTO.class).bindFromRequest();
         long usuario_id = postForm.get().usuarioId;
@@ -127,6 +144,39 @@ public class PerfilKernelController extends Controller {
         if (usuario != null) {
             List<Ciclista> amigos = usuario.amigos;
             return ok(Json.toJson(amigos));
+        }
+
+        return Results.notFound();
+    }
+
+    public Result NoAmigos(long id) {
+        Ciclista usuario = Ebean.find(Ciclista.class, id);
+
+        if (usuario != null) {
+            List<Ciclista> amigos = usuario.amigos;
+            List<Ciclista> ciclistas = Ebean.find(Ciclista.class).findList();
+            List<Ciclista> noAmigos = new ArrayList<Ciclista>();
+
+            for (int i = 0; i < ciclistas.size(); i++) {
+                boolean existe = false;
+                Ciclista c1 = ciclistas.get(i);
+
+                if(c1.id != id) {
+                    for (int j = 0; j < amigos.size(); j++) {
+                        Ciclista c2 = amigos.get(j);
+                        if(c1.id == c2.id) {
+                            existe = true;
+                            amigos.remove(c2);
+                        }
+                    }
+
+                    if(!existe && c1.id != id) {
+                        noAmigos.add(c1);
+                    }
+                }
+            }
+
+            return ok(Json.toJson(noAmigos));
         }
 
         return Results.notFound();
