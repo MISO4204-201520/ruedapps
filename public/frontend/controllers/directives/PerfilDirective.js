@@ -14,12 +14,12 @@ app.directive('login', function(){
                         url: 'http://localhost:8080/crud-web/authentication/login',
                         headers: { 'Content-Type': 'application/json' },
                         data: { email: $scope.user.email, password: $scope.user.password }
-                    }
+                    };
 
                     $http(post).success(function (data) {
                         sessionStorage.setItem("Auth-JWT", data);
                         $scope.auth.isAuthenticated = true;
-                        console.log($scope.auth.isAuthenticated)
+                        console.log($scope.auth.isAuthenticated);
                         $scope.getPeople();
                     }).error(function (err) {
                         console.log("Error: " + $scope.view + err);
@@ -44,7 +44,7 @@ app.directive('register', function(){
                         url: 'http://localhost:8080/crud-web/authentication/register',
                         headers: { 'Content-Type': 'application/json' },
                         data: { firstName: $scope.user.firstName, lastName: $scope.user.lastName, gender: $scope.user.gender, email: $scope.user.email, password: $scope.user.password }
-                    }
+                    };
 
                     $http(post).success(function (data) {
                         $scope.login();

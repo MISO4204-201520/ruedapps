@@ -2821,7 +2821,7 @@ angular.module("leaflet-directive").factory('leafletPathsHelpers', ["$rootScope"
             setPath: function(path, data) {
                 path.setLatLngs(_convertToLeafletLatLngs(data.latlngs));
                 _updatePathOptions(path, data);
-                return;
+
             }
         },
         multiPolyline: {
@@ -2846,7 +2846,7 @@ angular.module("leaflet-directive").factory('leafletPathsHelpers', ["$rootScope"
             setPath: function(path, data) {
                 path.setLatLngs(_convertToLeafletMultiLatLngs(data.latlngs));
                 _updatePathOptions(path, data);
-                return;
+
             }
         } ,
         polygon: {
@@ -2860,7 +2860,7 @@ angular.module("leaflet-directive").factory('leafletPathsHelpers', ["$rootScope"
             setPath: function(path, data) {
                 path.setLatLngs(_convertToLeafletLatLngs(data.latlngs));
                 _updatePathOptions(path, data);
-                return;
+
             }
         },
         multiPolygon: {
@@ -2886,7 +2886,7 @@ angular.module("leaflet-directive").factory('leafletPathsHelpers', ["$rootScope"
             setPath: function(path, data) {
                 path.setLatLngs(_convertToLeafletMultiLatLngs(data.latlngs));
                 _updatePathOptions(path, data);
-                return;
+
             }
         },
         rectangle: {
@@ -4839,8 +4839,7 @@ angular.module("leaflet-directive")
             isObject = leafletHelpers.isObject,
             isArray = leafletHelpers.isArray,
             errorHeader = leafletHelpers.errorHeader,
-            $log = leafletLogger;;
-
+            $log = leafletLogger;
         var EventsHelper = function(rootBroadcastName, lObjectType){
             this.rootBroadcastName = rootBroadcastName;
             //used to path/key out certain properties based on the type , "markers", "geojson"

@@ -20,7 +20,8 @@
 </style>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6" ng-controller="recorridoController">
+        <div class="col-md-2"></div>
+        <div class="col-md-4" ng-controller="recorridoController">
             <h2>Rutas</h2>
 
             <div><a href="#">Más >></a></div>
@@ -31,9 +32,25 @@
                 <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar</button>
             </div>
         </div>
-        <div class="col-md-6">
-            <h2>Amigos</h2>
-
+        <div class="col-md-4">
+            <div>
+                <h2>Amigos</h2>
+                <ol class="ruedapps-selectable" id="ruedapps-selectable-amigos">
+                    <li class="ui-widget-content" ng-repeat="x in amigos" value="{{x.id}}">
+                        {{ x.nombres }}
+                    </li>
+                </ol>
+                <br/>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <button type="submit" class="btn btn-info center-block ruedapps-inline-block" ng-click="planearRecorrido()">Planear Recorrido</button>
+                    <button type="submit" class="btn btn-info center-block ruedapps-inline-block" ng-click="enviarMensaje()">Enviar Mensaje</button>
+                    <button type="submit" class="btn btn-info center-block ruedapps-inline-block" ng-click="agregarAmigo()">Agregar Amigos</button>
+                </div>
+            </div>
+            <br/>
+            <hr/>
+            <br/>
             <h2>Servicios</h2>
         </div>
     </div>
