@@ -2,8 +2,8 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('inicioController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
-    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
+ruedapp.controller('inicioController', ['$scope', '$rootScope', '$location', '$http',
+    function ($scope, $rootScope, $location, $http) {
         /**
          * Obtención de amigos y usuarios de la plataforma.
          */
@@ -38,15 +38,15 @@ ruedapp.controller('inicioController', ['$scope', '$rootScope', '$location', '$h
 
         var planearRecorrido = function(){
             window.location.replace('#/recorridos');
-        }
+        };
 
         var enviarMensaje = function() {
             window.location.replace('#/mensaje');
-        }
+        };
 
         var agregarAmigo = function() {
             window.location.replace('#/amigos');
-        }
+        };
 
     }]);
 
@@ -80,19 +80,23 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
             $scope.amigosSeleccionados = [];
             $scope.noAmigosSeleccionados = [];
 
-            $( "#ruedapps-selectable-amigos").selectable({
+            var amigos = $("#ruedapps-selectable-amigos");
+            amigos.selectable({
                 selected: function(event, ui){
                     $scope.amigosSeleccionados.push(ui.selected.value);
                 }
             });
-            $( "#ruedapps-selectable-amigos" ).on( "selectableselected", function( event, ui ) {} );
+            amigos.on("selectableselected", function (event, ui) {
+            });
 
-            $( "#ruedapps-selectable-ciclistas").selectable({
+            var ciclistas = $("#ruedapps-selectable-ciclistas");
+            ciclistas.selectable({
                 selected: function(event, ui){
                     $scope.noAmigosSeleccionados.push(ui.selected.value);
                 }
             });
-            $( "#ruedapps-selectable-ciclistas" ).on( "selectableselected", function( event, ui ) {} );
+            ciclistas.on("selectableselected", function (event, ui) {
+            });
         });
 
         /**
@@ -143,8 +147,8 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
             if($scope.form.$valid) {
                 var userInfo = $scope.userInfo;
                 var post = {
-                    method: 'POST',
-                    url: '/usuario/crear ',
+                    method: 'PUT',
+                    url: '/usuario',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(userInfo)
                 };
@@ -189,7 +193,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 var userInfo = $scope.userInfo;
                 var post = {
                     method: 'POST',
-                    url: '/usuario/modificar',
+                    url: '/usuario',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(userInfo)
                 };
@@ -213,7 +217,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 };
 
                 var post = {
-                    method: 'POST',
+                    method: 'PUT',
                     url: '/amigo',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(amigos)
@@ -238,8 +242,8 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 };
 
                 var del = {
-                    method: 'POST',
-                    url: '/amigo/delete',
+                    method: 'DELETE',
+                    url: '/amigo',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(amigos)
                 };
@@ -555,7 +559,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
                 data: JSON.stringify(programacion)
             };
 
-            $http(post).success(function (data) {
+            $http(post).success(function () {
                 console.log("crea programacion ok");
                 alert('Programación Creada');
                 window.location.replace('#/inicio');

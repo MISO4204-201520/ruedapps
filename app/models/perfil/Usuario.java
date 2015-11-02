@@ -65,7 +65,7 @@ public abstract class Usuario extends Model {
     /**
      * Representa la ciudad ingresada por el usuario en el registro.
      */
-    @Column(unique = true)
+    @Column
     @Constraints.Required
     public String ciudad;
 
