@@ -12,15 +12,15 @@ GET         /assets/*file                                     controllers.Assets
 GET         /login                                            controllers.perfil.PerfilKernelController.Login()
 GET         /logout                                           controllers.perfil.PerfilKernelController.LogOut()
 POST        /login                                            controllers.perfil.PerfilKernelController.LoginPost()
-PUT           /usuario          controllers.perfil.PerfilKernelController.CrearUsuario()
-PUT           /proveedor        controllers.perfil.PerfilKernelController.CrearProveedor()
-POST          /usuario          controllers.perfil.PerfilKernelController.ActualizarUsuario()
+PUT         /usuario                                          controllers.perfil.PerfilKernelController.CrearUsuario()
+PUT         /proveedor                                        controllers.perfil.PerfilKernelController.CrearProveedor()
+POST        /usuario                                          controllers.perfil.PerfilKernelController.ActualizarUsuario()
 GET         /usuario/:id                                      controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
 GET         /ciclista/:email                                  controllers.perfil.PerfilKernelController.ConsultarUsuarioPorEmail(email: String)
 GET         /ciclistas                                        controllers.perfil.PerfilKernelController.Ciclistas()
 GET         /amigo/:id                                        controllers.perfil.PerfilKernelController.Amigos(id: Long)
-PUT           /amigo            controllers.perfil.PerfilKernelController.AgregarAmigo()
-DELETE        /amigo            controllers.perfil.PerfilKernelController.EliminarAmigo()
+PUT         /amigo                                            controllers.perfil.PerfilKernelController.AgregarAmigo()
+DELETE      /amigo                                            controllers.perfil.PerfilKernelController.EliminarAmigo()
 GET         /no-amigo/:id                                     controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
 
 # Routes Rutas
@@ -37,12 +37,12 @@ GET         /recorrido/programacion/organizador/:id           controllers.ruta.R
 GET         /recorrido/programacion/participante/:id          controllers.ruta.RutaController.ListaProgramacionRutaPorParticipante(id: Long)
 
 # Rutas Categoria
-GET         /categoria/categorias                             controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
-GET         /categoria/servicios/:idCategoria                 controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(idCategoria: Long)
-POST        /categoria/registrar                              controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
-POST        /categoria/servicio/registrar/:idCategoria        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio(idCategoria: Long)
-POST        /categoria/editar                                 controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio()
-POST        /categoria/eliminar                               controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio()
+GET         /categoria                                        controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
+GET         /categoria/:id/servicio                           controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(id: Long)
+PUT         /categoria                                        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
+PUT         /categoria/:id/servicio                           controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio(id: Long)
+POST        /servicio/:id                                     controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio()
+DELETE      /servicio/:id                                     controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio()
 
 #Rutas Comunicacion
 GET         /mensaje                                          controllers.comunicacion.MensajeController.Mensaje()

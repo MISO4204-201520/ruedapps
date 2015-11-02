@@ -85,7 +85,7 @@ public class DirectorioServiciosKernelController extends Controller {
         }
     }
 
-    public Result editarServicio() {
+    public Result editarServicio(long id) {
         Form<Servicio> form = Form.form(Servicio.class).bindFromRequest();
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());
@@ -99,7 +99,7 @@ public class DirectorioServiciosKernelController extends Controller {
         return ok();
     }
 
-    public Result eliminarServicio() {
+    public Result eliminarServicio(long id) {
         Form<Servicio> form = Form.form(Servicio.class).bindFromRequest();
         if (form.hasErrors()) {
             return badRequest(form.errorsAsJson());

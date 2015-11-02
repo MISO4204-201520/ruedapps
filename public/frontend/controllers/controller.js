@@ -671,14 +671,14 @@ ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$h
 
             if($scope.form.$valid) {
                 var categoria = $scope.categoria;
-                var post = {
-                    method: 'POST',
-                    url: '/categoria/registrar',
+                var put = {
+                    method: 'PUT',
+                    url: '/categoria',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(categoria)
                 };
 
-                $http(post).success(function (data) {
+                $http(put).success(function (data) {
                     console.log("Registró");
                     console.log("data: "+ data);
                     window.location.replace('/');
@@ -695,7 +695,7 @@ ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$h
 
             var get = {
                 method: 'GET',
-                url: '/categoria/categorias'
+                url: '/categoria'
             };
 
             $http(get).success(function (data) {
@@ -722,7 +722,7 @@ ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$h
 
             var get = {
                 method: 'GET',
-                url: '/categoria/servicios/' + idCategoria
+                url: '/categoria/' + idCategoria + '/servicio'
             };
 
             $http(get).success(function (data) {
@@ -744,14 +744,14 @@ ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$h
 
             if($scope.form.$valid) {
                 var servicio = $scope.servicio;
-                var post = {
-                    method: 'POST',
-                    url: '/categoria/servicio/registrar/' + idCategoria,
+                var put = {
+                    method: 'PUT',
+                    url: '/categoria/' + idCategoria + '/servicio',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(servicio)
                 };
 
-                $http(post).success(function (data) {
+                $http(put).success(function (data) {
                     console.log("Registró");
                     console.log("data: "+ data);
                     window.location.replace('#/categoria/servicios');
