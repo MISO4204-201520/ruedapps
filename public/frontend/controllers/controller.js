@@ -80,7 +80,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
                 var get2 = {
                     method: 'GET',
-                    url: '/no-amigo/7'
+                    url: '/no-amigo/' + $scope.userGlobalId
                 };
                 $http(get2).success(function (data) {
                     $scope.noAmigos = data;
@@ -94,8 +94,6 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 console.log("Error obtención id.");
                 console.log("data: "+ data);
             });
-
-
         });
 
         $scope.registrar = function() {
@@ -180,18 +178,43 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
                 $http(post).success(function () {
                     console.log("Creó amigo");
-                    window.location.replace('/');
+                    window.location.replace('#/amigos');
 
                 }).error(function (data) {
                     console.log("Error creación amigo.");
                     console.log("data: "+ data);
                 });
             });
+        };
+
+        $scope.eliminarAmigo = function() {
+            $scope.amigosSeleccionados.forEach(function(element){
+                var amigos = {
+                    usuarioId: $scope.userGlobalId,
+                    amigoId: element
+                };
+
+                var del = {
+                    method: 'POST',
+                    url: '/amigo/delete',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: JSON.stringify(amigos)
+                };
+
+                $http(del).success(function () {
+                    console.log("Eliminó amigo");
+                    window.location.replace('#/amigos');
+
+                }).error(function (data) {
+                    console.log("Error eliminar amigo.");
+                    console.log("data: "+ data);
+                });
+            });
         }
     }]);
 
-ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData', 'ngTableParams',
-    function($scope, $http, leafletData, ngTableParams) {
+ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'leafletData', 'ngTableParams',
+    function($scope, $rootScope, $http, leafletData, ngTableParams) {
 
         var recorridoInterval = 10000;
         var control;
@@ -323,18 +346,31 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData', 'ng
 
         $scope.consultaamigos = function() {
 
-            var post = {
-                method: 'get',
-                url: '/ciclistas',
-                headers: {'Content-Type': 'application/json'}
+            var get = {
+                method: 'GET',
+                url: '/ciclista/' + $rootScope.globals.currentUser.userId
             };
 
-            $http(post).success(function (data) {
-                console.log("consulta ok");
-                $scope.amigos = data;
+            $http(get).success(function (data) {
+                $scope.userGlobalId = data;
+
+                var post = {
+                    method: 'GET',
+                    url: '/amigo/' + $scope.userGlobalId
+                };
+
+                $http(post).success(function (data) {
+                    console.log("consulta ok");
+                    $scope.amigos = data;
+                }).error(function (data) {
+                    console.log("Error consulta amigos : " + data);
+                });
             }).error(function (data) {
-                console.log("Error consulta amigos : " + data);
+                console.log("Error obtención id.");
+                console.log("data: "+ data);
             });
+
+
         };
 
         $scope.iniciarecorrido = function () {
@@ -462,7 +498,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$http', 'leafletData', 'ng
 
             $http(post).success(function (data) {
                 console.log("crea programacion ok");
-                alert('Programación Creada')
+                alert('Programación Creada');
                 window.location.replace('#/inicio');
             }).error(function (data) {
                 console.log("Error crea programacion : " + data);

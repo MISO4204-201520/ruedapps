@@ -138,6 +138,27 @@ public class PerfilKernelController extends Controller {
         return Results.notFound();
     }
 
+    public Result EliminarAmigo() {
+        Form<AmigoDTO> postForm = Form.form(AmigoDTO.class).bindFromRequest();
+        long usuario_id = postForm.get().usuarioId;
+        long amigo_id = postForm.get().amigoId;
+
+        Ciclista usuario = Ebean.find(Ciclista.class, usuario_id);
+
+        if (usuario != null) {
+            for(int i = 0; i < usuario.amigos.size(); i++) {
+                Ciclista c = usuario.amigos.get(i);
+                if(c.id == amigo_id) {
+                    usuario.amigos.remove(i);
+                    usuario.save();
+                    return ok(Json.toJson(usuario));
+                }
+            }
+        }
+
+        return Results.notFound();
+    }
+
     public Result Amigos(long id) {
         Ciclista usuario = Ebean.find(Ciclista.class, id);
 

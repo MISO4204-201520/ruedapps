@@ -20,6 +20,7 @@ GET         /ciclista/:email                                  controllers.perfil
 GET         /ciclistas                                        controllers.perfil.PerfilKernelController.Ciclistas()
 GET         /amigo/:id                                        controllers.perfil.PerfilKernelController.Amigos(id: Long)
 POST        /amigo                                            controllers.perfil.PerfilKernelController.AgregarAmigo()
+POST        /amigo/delete                                     controllers.perfil.PerfilKernelController.EliminarAmigo()
 GET         /no-amigo/:id                                     controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
 
 # Routes Rutas
