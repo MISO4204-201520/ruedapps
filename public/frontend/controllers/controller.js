@@ -387,6 +387,22 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
             });
         };
 
+        $scope.consultarutas = function() {
+
+            var post = {
+                method: 'get',
+                url: '/recorrido/programacion/participante/0',
+                headers: {'Content-Type': 'application/json'}
+            };
+
+            $http(post).success(function (data) {
+                console.log("consulta rutas participante ok");
+                $scope.rutasUsuario = data;
+            }).error(function (data) {
+                console.log("Error consulta rutas participante : " + data);
+            });
+        };
+
         $scope.consultaamigos = function() {
 
             var get = {

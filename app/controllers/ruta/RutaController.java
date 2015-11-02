@@ -10,8 +10,12 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**\
  * Created by Juan on 9/12/2015.
@@ -164,8 +168,10 @@ public class RutaController extends Controller {
     }
 
 
-    public Result SaveProgramacionRuta() {
+    public Result SaveProgramacionRuta() throws ParseException {
+
         Form<ProgramacionRuta> postForm = Form.form(ProgramacionRuta.class).bindFromRequest();
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
 
         if (postForm.hasErrors() || postForm.get().ruta == null) {
             return badRequest(postForm.errorsAsJson());
@@ -176,6 +182,10 @@ public class RutaController extends Controller {
         if (organizador == null) {
             return Results.notFound("organizador no encontrado ");
         }
+
+        String fechaString = dynamicForm.get("fechaInicio");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
+        format.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         Ruta ruta = new Ruta();
         ruta.origen = new Ubicacion();
@@ -193,7 +203,7 @@ public class RutaController extends Controller {
         programacionRuta.organizador = organizador;
         programacionRuta.ruta = ruta;
         programacionRuta.descripcion = postForm.get().descripcion;
-        programacionRuta.fechaInicio = postForm.get().fechaInicio;
+        programacionRuta.fechaInicio = format.parse(fechaString) ;
         programacionRuta.nombre= postForm.get().nombre;
 
         if (postForm.get().participantes != null) {
@@ -256,12 +266,12 @@ public class RutaController extends Controller {
 
     public Result ListaProgramacionRutaPorParticipante(long id) {
 
-        if (id == 0)
-        {
+        if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
         }
 
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("participantes.id", id).findList();
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().or(com.avaje.ebean.Expr.eq("participantes.id", id),
+                                                                                                     com.avaje.ebean.Expr.eq("organizador.id", id)).findList();
         if (programacionRecorrido == null) {
             return Results.notFound("Programacion Recorrido no encontrada");
         }
