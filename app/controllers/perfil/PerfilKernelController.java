@@ -1,7 +1,10 @@
 package controllers.perfil;
 
 import com.avaje.ebean.Ebean;
-import models.perfil.*;
+import models.perfil.Ciclista;
+import models.perfil.LoginDTO;
+import models.perfil.Proveedor;
+import models.perfil.Usuario;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -121,42 +124,35 @@ public class PerfilKernelController extends Controller {
         return Results.notFound();
     }
 
-    public Result AgregarAmigo() {
-        Form<AmigoDTO> postForm = Form.form(AmigoDTO.class).bindFromRequest();
-        long usuario_id = postForm.get().usuarioId;
-        long amigo_id = postForm.get().amigoId;
-
-        Ciclista usuario = Ebean.find(Ciclista.class, usuario_id);
-        Ciclista amigo = Ebean.find(Ciclista.class, amigo_id);
+    public Result AgregarAmigo(long id, long idAmigo) {
+        Ciclista usuario = Ebean.find(Ciclista.class, id);
+        Ciclista amigo = Ebean.find(Ciclista.class, idAmigo);
 
         if (usuario != null && amigo != null) {
             usuario.amigos.add(amigo);
             usuario.save();
             return ok(Json.toJson(usuario));
+        } else {
+            return Results.notFound();
         }
-
-        return Results.notFound();
     }
 
-    public Result EliminarAmigo() {
-        Form<AmigoDTO> postForm = Form.form(AmigoDTO.class).bindFromRequest();
-        long usuario_id = postForm.get().usuarioId;
-        long amigo_id = postForm.get().amigoId;
-
-        Ciclista usuario = Ebean.find(Ciclista.class, usuario_id);
+    public Result EliminarAmigo(long id, long idAmigo) {
+        Ciclista usuario = Ebean.find(Ciclista.class, id);
 
         if (usuario != null) {
             for(int i = 0; i < usuario.amigos.size(); i++) {
                 Ciclista c = usuario.amigos.get(i);
-                if(c.id == amigo_id) {
+                if (c.id == idAmigo) {
                     usuario.amigos.remove(i);
                     usuario.save();
-                    return ok(Json.toJson(usuario));
                 }
             }
-        }
 
-        return Results.notFound();
+            return ok(Json.toJson(usuario));
+        } else {
+            return Results.notFound();
+        }
     }
 
     public Result Amigos(long id) {
@@ -176,23 +172,22 @@ public class PerfilKernelController extends Controller {
         if (usuario != null) {
             List<Ciclista> amigos = usuario.amigos;
             List<Ciclista> ciclistas = Ebean.find(Ciclista.class).findList();
-            List<Ciclista> noAmigos = new ArrayList<Ciclista>();
+            List<Ciclista> noAmigos = new ArrayList<>();
 
-            for (int i = 0; i < ciclistas.size(); i++) {
+            for (Ciclista ciclista : ciclistas) {
                 boolean existe = false;
-                Ciclista c1 = ciclistas.get(i);
 
-                if(c1.id != id) {
+                if (ciclista.id != id) {
                     for (int j = 0; j < amigos.size(); j++) {
                         Ciclista c2 = amigos.get(j);
-                        if(c1.id == c2.id) {
+                        if (ciclista.id == c2.id) {
                             existe = true;
                             amigos.remove(c2);
                         }
                     }
 
-                    if(!existe && c1.id != id) {
-                        noAmigos.add(c1);
+                    if (!existe && ciclista.id != id) {
+                        noAmigos.add(ciclista);
                     }
                 }
             }

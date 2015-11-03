@@ -18,10 +18,10 @@ POST        /usuario                                          controllers.perfil
 GET         /usuario/:id                                      controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
 GET         /ciclista/:email                                  controllers.perfil.PerfilKernelController.ConsultarUsuarioPorEmail(email: String)
 GET         /ciclistas                                        controllers.perfil.PerfilKernelController.Ciclistas()
-GET         /amigo/:id                                        controllers.perfil.PerfilKernelController.Amigos(id: Long)
-PUT         /amigo                                            controllers.perfil.PerfilKernelController.AgregarAmigo()
-DELETE      /amigo                                            controllers.perfil.PerfilKernelController.EliminarAmigo()
-GET         /no-amigo/:id                                     controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
+GET           /ciclista/:id/amigos                 controllers.perfil.PerfilKernelController.Amigos(id: Long)
+PUT           /ciclista/:id/amigos/:idAmigo        controllers.perfil.PerfilKernelController.AgregarAmigo(id:Long, idAmigo:Long)
+DELETE        /ciclista/:id/amigos/:idAmigo        controllers.perfil.PerfilKernelController.EliminarAmigo(id:Long, idAmigo:Long)
+GET           /ciclista/:id/no-amigos              controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
 
 # Routes Rutas
 PUT         /ubicacion/:id                                    controllers.ruta.RutaController.SaveUbicacion(id: Long)
