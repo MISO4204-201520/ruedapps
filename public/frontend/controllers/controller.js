@@ -20,7 +20,7 @@ ruedapp.controller('inicioController', ['$scope', '$rootScope', '$location', '$h
 
                 var get1 = {
                     method: 'GET',
-                    url: '/amigo/' + $scope.userGlobalId
+                    url: '/ciclista/' + $scope.userGlobalId + '/amigos'
                 };
                 $http(get1).success(function (data) {
                     $scope.amigos = data;
@@ -115,7 +115,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
                 var get1 = {
                     method: 'GET',
-                    url: '/amigo/' + $scope.userGlobalId
+                    url: '/ciclista/' + $scope.userGlobalId + '/amigos'
                 };
                 $http(get1).success(function (data) {
                     $scope.amigos = data;
@@ -127,7 +127,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
                 var get2 = {
                     method: 'GET',
-                    url: '/no-amigo/' + $scope.userGlobalId
+                    url: '/ciclista/' + $scope.userGlobalId + '/no-amigos'
                 };
                 $http(get2).success(function (data) {
                     $scope.noAmigos = data;
@@ -211,19 +211,13 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
         $scope.agregarAmigo = function() {
             $scope.noAmigosSeleccionados.forEach(function(element){
-                var amigos = {
-                    usuarioId: $scope.userGlobalId,
-                    amigoId: element
-                };
-
-                var post = {
+                var put = {
                     method: 'PUT',
-                    url: '/amigo',
-                    headers: { 'Content-Type': 'application/json' },
-                    data: JSON.stringify(amigos)
+                    url: '/ciclista/' + $scope.userGlobalId + '/amigos/' + element,
+                    headers: {'Content-Type': 'application/json'}
                 };
 
-                $http(post).success(function () {
+                $http(put).success(function () {
                     console.log("Creó amigo");
                     window.location.replace('#/amigos');
 
@@ -236,16 +230,10 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
         $scope.eliminarAmigo = function() {
             $scope.amigosSeleccionados.forEach(function(element){
-                var amigos = {
-                    usuarioId: $scope.userGlobalId,
-                    amigoId: element
-                };
-
                 var del = {
                     method: 'DELETE',
-                    url: '/amigo',
-                    headers: { 'Content-Type': 'application/json' },
-                    data: JSON.stringify(amigos)
+                    url: '/ciclista/' + $scope.userGlobalId + '/amigos/' + element,
+                    headers: {'Content-Type': 'application/json'}
                 };
 
                 $http(del).success(function () {
