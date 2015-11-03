@@ -1,6 +1,5 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
-# ~~~~
 
 # Home page
 GET         /                                                 controllers.Application.index()
@@ -23,7 +22,7 @@ PUT           /ciclista/:id/amigos/:idAmigo        controllers.perfil.PerfilKern
 DELETE        /ciclista/:id/amigos/:idAmigo        controllers.perfil.PerfilKernelController.EliminarAmigo(id:Long, idAmigo:Long)
 GET           /ciclista/:id/no-amigos              controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
 
-# Routes Rutas
+# Rutas recorridos
 PUT         /ubicacion/:id                                    controllers.ruta.RutaController.SaveUbicacion(id: Long)
 PUT         /ruta                                             controllers.ruta.RutaController.SaveRuta()
 PUT         /recorrido                                        controllers.ruta.RutaController.SaveRutaRecorrido()
@@ -36,7 +35,7 @@ GET         /recorrido/programacion/:id                       controllers.ruta.R
 GET         /recorrido/programacion/organizador/:id           controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
 GET         /recorrido/programacion/participante/:id          controllers.ruta.RutaController.ListaProgramacionRutaPorParticipante(id: Long)
 
-# Rutas Categoria
+# Rutas directorio
 GET         /categoria                                        controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
 GET         /categoria/:id/servicio                           controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(id: Long)
 PUT         /categoria                                        controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
