@@ -7,6 +7,14 @@ img {
     width: 80%;
 }
 
+#mensaje {
+    height: 10rem;
+}
+
+#mensajesRecibidos {
+    height: 18rem;
+}
+
 .ruedapps-container-gray {
     background-color: #eee;
 }
