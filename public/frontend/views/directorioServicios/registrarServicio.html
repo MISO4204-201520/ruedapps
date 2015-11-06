@@ -3,7 +3,7 @@
         <h1>Servicio</h1>
     </div>
     <form name="form" role="form" ng-controller="directorioServiciosController"
-                  ng-init="obtenerCategoriaSeleccionada()">
+          ng-init="obtenerCategoriaSeleccionada()">
         <div class="row">
             <div class="col-md-push-6 col-md-3 col-xs-12">
                 <button type="submit" class="btn btn-info btn-block" ng-click="registrarServicio()">Registrar</button>
@@ -14,45 +14,48 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <div class="form-group" required>
+                <div class="form-group">
                     <label for="nombre">Nombre:</label>
-                    <input name="nombre" ng-model="servicio.nombre" class="form-control" id="nombre">
+                    <input name="nombre" ng-model="servicio.nombre" class="form-control" id="nombre" required>
                 </div>
-                <div class="form-group" required>
+                <div class="form-group">
                     <label for="descripcion">Descripción:</label>
-                    <input name="descripcion" ng-model="servicio.descripcion" class="form-control" id="descripcion">
+                    <input name="descripcion" ng-model="servicio.descripcion" class="form-control" id="descripcion"
+                           required>
                 </div>
-                <div class="form-group" required>
+                <div class="form-group">
                     <label for="horario">Horario:</label>
-                    <input name="horario" ng-model="servicio.horario" class="form-control" id="horario">
+                    <input name="horario" ng-model="servicio.horario" class="form-control" id="horario" required>
                 </div>
-                <div class="form-group" required>
+                <div class="form-group">
                     <label for="precio">Precio:</label>
-                    <input name="precio" ng-model="servicio.precio" class="form-control" id="precio">
+                    <input name="precio" ng-model="servicio.precio" class="form-control" id="precio" required>
                 </div>
                 <div class="form-group">
                     <label for="telefono">Teléfono:</label>
                     <input name="telefono" ng-model="servicio.telefono" class="form-control" id="telefono">
                 </div>
-                <div class="form-group" required>
+                <div class="form-group">
                     <label for="domicilios">Domicilios:</label>
                     <input type="checkbox" name="domicilios" ng-model="servicio.domicilios" class="form-control"
-                           id="domicilios">
+                           id="domicilios" required>
                 </div>
-                <div class="form-group" required>
+                <div class="form-group">
                     <label for="ubicacion">ubicación:</label>
-                    <input name="ubicacion" ng-model="servicio.ubicacion" class="form-control" id="ubicacion" disabled>
-
+                    <input name="ubicacion" ng-model="ubicacionServicio" class="form-control" id="ubicacion" disabled
+                           required>
                 </div>
             </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="form-group" required>
-                    <label for="ubicacion-map">Ubicación:</label>
+            <div class="col-md-6 col-xs-12"> 
+                <div class="form-group" required> 
+                    <label for="ubicacion-map">Indique su ubicación:</label>  
                     <div ng-init="loadmap()"></div>
-                    <leaflet style="min-height: 540px;" name="ubicacion" id="ubicacion-map" defaults="defaults"></leaflet>
+                    <leaflet style="min-height: 540px;" name="ubicacion" id="ubicacion-map" defaults="defaults"
+                             center="bogota" event-broadcast="events" markers="markers">
+                    </leaflet>
                 </div>
             </div>
         </div>
     </form>
-            <br/>
+    <br/>
 </div>
