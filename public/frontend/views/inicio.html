@@ -19,39 +19,67 @@
     }
 </style>
 <div class="container-fluid">
-    <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-4" ng-controller="recorridoController">
-            <h2>Rutas</h2>
+        <div class="col-md-4 ruedapps-inicio-cols" ng-controller="recorridoController">
+            <div class="row">
+                <h2>Rutas</h2>
 
-            <div><a href="#">Más >></a></div>
-            <leaflet id="ruedappmap" defaults="defaults"></leaflet>
-            <div class="footer" ng-init="loadmap()">
-                <b>Recorrido</b>
-                <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="iniciarecorrido()">Iniciar</button>
-                <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar</button>
+                <div><a href="#">Más >></a></div>
+                <leaflet id="ruedappmap" defaults="defaults"></leaflet>
+                <div class="footer" ng-init="loadmap()">
+                    <b>Recorrido</b>
+                    <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="iniciarecorrido()">Iniciar</button>
+                    <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar</button>
+                </div>
             </div>
+            <br/>
+            <br/>
+            <br/>
+            <hr/>
         </div>
-        <div class="col-md-4">
-            <div>
+
+        <div class="col-md-4 ruedapps-inicio-cols">
+            <div class="row">
                 <h2>Amigos</h2>
-                <ol class="ruedapps-selectable" id="ruedapps-selectable-amigos">
-                    <li class="ui-widget-content" ng-repeat="x in amigos" value="{{x.id}}">
-                        {{ x.nombres }}
-                    </li>
-                </ol>
-                <br/>
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <button type="submit" class="btn btn-info center-block ruedapps-inline-block" ng-click="planearRecorrido()">Planear Recorrido</button>
-                    <button type="submit" class="btn btn-info center-block ruedapps-inline-block" ng-click="enviarMensaje()">Enviar Mensaje</button>
-                    <button type="submit" class="btn btn-info center-block ruedapps-inline-block" ng-click="agregarAmigo()">Agregar Amigos</button>
+                <div class="col-md-6">
+                    <form name="frmEnviar" role="form" ng-controller="mensajeController">
+                        <div class="form-group" required>
+                            <label for="destinatario">Para:</label>
+                            <p class="input-group col-md-12">
+                                <select name="destinatario" ng-model="mensajeInfo.destinatarioCompleto" class="form-control" id="destinatario"
+                                        ng-options="amigo as amigo.nombres for amigo in amigos">
+                                </select>
+                            </p>
+                        </div>
+
+                        <div class="form-group" required>
+                            <label for="mensaje">Mensaje:</label>
+                            <textarea name="mensaje" ng-model="mensajeInfo.mensaje" class="form-control" id="mensaje" placeholder="Ingrese mensaje"></textarea>
+                        </div>
+                        <button id="btnEnviar" type="submit" class="btn btn-info center-block" ng-click="enviarMensaje()"
+                                disabled>Enviar
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group" required>
+                        <label for="mensajesRecibidos">Mensajes recibidos:</label>
+                        <textarea id="mensajesRecibidos" class="form-control" placeholder="Mensajes recibidos"></textarea>
+                    </div>
+
+                    <div class="row text-center">
+                        <form name="frmRecibidos" role="form" ng-controller="mensajeController">
+                            <button id="btnConectar" type="button" class="btn btn-info center-block ruedapps-inline-block" ng-click="conectar()">Conectar</button>
+                            <button id="btnDesconectar" type="button" class="btn btn-info center-block ruedapps-inline-block" ng-click="desconectar()" disabled>Desconectar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <br/>
             <hr/>
-            <br/>
-            <h2>Servicios</h2>
+            <div class="row">
+                <h2>Servicios</h2>
+            </div>
+
         </div>
-    </div>
 </div>

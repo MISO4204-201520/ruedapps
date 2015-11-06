@@ -3,7 +3,7 @@
         <h1>Servicios</h1>
     </div>
     <div class="row">
-        <form name="form" role="form" ng-controller="directorioServiciosController"
+        <form name="form" role="form" ng-controller="directorioController"
               ng-init="retornarServiciosPorCategoria()">
             <output>{{categoriaSeleccionada.nombre}}</output>
             <div class="servicio" ng-repeat="servicio in serviciosPorCategoria">

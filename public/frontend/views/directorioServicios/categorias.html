@@ -3,7 +3,7 @@
         <h1>Categorías</h1>
     </div>
     <div class="row">
-        <form name="form" role="form" ng-controller="directorioServiciosController" ng-init="retornarCategorias()">
+        <form name="form" role="form" ng-controller="directorioController" ng-init="retornarCategorias()">
             <div class="categoria" ng-repeat="categoria in categorias">
                 <a href="" ng-model="collapsed" ng-click="collapsed = !collapsed">
                     <h3>- {{categoria.nombre}}</h3>

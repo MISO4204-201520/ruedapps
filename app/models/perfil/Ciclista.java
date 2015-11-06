@@ -2,6 +2,7 @@ package models.perfil;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.comunicacion.Mensaje;
+import models.configurador_bicicletas.Bicicleta;
 import models.ruta.HistoricoRecorrido;
 import play.data.validation.Constraints;
 
@@ -55,10 +56,21 @@ public class Ciclista extends Usuario {
     @JsonIgnore
     public List<Mensaje> enviados;
 
+    /**
+     * Amigos del usuario
+     */
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "amigos", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "amigo_id"))
     @JsonIgnore
     public List<Ciclista> amigos;
+
+    /**
+     * Bicicletas configuradas por el usuario
+     */
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "bicicleta_usuario", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "bicicleta_id"))
+    @JsonIgnore
+    public List<Bicicleta> bicicletas;
 
     public static Finder<Long, Ciclista> findCiclista = new Finder<>(Ciclista.class);
 }

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid"  ng-init="consultaAmigos()">
     <div class="row text-center">
         <h1>Enviar Mensaje</h1>
     </div>
@@ -15,7 +15,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4"></div>
+
                 <form name="frmRecibidos" role="form" ng-controller="mensajeController">
                     <button id="btnConectar" type="button" class="btn btn-info center-block ruedapps-inline-block" ng-click="conectar()">Conectar</button>
                     <button id="btnDesconectar" type="button" class="btn btn-info center-block ruedapps-inline-block" ng-click="desconectar()" disabled>Desconectar</button>
@@ -35,7 +35,11 @@
             <form name="frmEnviar" role="form" ng-controller="mensajeController">
                 <div class="form-group" required>
                     <label for="destinatario">Para:</label>
-                    <input name="destinatario" ng-model="mensajeInfo.destinatario" type="email" class="form-control" id="destinatario" placeholder="Ingrese usuario">
+                    <p class="input-group col-md-12">
+                        <select name="destinatario" ng-model="mensajeInfo.destinatarioCompleto" class="form-control" id="destinatario"
+                                ng-options="amigo as amigo.nombres for amigo in amigos">
+                        </select>
+                    </p>
                 </div>
 
                 <div class="form-group" required>
