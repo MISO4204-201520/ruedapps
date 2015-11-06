@@ -2,8 +2,8 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('mensajeController', ['$scope', '$rootScope',
-    function ($scope, $rootScope) {
+ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
+    function ($scope, $rootScope, $http) {
         $scope.conectar = function () {
             // Abrir socket
             var websocket = new WebSocket("ws://localhost:9000/mensajeSocket");
@@ -63,9 +63,38 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope',
                 // Correo de usuario actual
                 $scope.mensajeInfo.remitente = $rootScope.globals.currentUser.userId;
 
+                //Tomar correo elctrónico del amigo
+                $scope.mensajeInfo.destinatario = $scope.mensajeInfo.destinatarioCompleto.correoElectronico;
+
                 // Mandar mensaje a socket
                 var dto = JSON.stringify($scope.mensajeInfo);
                 $rootScope.mensajeSocket.send(dto);
             }
-        }
+        };
+
+        $scope.consultaAmigos = function () {
+            var get = {
+                method: 'GET',
+                url: '/ciclista/' + $rootScope.globals.currentUser.userId
+            };
+
+            $http(get).success(function (data) {
+                $scope.userGlobalId = data;
+
+                var get1 = {
+                    method: 'GET',
+                    url: '/ciclista/' + $scope.userGlobalId + '/amigos'
+                };
+
+                $http(get1).success(function (data) {
+                    console.log("consulta ok");
+                    $scope.amigos = data;
+                }).error(function (data) {
+                    console.log("Error consulta amigos : " + data);
+                });
+            }).error(function (data) {
+                console.log("Error obtención id.");
+                console.log("data: " + data);
+            });
+        };
     }]);

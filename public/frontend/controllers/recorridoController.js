@@ -161,7 +161,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
 
                 var get1 = {
                     method: 'GET',
-                    url: '/amigo/' + $scope.userGlobalId
+                    url: '/ciclista/' + $scope.userGlobalId + '/amigos'
                 };
 
                 $http(get1).success(function (data) {
