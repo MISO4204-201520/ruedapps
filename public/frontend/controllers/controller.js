@@ -147,7 +147,7 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
             if($scope.form.$valid) {
                 var userInfo = $scope.userInfo;
                 var post = {
-                    method: 'PUT',
+                    method: 'POST',
                     url: '/usuario',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(userInfo)
@@ -191,14 +191,14 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
         $scope.editarPerfil = function() {
             if($scope.form.$valid) {
                 var userInfo = $scope.userInfo;
-                var post = {
-                    method: 'POST',
+                var put = {
+                    method: 'PUT',
                     url: '/usuario',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(userInfo)
                 };
 
-                $http(post).success(function () {
+                $http(put).success(function () {
                     console.log("Modificó");
                     window.location.replace('/');
 
@@ -211,13 +211,13 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
 
         $scope.agregarAmigo = function() {
             $scope.noAmigosSeleccionados.forEach(function(element){
-                var put = {
-                    method: 'PUT',
+                var post = {
+                    method: 'POST',
                     url: '/ciclista/' + $scope.userGlobalId + '/amigos/' + element,
                     headers: {'Content-Type': 'application/json'}
                 };
 
-                $http(put).success(function () {
+                $http(post).success(function () {
                     console.log("Creó amigo");
                     window.location.replace('#/amigos');
 
@@ -347,7 +347,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
             };
 
             var post = {
-                method: 'PUT',
+                method: 'POST',
                 url: '/historico',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(historico)
@@ -365,13 +365,13 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
 
         $scope.consultahistorico = function() {
 
-            var post = {
+            var get = {
                 method: 'get',
                 url: '/historico/usuario/0',
                 headers: {'Content-Type': 'application/json'}
             };
 
-            $http(post).success(function (data) {
+            $http(get).success(function (data) {
                 console.log("consulta ok");
                 $scope.historicoUsuario = data;
             }).error(function (data) {
@@ -381,13 +381,13 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
 
         $scope.consultarutas = function() {
 
-            var post = {
+            var get = {
                 method: 'get',
                 url: '/recorrido/programacion/participante/0',
                 headers: {'Content-Type': 'application/json'}
             };
 
-            $http(post).success(function (data) {
+            $http(get).success(function (data) {
                 console.log("consulta rutas participante ok");
                 $scope.rutasUsuario = data;
             }).error(function (data) {
@@ -405,12 +405,12 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
             $http(get).success(function (data) {
                 $scope.userGlobalId = data;
 
-                var post = {
+                var get1 = {
                     method: 'GET',
                     url: '/amigo/' + $scope.userGlobalId
                 };
 
-                $http(post).success(function (data) {
+                $http(get1).success(function (data) {
                     console.log("consulta ok");
                     $scope.amigos = data;
                 }).error(function (data) {
@@ -448,7 +448,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
                 };
 
                 var post = {
-                    method: 'PUT',
+                    method: 'POST',
                     url: '/recorrido',
                     headers: {'Content-Type': 'application/json'},
                     data: JSON.stringify(ruta)
@@ -489,7 +489,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
                 };
 
                 var post = {
-                    method: 'PUT',
+                    method: 'POST',
                     url: '/ubicacion/' + recorridoId,
                     headers: {'Content-Type': 'application/json'},
                     data: JSON.stringify(ubicacion)
@@ -541,7 +541,7 @@ ruedapp.controller('recorridoController',[ '$scope', '$rootScope', '$http', 'lea
             programacion.participantes = $scope.amigosruta;
 
             var post = {
-                method: 'put',
+                method: 'POST',
                 url: '/recorrido/programacion',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(programacion)
@@ -659,14 +659,14 @@ ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$h
 
             if($scope.form.$valid) {
                 var categoria = $scope.categoria;
-                var put = {
-                    method: 'PUT',
+                var post = {
+                    method: 'POST',
                     url: '/categoria',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(categoria)
                 };
 
-                $http(put).success(function (data) {
+                $http(post).success(function (data) {
                     console.log("Registró");
                     console.log("data: "+ data);
                     window.location.replace('/');
@@ -732,14 +732,14 @@ ruedapp.controller('directorioServiciosController', ['$scope', '$rootScope', '$h
 
             if($scope.form.$valid) {
                 var servicio = $scope.servicio;
-                var put = {
-                    method: 'PUT',
+                var post = {
+                    method: 'POST',
                     url: '/categoria/' + idCategoria + '/servicio',
                     headers: { 'Content-Type': 'application/json' },
                     data: JSON.stringify(servicio)
                 };
 
-                $http(put).success(function (data) {
+                $http(post).success(function (data) {
                     console.log("Registró");
                     console.log("data: "+ data);
                     window.location.replace('#/categoria/servicios');
