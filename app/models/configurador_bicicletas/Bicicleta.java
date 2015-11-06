@@ -1,36 +1,63 @@
 package models.configurador_bicicletas;
 
+import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import play.data.validation.Constraints;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Lina8a on 06/11/2015.
+ * Entidad bicicleta.
  */
-public class Bicicleta {
+@Entity
+public class Bicicleta extends Model {
+
+    // --------------------------------------------------------------------
+    // Atributos
+    // --------------------------------------------------------------------
+
+    /**
+     * Representa la llave primaria de la entidad.
+     */
+    @Id
+    public long id;
 
     /**
      * Color de la biclicleta
      */
+    @Column(nullable = false)
+    @Constraints.Required
     private final String color;
 
     /**
      * Tamanio de la bicicleta
      */
+    @Column(nullable = false)
+    @Constraints.Required
     private final String tamanio;
 
     /**
      * Llantas de la bicicleta
      */
+    @Column(nullable = false)
+    @Constraints.Required
     private final String llantas;
 
     /**
      * Sillin de la bicicleta
      */
+    @Column(nullable = false)
+    @Constraints.Required
     private final String sillin;
 
     /**
      * Accesorios de la bicileta
      */
+    @OneToMany(mappedBy = "bicicleta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private final List<String> accesorios;
 
     /**
