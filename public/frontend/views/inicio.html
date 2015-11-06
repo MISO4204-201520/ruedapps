@@ -19,25 +19,27 @@
     }
 </style>
 <div class="container-fluid">
-    <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-4" ng-controller="recorridoController">
-            <h2>Rutas</h2>
+        <div class="col-md-4 ruedapps-inicio-cols" ng-controller="recorridoController">
+            <div class="row">
+                <h2>Rutas</h2>
 
-            <div><a href="#">Más >></a></div>
-            <leaflet id="ruedappmap" defaults="defaults"></leaflet>
-            <div class="footer" ng-init="loadmap()">
-                <b>Recorrido</b>
-                <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="iniciarecorrido()">Iniciar</button>
-                <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar</button>
+                <div><a href="#">Más >></a></div>
+                <leaflet id="ruedappmap" defaults="defaults"></leaflet>
+                <div class="footer" ng-init="loadmap()">
+                    <b>Recorrido</b>
+                    <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="iniciarecorrido()">Iniciar</button>
+                    <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar</button>
+                </div>
             </div>
             <br/>
+            <br/>
+            <br/>
+            <hr/>
         </div>
-        <br/>
-        <br/>
-        <hr/>
-        <br/>
-        <div class="col-md-4">
+
+        <div class="col-md-4 ruedapps-inicio-cols">
+            <div class="row">
                 <h2>Amigos</h2>
                 <div class="col-md-6">
                     <form name="frmEnviar" role="form" ng-controller="mensajeController">
@@ -72,12 +74,12 @@
                         </form>
                     </div>
                 </div>
-
-            <br/>
+            </div>
             <br/>
             <hr/>
-            <br/>
-            <h2>Servicios</h2>
+            <div class="row">
+                <h2>Servicios</h2>
+            </div>
+
         </div>
-    </div>
 </div>

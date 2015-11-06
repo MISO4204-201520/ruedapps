@@ -24,6 +24,10 @@ img {
     padding: 0 1em;
 }
 
+.ruedapps-inicio-cols {
+    margin: 0 2rem;
+}
+
 .ruedapps-inline-block {
     display: inline-block;
 }
