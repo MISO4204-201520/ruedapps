@@ -60,3 +60,15 @@ img {
     background: #ffaf0f;
     color: white;
 }
+
+
+#social-separator {
+    border-top:1px dotted #AAAAAA;
+}
+
+#social-separator span {
+    background:white none repeat scroll 0 0;
+    line-height:0;
+    padding:1.1em 1.5em;
+    position:relative;
+}
