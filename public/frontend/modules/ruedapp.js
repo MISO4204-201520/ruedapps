@@ -1,7 +1,7 @@
 /*
  * Created by jasmo2 on 9/19/15.
  */
-var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies', 'ngTable'])
+var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies','satellizer' ,'ngTable'])
     /**/
 //Constants
     .constant('AUTH_EVENTS', {
@@ -123,6 +123,21 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         }])
 // /**/
 //Configurations
+    .config(['$authProvider',function($authProvider) {
+        $authProvider.facebook({
+            clientId: '1626235154309557'
+        });
+
+        $authProvider.google({
+            clientId: '989003573613-6nrpeekrkn11bqcoi1k7lbk4jgmp5f7s.apps.googleusercontent.com'
+        });
+
+        /*$authProvider.github({
+            clientId: 'GitHub Client ID'
+        });*/
+
+
+    }])
     .config(['$httpProvider',function ($httpProvider) {
         $httpProvider.interceptors.push([
             '$injector',
