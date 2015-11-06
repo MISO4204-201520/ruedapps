@@ -53,8 +53,8 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
 
             return sessionFactory;
         }])
-    .factory('AuthFactory', ['$http', 'SessionFactory',
-        function ($http, SessionFactory){
+    .factory('AuthFactory', ['$http', '$rootScope', 'SessionFactory',
+        function ($http, $rootScope, SessionFactory) {
             var authFactory = {
                 login: function (credentials) {
                     return $http
@@ -62,10 +62,12 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                         .success(function () {
                             console.log("Inició sesión");
                             SessionFactory.create(credentials);
+                            $rootScope.loginFailed = false;
                             return credentials;
                         }).error(function (res) {
                             console.log("Error login.");
                             console.log("data: "+ res);
+                            $rootScope.loginFailed = true;
                             return null;
                         });
                 },
