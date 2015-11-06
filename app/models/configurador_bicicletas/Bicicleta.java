@@ -56,8 +56,8 @@ public class Bicicleta extends Model {
     /**
      * Accesorios de la bicileta
      */
-    @OneToMany(mappedBy = "bicicleta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
+    //@OneToMany(mappedBy = "bicicleta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonIgnore
     private final List<String> accesorios;
 
     /**
