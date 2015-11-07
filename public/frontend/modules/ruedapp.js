@@ -225,5 +225,11 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 templateUrl: 'assets/frontend/views/ruta/rutasprogramadas.html'
             }
         )
+            .when(
+            '/configuradorBicicletas',{
+                controller: 'configuradorBicicletasController',
+                templateUrl: 'assets/frontend/views/configurador_bicicletas/configuradorBicicletas.html'
+            }
+        )
             .otherwise({ redirectTo: '/'})
     }]);

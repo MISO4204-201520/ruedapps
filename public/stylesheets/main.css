@@ -15,6 +15,14 @@ img {
     height: 18rem;
 }
 
+.ruedapps-botones-configurador {
+    background-color: transparent;
+    color: rgba(200, 200, 200, 1);
+    font-size: 4rem;
+    border: none !important;
+    margin: 17rem 0;
+}
+
 .ruedapps-container-gray {
     background-color: #eee;
 }
@@ -22,6 +30,21 @@ img {
 .ruedapps-glyphicons {
     font-size: 10em;
     padding: 0 1em;
+}
+
+.ruedapps-glyphicons-configurador-sm {
+    font-size: 10rem;
+    margin: 0 3rem !important;
+}
+
+.ruedapps-glyphicons-configurador-md {
+    font-size: 15rem;
+    margin: 0 3rem !important;
+}
+
+.ruedapps-glyphicons-configurador-lg {
+    font-size: 20rem;
+    margin: 0 3rem !important;
 }
 
 .ruedapps-inicio-cols {
@@ -71,4 +94,19 @@ img {
 .ruedapps-selectable .ui-selected {
     background: #ffaf0f;
     color: white;
+}
+
+.ruedapps-selectable-configurador {
+    list-style-type: none;
+    padding: 0 !important;
+}
+
+.ruedapps-selectable-configurador li {
+    margin: 0.4rem;
+    padding-left: 2rem !important;
+    height: 2rem;
+}
+
+#ruedapps-selectable-color li img {
+    border: solid 1px #adadad;
 }
