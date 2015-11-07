@@ -302,8 +302,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
 
             $http(post).success(function () {
                 console.log("crea programacion ok");
-                alert('Programación Creada');
-                window.location.replace('#/inicio');
+                $scope.programacionCreada = true;
             }).error(function (data) {
                 console.log("Error crea programacion : " + data);
             });

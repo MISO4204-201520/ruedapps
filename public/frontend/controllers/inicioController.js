@@ -8,8 +8,12 @@ ruedapp.controller('inicioController', ['$scope', '$rootScope', '$location', '$h
          Mostrar notificaciones
          */
         $(function () {
-            $scope.notificationType = "INFO";
-            $scope.notificationText = "Some content";
-            $scope.showNotification = false;
+            // mostrarNotificacion("PRUEBA", "mensaje");
         });
+
+        function mostrarNotificacion(tipo, texto) {
+            $scope.notificationType = tipo;
+            $scope.notificationText = texto;
+            $scope.showNotification = true;
+        }
     }]);
