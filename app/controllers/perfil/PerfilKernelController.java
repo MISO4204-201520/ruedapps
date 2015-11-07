@@ -161,9 +161,9 @@ public class PerfilKernelController extends Controller {
         if (usuario != null) {
             List<Ciclista> amigos = usuario.amigos;
             return ok(Json.toJson(amigos));
+        } else {
+            return Results.notFound();
         }
-
-        return Results.notFound();
     }
 
     public Result NoAmigos(long id) {
@@ -193,9 +193,9 @@ public class PerfilKernelController extends Controller {
             }
 
             return ok(Json.toJson(noAmigos));
+        } else {
+            return Results.notFound();
         }
-
-        return Results.notFound();
     }
 
     private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario) {
