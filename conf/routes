@@ -44,6 +44,7 @@ GET           /reporte/metrica/rutas/:finicio/:ffin/:id       controllers.report
 
 # Rutas directorio
 GET           /categoria                                      controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
+GET           /servicio                                       controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServicios()
 GET           /categoria/:id/servicio                         controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(id: Long)
 POST          /categoria                                      controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
 POST          /categoria/:id/servicio                         controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio(id: Long)

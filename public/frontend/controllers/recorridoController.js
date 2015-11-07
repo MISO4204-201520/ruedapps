@@ -12,6 +12,9 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
 
         var today = new Date();
 
+        var radioCercaniaServicios = 1000;
+        var marcadoresServicios = [];
+
         $scope.amigosruta = [];
         $scope.hideHistorico = true;
         $scope.minDate = today;
@@ -20,6 +23,8 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
             hora: today,
             fecha: today
         };
+
+        $scope.serviciosCercanos = [];
 
         $scope.open = function () {
             $scope.status.opened = true;
@@ -256,6 +261,54 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
 
                 setTimeout(timeoutLocation, recorridoInterval);
             }
+
+            // Obtiene todos los servicios y ubica en el mapa los que estan cerca a la ubicación actual del usuario
+            // teniendo en cuenta una constante de distancia
+            leafletData.getMap('ruedappmap').then(function (map) {
+
+                if (marcadoresServicios && marcadoresServicios.length > 0) {
+                    angular.forEach(marcadoresServicios, function (marcador) {
+                        map.removeLayer(marcador);
+                    })
+                    marcadoresServicios = [];
+                }
+
+                var get = {
+                    method: 'GET',
+                    url: '/servicio'
+                };
+
+                $http(get).success(function (data) {
+                    console.log("Obtuvo todos los servicios");
+                    console.log("data: " + data);
+                    $scope.servicios = data;
+
+                    var ubicacionActual = L.latLng(e.latitude, e.longitude);
+                    console.log("Ubicación actual: " + ubicacionActual);
+
+                    angular.forEach($scope.servicios, function (servicio) {
+                        if (servicio.ubicacion) {
+                            var ubicacionServicio = L.latLng(servicio.ubicacion.latitud, servicio.ubicacion.longitud);
+                            var distancia = ubicacionActual.distanceTo(ubicacionServicio).toFixed(0);
+                            console.log("Distancia: " + distancia);
+                            if (distancia <= radioCercaniaServicios) {
+                                $scope.serviciosCercanos.push(servicio);
+                                marcadoresServicios.push(L.marker(ubicacionServicio).bindPopup(L.popup().setContent(servicio.nombre)).openPopup());
+                            }
+                        }
+                    })
+
+                    angular.forEach(marcadoresServicios, function (marcador) {
+                        map.addLayer(marcador);
+                    });
+
+                }).error(function (data) {
+                    console.log("Error consultando servicios.");
+                    console.log("data: "+ data);
+                });
+
+            });
+
         }
 
         function createMapButton(label, container) {
