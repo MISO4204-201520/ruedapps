@@ -36,6 +36,12 @@ GET           /recorrido/programacion/:id                     controllers.ruta.R
 GET           /recorrido/programacion/organizador/:id         controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
 GET           /recorrido/programacion/participante/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorParticipante(id: Long)
 
+# Reportes
+GET           /reporte/metrica/distancia/:finicio/:ffin/:id   controllers.reporte.ReporteController.ConsultarMetricaPorDistancia(finicio:String, ffin:String, id: Long)
+GET           /reporte/metrica/tiempo/:finicio/:ffin/:id      controllers.reporte.ReporteController.ConsultarMetricaPorTiempo(finicio:String, ffin:String, id: Long)
+GET           /reporte/metrica/historico/:finicio/:ffin/:id   controllers.reporte.ReporteController.ConsultarHistoricoPorUsuario(finicio:String, ffin:String, id: Long)
+GET           /reporte/metrica/rutas/:finicio/:ffin/:id       controllers.reporte.ReporteController.ConsultarRutasPorUsusario(finicio:String, ffin:String, id: Long)
+
 # Rutas directorio
 GET           /categoria                                      controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
 GET           /categoria/:id/servicio                         controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(id: Long)

@@ -231,5 +231,23 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 templateUrl: 'assets/frontend/views/configurador_bicicletas/configuradorBicicletas.html'
             }
         )
+            .when(
+            '/reporte/metricas',{
+                controller: 'reporteController',
+                templateUrl: 'assets/frontend/views/reportes/metricas.html'
+            }
+        )
+            .when(
+            '/reporte/historico',{
+                controller: 'reporteController',
+                templateUrl: 'assets/frontend/views/reportes/historico.html'
+            }
+        )
+            .when(
+            '/reporte/rutas',{
+                controller: 'reporteController',
+                templateUrl: 'assets/frontend/views/reportes/rutas.html'
+            }
+        )
             .otherwise({ redirectTo: '/'})
     }]);

@@ -36,6 +36,10 @@
                                 <li><a href="#/mensaje">Mensajería</a></li>
                                 <li><a href="#/amigos">Mis Amigos</a></li>
                                 <li><a href="#/perfil">Mi Perfil</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#/reporte/metricas">Reporte Métricas</a></li>
+                                <li><a href="#/reporte/historico">Reporte Histórico</a></li>
+                                <li><a href="#/reporte/rutas">Reporte Rutas</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -78,6 +82,8 @@
         <script src="@routes.Assets.versioned("javascripts/ui-bootstrap.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/ui-bootstrap-tpls.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/ng-table.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/angular-chart.min.js")"></script>
 
             <!--Bootstrap styling Below-->
         <script src="@routes.Assets.versioned("javascripts/jquery.min.js")"></script>
@@ -92,5 +98,6 @@
         <script src="@routes.Assets.versioned("frontend/controllers/perfilController.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/recorridoController.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/configuradorBicicletasController.js")"></script>
+        <script src="@routes.Assets.versioned("frontend/controllers/reporteController.js")"></script>
     </body>
 </html>

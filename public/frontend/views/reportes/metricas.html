@@ -1,0 +1,24 @@
+<div class="container-fluid" ng-init="">
+    <div class="row text-center">
+        <h1>Reporte Métricas</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form name="form" role="form">
+                <div class="form-group" required>
+                    <label for="fecha">Fecha Inicial :</label>
+                    <p class="input-group">
+                        <input name="fecha" ng-model="programacion.fecha" type="text" class="form-control" is-open="status.opened"
+                               datepicker-options="dateOptions" uib-datepicker-popup="yyyy/MM/dd" id="fecha" min-date="minDate" max-date="maxDate"
+                               ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
