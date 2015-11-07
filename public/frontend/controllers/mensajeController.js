@@ -98,15 +98,4 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
                 console.log("data: " + data);
             });
         };
-
-        $scope.llenarSelectableAmigos = function () {
-            $scope.amigosSeleccionados = [];
-
-            var amigos = $("#ruedapps-selectable-amigos");
-            amigos.selectable({
-                selected: function (event, ui) {
-                    $scope.amigosSeleccionados.push(ui.selected.value);
-                }
-            });
-        };
     }]);

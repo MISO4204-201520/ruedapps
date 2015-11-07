@@ -1,6 +1,7 @@
 package controllers.ruta;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 import models.perfil.Ciclista;
 import models.ruta.*;
 import play.data.DynamicForm;
@@ -10,7 +11,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -251,31 +251,42 @@ public class RutaController extends Controller {
 
     public Result ListaProgramacionRutaPorOrganizador(long id) {
 
-        if (id == 0)
-        {
-            id = Long.valueOf(session().get("loggedUser"));
-        }
-
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("organizador.id", id).findList();
-        if (programacionRecorrido == null) {
-            return Results.notFound("Programacion Recorrido no encontrada");
-        }
-
-        return Results.ok(Json.toJson(programacionRecorrido));
-    }
-
-    public Result ListaProgramacionRutaPorParticipante(long id) {
-
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
         }
 
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().or(com.avaje.ebean.Expr.eq("participantes.id", id),
-                                                                                                     com.avaje.ebean.Expr.eq("organizador.id", id)).findList();
-        if (programacionRecorrido == null) {
-            return Results.notFound("Programacion Recorrido no encontrada");
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("organizador.id", id).findList();
+        if (programacionRecorrido != null) {
+            return Results.ok(Json.toJson(programacionRecorrido));
+        } else {
+            return Results.notFound("Programacion recorrido organizador no encontrada");
+        }
+    }
+
+    public Result ListaProgramacionRutaPorInvitado(long id) {
+        if (id == 0) {
+            id = Long.valueOf(session().get("loggedUser"));
         }
 
-        return Results.ok(Json.toJson(programacionRecorrido));
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("participantes.id", id).findList();
+        if (programacionRecorrido != null) {
+            return Results.ok(Json.toJson(programacionRecorrido));
+        } else {
+            return Results.notFound("Programacion recorrido invitado no encontrada");
+        }
+    }
+
+    public Result ListaProgramacionRutaPorParticipante(long id) {
+        if (id == 0) {
+            id = Long.valueOf(session().get("loggedUser"));
+        }
+
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().or(Expr.eq("participantes.id", id),
+                Expr.eq("organizador.id", id)).findList();
+        if (programacionRecorrido != null) {
+            return Results.ok(Json.toJson(programacionRecorrido));
+        } else {
+            return Results.notFound("Programacion recorrido participante no encontrada");
+        }
     }
 }

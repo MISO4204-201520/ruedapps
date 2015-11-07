@@ -34,6 +34,7 @@ POST          /recorrido/programacion                         controllers.ruta.R
 POST          /recorrido/programacion/ciclista/:id            controllers.ruta.RutaController.AddCiclistaProgramacionRuta(id: Long)
 GET           /recorrido/programacion/:id                     controllers.ruta.RutaController.ConsultaProgramacionRuta(id: Long)
 GET           /recorrido/programacion/organizador/:id         controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
+GET        /recorrido/programacion/invitado/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorInvitado(id: Long)
 GET           /recorrido/programacion/participante/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorParticipante(id: Long)
 
 # Reportes

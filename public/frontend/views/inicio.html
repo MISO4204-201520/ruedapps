@@ -19,13 +19,11 @@
     }
 </style>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" ng-init="consultaNotificaciones();">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <div class="alert alert-info fade in" ng-show="showNotification">
-                <a class="close" data-dismiss="alert">&times;</a>
-                <strong>{{notificationType}}:</strong> {{notificationText}}
-            </div>
+            <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}
+            </uib-alert>
         </div>
     </div>
     <div class="row">
