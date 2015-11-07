@@ -125,7 +125,9 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         }])
 // /**/
 //Configurations
-    .config(['$authProvider',function($authProvider) {
+    .config(['$authProvider',
+      function($authProvider) {
+
         $authProvider.facebook({
             clientId: '1626235154309557'
         });
@@ -133,11 +135,6 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         $authProvider.google({
             clientId: '989003573613-6nrpeekrkn11bqcoi1k7lbk4jgmp5f7s.apps.googleusercontent.com'
         });
-
-        /*$authProvider.github({
-            clientId: 'GitHub Client ID'
-        });*/
-
 
     }])
     .config(['$httpProvider',function ($httpProvider) {

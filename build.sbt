@@ -16,8 +16,6 @@ libraryDependencies ++= Seq(
   javaJpa,
   "org.xerial" % "sqlite-jdbc" % "3.8.9",
   "com.feth"      %% "play-authenticate" % "0.7.0",
-  "ws.securesocial" %% "securesocial" % "master-SNAPSHOT"
-
 )
 
 

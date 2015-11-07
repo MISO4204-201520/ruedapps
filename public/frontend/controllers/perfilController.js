@@ -2,8 +2,8 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
-    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
+ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
+    function ($scope,$auth, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
         /**
          * Definición datepicker
          * @type {Date}
@@ -198,4 +198,15 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 });
             });
         }
+        $scope.authenticate = function(provider) {
+            debugger
+            $auth.authenticate(provider)
+                .then(function() {
+                    //toastr.success('You have successfully signed in with ' + provider);
+                    $location.path('/');
+                })
+                .catch(function(response) {
+                    //toastr.error(response.data.message);
+                });
+        };
     }]);
