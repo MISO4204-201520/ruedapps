@@ -15,8 +15,7 @@ libraryDependencies ++= Seq(
   jdbc,
   javaJpa,
   "org.xerial" % "sqlite-jdbc" % "3.8.9",
-  "com.feth"      %% "play-authenticate" % "0.7.0",
-)
+  "com.feth"      %% "play-authenticate" % "0.7.0")
 
 
 // Play provides two styles of routers, one expects its actions to be injected, the
