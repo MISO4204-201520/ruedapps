@@ -9,7 +9,5 @@ public class Metrica {
 
     public Date fecha;
 
-    public int distancia;
-
-    public int tiempo;
+    public int valor;
 }
