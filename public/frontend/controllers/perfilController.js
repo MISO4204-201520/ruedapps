@@ -26,11 +26,10 @@ ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$locati
         };
 
         /**
-         * Definición selectable mis amigos
+         * Definición selectable amigos
          */
-        $(function () {
+        $scope.llenarSelectableAmigos = function () {
             $scope.amigosSeleccionados = [];
-            $scope.noAmigosSeleccionados = [];
 
             var amigos = $("#ruedapps-selectable-amigos");
             amigos.selectable({
@@ -38,8 +37,13 @@ ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$locati
                     $scope.amigosSeleccionados.push(ui.selected.value);
                 }
             });
-            amigos.on("selectableselected", function (event, ui) {
-            });
+        };
+
+        /**
+         * Definición selectable ciclistas (no amigos)
+         */
+        $scope.llenarSelectableCiclistas = function () {
+            $scope.noAmigosSeleccionados = [];
 
             var ciclistas = $("#ruedapps-selectable-ciclistas");
             ciclistas.selectable({
@@ -47,14 +51,12 @@ ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$locati
                     $scope.noAmigosSeleccionados.push(ui.selected.value);
                 }
             });
-            ciclistas.on("selectableselected", function (event, ui) {
-            });
-        });
+        };
 
         /**
-         * Obtención de amigos y usuarios de la plataforma.
+         * Obtención de amigos y ciclistas de la plataforma.
          */
-        $(function () {
+        $scope.consultaAmigosCiclistas = function () {
             var get = {
                 method: 'GET',
                 url: '/ciclista/' + $rootScope.globals.currentUser.userId
@@ -73,7 +75,7 @@ ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$locati
                     $scope.amigos = data;
 
                 }).error(function (data) {
-                    console.log("Error amigos.");
+                    console.log("Error consulta amigos");
                     console.log("data: " + data);
                 });
 
@@ -85,15 +87,15 @@ ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$locati
                     $scope.noAmigos = data;
 
                 }).error(function (data) {
-                    console.log("Error no amigos.");
+                    console.log("Error consulta no amigos");
                     console.log("data: " + data);
                 });
 
             }).error(function (data) {
-                console.log("Error obtención id.");
+                console.log("Error obtención ciclista");
                 console.log("data: " + data);
             });
-        });
+        };
 
         $scope.registrar = function () {
             if ($scope.form.$valid) {

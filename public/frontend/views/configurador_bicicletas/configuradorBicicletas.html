@@ -1,0 +1,85 @@
+<div class="container-fluid">
+    <div class="row text-center">
+        <h1>Configurador de Bicicletas</h1>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="row text-center">
+                <div class="col-md-1">
+                    <button class="ruedapps-inline-block ruedapps-botones-configurador" ng-click="retroceder()" ng-show="pasoConfigurador != 1">
+                        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                <div class="ruedapps-inline-block col-md-10" ng-show="pasoConfigurador == 1">
+                    <h2 class="text-left">1. Color</h2>
+                    <p class="text-left">Selecciona tu color favorito.</p>
+                    <br>
+                    <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-color">
+                        <li class="ui-widget-content" value="Blanco"><img src="assets/images/color-blanco.png"></li>
+                        <li class="ui-widget-content" value="Verde"><img src="assets/images/color-verde.png"></li>
+                        <li class="ui-widget-content" value="Azul"><img src="assets/images/color-azul.png"></li>
+                    </ol>
+                </div>
+
+                <div class="ruedapps-inline-block col-md-10" ng-show="pasoConfigurador == 2">
+                    <h2 class="text-left">2. Tamaño</h2>
+                    <p class="text-left">Selecciona el tamaño de bici de tu preferencia.</p>
+                    <br>
+                    <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-tamanio">
+                        <li class="ui-widget-content ruedapps-glyphicons-configurador-sm" value="Pequeña"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></li>
+                        <li class="ui-widget-content ruedapps-glyphicons-configurador-md" value="Mediana"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></li>
+                        <li class="ui-widget-content ruedapps-glyphicons-configurador-lg" value="Grande"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></li>
+                    </ol>
+                </div>
+
+                <div class="ruedapps-inline-block col-md-10" ng-show="pasoConfigurador == 3">
+                    <h2 class="text-left">3. Llantas</h2>
+                    <p class="text-left">Selecciona el tipo de llantas que se acoplan a tu rutina.</p>
+                    <br>
+                    <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-llantas">
+                        <li class="ui-widget-content" value="Ciudad"><img src="assets/images/llanta-ciudad.png"></li>
+                        <li class="ui-widget-content" value="Montaña"><img src="assets/images/llanta-montania.png"></li>
+                        <li class="ui-widget-content" value="Velocidad"><img src="assets/images/llanta-velocidad.png"></li>
+                    </ol>
+                </div>
+
+                <div class="ruedapps-inline-block col-md-10" ng-show="pasoConfigurador == 4">
+                    <h2 class="text-left">4. Sillín</h2>
+                    <p class="text-left">Selecciona el sillín que se acomode a tu estilo.</p>
+                    <br>
+                    <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-sillin">
+                        <li class="ui-widget-content" value="Ciudad"><img src="assets/images/sillin-con-abertura.png"></li>
+                        <li class="ui-widget-content" value="Montaña"><img src="assets/images/sillin-con-resorte.png"></li>
+                        <li class="ui-widget-content" value="Velocidad"><img src="assets/images/sillin-ancho.png"></li>
+                    </ol>
+                </div>
+
+                <div class="ruedapps-inline-block col-md-10" ng-show="pasoConfigurador == 5">
+                    <h2 class="text-left">5. Accesorios</h2>
+                    <p class="text-left">Selecciona los accesorios que desees agregar a tu bicicleta.</p>
+                    <br>
+                    <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-accesorios">
+                        <li class="ui-widget-content" value="Ciudad"><img src="assets/images/accesorio-canasta.png"></li>
+                        <li class="ui-widget-content" value="Montaña"><img src="assets/images/accesorio-pito.png"></li>
+                    </ol>
+                </div>
+
+                <div class="col-md-1">
+                    <button class="ruedapps-inline-block ruedapps-botones-configurador" ng-show="pasoConfigurador != 5" ng-click="avanzar()">
+                        <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+                    </button>
+                    <button class="ruedapps-inline-block ruedapps-botones-configurador" ng-show="pasoConfigurador == 5" ng-click="finalizarConfiguracion()">
+                        <span class="glyphicon glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

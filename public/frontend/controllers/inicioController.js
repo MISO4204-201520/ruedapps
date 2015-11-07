@@ -4,48 +4,62 @@
 
 ruedapp.controller('inicioController', ['$scope', '$rootScope', '$location', '$http',
     function ($scope, $rootScope, $location, $http) {
-        /**
-         * Obtención de amigos y usuarios de la plataforma.
+        // No hay alertas iniciales
+        $scope.alerts = [];
+
+        /*
+         Mostrar notificaciones
          */
-        $(function () {
+        $scope.consultaNotificaciones = function () {
+            consultaRutasHoy();
+            consultaRutasInvitado();
+        };
+
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
+
+        function addAlert(alertType, alertText) {
+            $scope.alerts.push({type: alertType, msg: alertText});
+        }
+
+        function consultaRutasInvitado() {
             var get = {
-                method: 'GET',
-                url: '/ciclista/' + $rootScope.globals.currentUser.userId
+                method: 'get',
+                url: '/recorrido/programacion/invitado/0',
+                headers: {'Content-Type': 'application/json'}
             };
 
             $http(get).success(function (data) {
-                console.log("Obtuvo usuario");
-                console.log("data: " + data);
-                $scope.userGlobalId = data;
-
-                var get1 = {
-                    method: 'GET',
-                    url: '/ciclista/' + $scope.userGlobalId + '/amigos'
-                };
-                $http(get1).success(function (data) {
-                    $scope.amigos = data;
-
-                }).error(function (data) {
-                    console.log("Error amigos.");
-                    console.log("data: " + data);
+                console.log("consulta rutas invitado ok");
+                data.forEach(function (ruta) {
+                    addAlert("info", "Ruta: usted fue invitado a la ruta '" + ruta.nombre + "' por su amigo " + ruta.organizador.nombres);
                 });
-
             }).error(function (data) {
-                console.log("Error obtención id.");
-                console.log("data: " + data);
+                console.log("info", "Error consulta rutas invitado : " + data);
             });
-        });
+        }
 
-        var planearRecorrido = function () {
-            window.location.replace('#/recorridos');
-        };
+        function consultaRutasHoy() {
+            var get = {
+                method: 'get',
+                url: '/recorrido/programacion/participante/0',
+                headers: {'Content-Type': 'application/json'}
+            };
 
-        var enviarMensaje = function () {
-            window.location.replace('#/mensaje');
-        };
+            $http(get).success(function (data) {
+                console.log("consulta rutas hoy ok");
+                data.forEach(function (ruta) {
+                    if (myDayDiff(ruta.fechaInicio, Date.now()) <= 1) {
+                        addAlert("warning", "Ruta: Hoy usted tiene programada la ruta '" + ruta.nombre + "'.");
+                    }
+                });
+            }).error(function (data) {
+                console.log("info", "Error consulta rutas hoy: " + data);
+            });
+        }
 
-        var agregarAmigo = function () {
-            window.location.replace('#/amigos');
-        };
-
+        function myDayDiff(first, second) {
+            return Math.abs(Math.round((second - first) / (1000 * 60 * 60 * 24)));
+        }
     }]);

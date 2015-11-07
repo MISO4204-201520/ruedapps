@@ -2,6 +2,7 @@
  * Created by jasmo2 on 9/19/15.
  */
 var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies','satellizer' ,'ngTable'])
+var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies', 'ngTable', 'chart.js'])
     /**/
 //Constants
     .constant('AUTH_EVENTS', {
@@ -235,6 +236,30 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
             '/recorridos/prog',{
                 controller: 'recorridoController',
                 templateUrl: 'assets/frontend/views/ruta/rutasprogramadas.html'
+            }
+        )
+            .when(
+            '/configuradorBicicletas',{
+                controller: 'configuradorBicicletasController',
+                templateUrl: 'assets/frontend/views/configurador_bicicletas/configuradorBicicletas.html'
+            }
+        )
+            .when(
+            '/reporte/metricas',{
+                controller: 'reporteController',
+                templateUrl: 'assets/frontend/views/reportes/metricas.html'
+            }
+        )
+            .when(
+            '/reporte/historico',{
+                controller: 'reporteController',
+                templateUrl: 'assets/frontend/views/reportes/historico.html'
+            }
+        )
+            .when(
+            '/reporte/rutas',{
+                controller: 'reporteController',
+                templateUrl: 'assets/frontend/views/reportes/rutas.html'
             }
         )
             .otherwise({ redirectTo: '/'})

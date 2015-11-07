@@ -25,6 +25,11 @@ public class DirectorioServiciosKernelController extends Controller {
         return ok(toJson(categorias));
     }
 
+    public Result retornarServicios() {
+        List<Servicio> servicios = Ebean.find(Servicio.class).findList();
+        return ok(toJson(servicios));
+    }
+
     public Result retornarServiciosPorCategoria(long idCategoria) {
         Categoria categoria = Ebean.find(Categoria.class, idCategoria);
         List<Servicio> servicios = new ArrayList<>();
@@ -85,6 +90,8 @@ public class DirectorioServiciosKernelController extends Controller {
             ubicacion.latitud = form.get().ubicacion.latitud;
             ubicacion.longitud = form.get().ubicacion.longitud;
             ubicacion.save();
+
+            servicio.ubicacion = ubicacion;
 
             servicio.save();
 

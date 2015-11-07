@@ -8,14 +8,44 @@ ruedapp.controller('directorioController', ['$scope', '$rootScope', '$http', '$c
         $scope.categorias = null;
         $scope.serviciosPorCategoria = null;
         $scope.categoriaSeleccionada = null;
+        $scope.ubicacionServicio = null;
 
-        $scope.loadmap = function () {
-            // ToDo drag del marker y Onclick get LatLog en el Disable input
-            leafletData.getMap('ubicacion-map').then(function (map) {
-                map.locate({setView: true, maxZoom: 16});
-                L.Control.geocoder().addTo(map);
-            });
+        var mainMarker = {
+            lat: 4.711245,
+            lng: -74.077608,
+            focus: true,
+            message: "Arrastrame para indicar tu ubicación",
+            draggable: true
         };
+
+        angular.extend($scope, {
+            bogota: {
+                lat: 4.711245,
+                lng: -74.077608,
+                zoom: 11
+            },
+            markers: {
+                mainMarker: angular.copy(mainMarker)
+            },
+            position: {
+                lat: 4.711245,
+                lng: -74.077608
+            },
+            events: { // or just {} //all events
+                markers:{
+                    enable: [ 'dragend' ]
+                    //logic: 'emit'
+                }
+            }
+        });
+
+        $scope.$on("leafletDirectiveMarker.dragend", function (event, args) {
+            //$scope.position.lat = args.model.lat;
+            //$scope.position.lng = args.model.lng;
+            console.log("Prueba: " + args.model.lat + ", " + args.model.lng);
+            $scope.ubicacionServicio = args.model.lat + ", " + args.model.lng;
+        });
+
         $scope.registrarCategoria = function () {
 
             if($scope.form.$valid) {
@@ -93,6 +123,22 @@ ruedapp.controller('directorioController', ['$scope', '$rootScope', '$http', '$c
 
             if($scope.form.$valid) {
                 var servicio = $scope.servicio;
+                var ubicacionServicio = $scope.ubicacionServicio;
+
+                console.log("Ubicacion: " + ubicacionServicio);
+
+                var latLng = ubicacionServicio.split(",");
+                var latitud = latLng[0];
+                var longitud = latLng[1];
+
+                servicio.ubicacion = {
+                    nombre : servicio.nombre,
+                    latitud : latitud,
+                    longitud : longitud
+                };
+
+                console.log(servicio);
+
                 var post = {
                     method: 'POST',
                     url: '/categoria/' + idCategoria + '/servicio',

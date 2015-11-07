@@ -6,6 +6,7 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
     function ($scope, $rootScope, $http) {
         $scope.conectar = function () {
             // Abrir socket
+            // TODO: URL socket relativa
             var websocket = new WebSocket("ws://localhost:9000/mensajeSocket");
             websocket.onopen = function (evt) {
                 onOpen(evt)
@@ -23,15 +24,15 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
             // Todos los eventos que el socket atiende
 
             function onOpen() {
-                console.log("CONNECTED");
+                console.log("Message socket connected");
             }
 
             function onClose() {
-                console.log("DISCONNECTED");
+                console.log("Message socket disconected");
             }
 
             function onMessage(evt) {
-                console.log("MENSAJE: " + evt.data);
+                console.log("Message received: " + evt.data);
 
                 var dto = JSON.parse(evt.data);
                 var recibidos = $('#mensajesRecibidos');
@@ -39,7 +40,7 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
             }
 
             function onError(evt) {
-                console.log("ERROR: " + evt.data);
+                console.log("Message error: " + evt.data);
             }
 
             $rootScope.mensajeSocket = websocket;

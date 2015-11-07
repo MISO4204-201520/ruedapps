@@ -30,35 +30,34 @@ public class Bicicleta extends Model {
      */
     @Column(nullable = false)
     @Constraints.Required
-    private final String color;
+    private String color;
 
     /**
      * Tamanio de la bicicleta
      */
     @Column(nullable = false)
     @Constraints.Required
-    private final String tamanio;
+    private String tamanio;
 
     /**
      * Llantas de la bicicleta
      */
     @Column(nullable = false)
     @Constraints.Required
-    private final String llantas;
+    private String llantas;
 
     /**
      * Sillin de la bicicleta
      */
     @Column(nullable = false)
     @Constraints.Required
-    private final String sillin;
+    private String sillin;
 
     /**
-     * Accesorios de la bicileta
+     * Accesorios de la bicicleta
      */
-    //@OneToMany(mappedBy = "bicicleta", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonIgnore
-    private final List<String> accesorios;
+    @OneToMany(mappedBy="bicicleta")
+    private List<Accesorio> accesorios;
 
     /**
      * Constructor de la clase bicicleta
@@ -108,7 +107,7 @@ public class Bicicleta extends Model {
      * Getter de los accesorios
      * @return
      */
-    public List<String> getAccesorios() {
+    public List<Accesorio> getAccesorios() {
         return accesorios;
     }
 
@@ -120,33 +119,33 @@ public class Bicicleta extends Model {
         /**
          * Color de la biclicleta
          */
-        private String color;
+        public String color;
 
         /**
          * Tamanio de la bicicleta
          */
-        private String tamanio;
+        public String tamanio;
 
         /**
          * Llantas de la bicicleta
          */
-        private String llantas;
+        public String llantas;
 
         /**
          * Sillin de la bicicleta
          */
-        private String sillin;
+        public String sillin;
 
         /**
          * Accesorios de la bicileta
          */
-        private List<String> accesorios;
+        public List<Accesorio> accesorios;
 
         /**
          * Constructor del builder
          */
         public BicicletaBuilder() {
-            this.accesorios = new ArrayList<String>();
+            this.accesorios = new ArrayList<Accesorio>();
         }
 
         /**
@@ -210,7 +209,7 @@ public class Bicicleta extends Model {
          * @param accesorio
          * @return builder
          */
-        public BicicletaBuilder accesorios(String accesorio) {
+        public BicicletaBuilder accesorios(Accesorio accesorio) {
             if(accesorio.equals(BicicletaConstantes.ACCESORIOS_CANASTA) ||
                     accesorio.equals(BicicletaConstantes.ACCESORIOS_PITO)) {
                 this.accesorios.add(accesorio);
