@@ -113,7 +113,7 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     color:"Blanco",
                     tamanio: "Pequeña",
                     llantas: "Montaña",
-                    sillin: "Ciudad",
+                    sillin: "Carrera",
                     accesorios: ["Pito"]
                 }
             };
