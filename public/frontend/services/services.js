@@ -6,20 +6,21 @@ angular.module('ruedapp.services', [])
     .factory('oauthServices', function($q) {
 
     var authorizationResult = false;
-
+    var provider = typeof provider !== 'undefined' ? provider : '';
     return {
-        initialize: function() {
+        initialize: function(provide) {
+            provider = provide
             //initialize OAuth.io with public key of the application
             OAuth.initialize('aRz8k9AQSMZrgo1xnjeEU9_FDac', {cache:true});
             //try to create an authorization result when the page loads, this means a returning user won't have to click the twitter button again
-            authorizationResult = OAuth.create('twitter');
+            authorizationResult = OAuth.create(provider);
         },
         isReady: function() {
             return (authorizationResult);
         },
         connect: function() {
             var deferred = $q.defer();
-            OAuth.popup('twitter', {cache:true}, function(error, result) { //cache means to execute the callback if the tokens are already present
+            OAuth.popup(provider, {cache:true}, function(error, result) { //cache means to execute the callback if the tokens are already present
                 if (!error) {
                     authorizationResult = result;
                     deferred.resolve();
@@ -30,8 +31,16 @@ angular.module('ruedapp.services', [])
             return deferred.promise;
         },
         clearCache: function() {
-            OAuth.clearCache('twitter');
+            OAuth.clearCache(provider);
             authorizationResult = false;
+        },
+        getUserInfo: function(){
+            debugger
+            var deferred = $q.defer(),
+                promise = authorizationResult.get('/1.1/account/verify_credentials.json').done(function(data){
+                    debugger
+                    //deferred.resolve(data)
+                })
         },
         getLatestTweets: function () {
             //create a deferred object using Angular's $q service

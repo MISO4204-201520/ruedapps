@@ -3,7 +3,7 @@
  */
 
 ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthServices',
-    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,twitterService) {
+    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,oauthServices) {
         /**
          * Definición datepicker
          * @type {Date}
@@ -204,10 +204,11 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
         }
         $scope.authenticate = function(provider) {
             $scope.tweets; //array of tweets
-            oauthServices.initialize();
+            oauthServices.initialize(provider);
             oauthServices.connect().then(function() {
                 if (oauthServices.isReady()) {
                     //if the authorization is successful, hide the connect button and display the tweets
+                    oauthServices.getUserInfo();
                    alert("conectado a twitter");
                 }
             });
