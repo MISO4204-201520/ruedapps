@@ -7,8 +7,17 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
         $scope.pasoConfigurador = 1;
 
         $scope.bicicleta = {};
-
         $scope.bicicleta.accesorios = [];
+
+        $scope.alertas = []
+
+        $scope.cerrarAlerta = function (index) {
+            $scope.alertas.splice(index, 1);
+        };
+
+        function adicionarAlerta(alertaTipo, alertaTexto) {
+            $scope.alertas.push({type: alertaTipo, msg: alertaTexto});
+        }
 
         /**
          * Definición selectable de los distintos pasos del configurador
@@ -21,7 +30,8 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.color = $(this).attr('value');
-                        alert("Color seleccionado: " + $scope.bicicleta.color);
+                        //alert("Color seleccionado: " + $scope.bicicleta.color);
+                        adicionarAlerta("success", "Color seleccionado: " + $scope.bicicleta.color);
                     });
                 }
             });
@@ -32,7 +42,8 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.tamanio = $(this).attr('value');
-                        alert("Tamaño seleccionado: " + $scope.bicicleta.tamanio);
+                        //alert("Tamaño seleccionado: " + $scope.bicicleta.tamanio);
+                        adicionarAlerta("success", "Tamaño seleccionado: " + $scope.bicicleta.tamanio);
                     });
                 }
             });
@@ -43,7 +54,8 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.llantas = $(this).attr('value');
-                        alert("Tipo llantas seleccionadas: " + $scope.bicicleta.llantas);
+                        //alert("Tipo llantas seleccionadas: " + $scope.bicicleta.llantas);
+                        adicionarAlerta("success", "Tipo llantas seleccionadas: " + $scope.bicicleta.llantas);
                     });
                 }
             });
@@ -54,7 +66,8 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.sillin = $(this).attr('value');
-                        alert("Tipo sillin seleccionado: " + $scope.bicicleta.sillin);
+                        //alert("Tipo sillin seleccionado: " + $scope.bicicleta.sillin);
+                        adicionarAlerta("success", "Tipo sillin seleccionado: " + $scope.bicicleta.sillin);
                     });
                 }
             });
@@ -88,28 +101,32 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     if ($scope.bicicleta.color) {
                         $scope.pasoConfigurador += 1;
                     } else {
-                        alert("Aún no ha seleccionado un color");
+                        //alert("Aún no ha seleccionado un color");
+                        adicionarAlerta("danger", "Aún no ha seleccionado un color");
                     }
                 }
                 if ($scope.pasoConfigurador == 2) {
                     if ($scope.bicicleta.tamanio) {
                         $scope.pasoConfigurador += 1;
                     } else {
-                        alert("Aún no ha seleccionado un tamaño");
+                        //alert("Aún no ha seleccionado un tamaño");
+                        adicionarAlerta("danger", "Aún no ha seleccionado un tamaño");
                     }
                 }
                 if ($scope.pasoConfigurador == 3) {
                     if ($scope.bicicleta.llantas) {
                         $scope.pasoConfigurador += 1;
                     } else {
-                        alert("Aún no ha seleccionado un tipo de llantas");
+                        //alert("Aún no ha seleccionado un tipo de llantas");
+                        adicionarAlerta("danger", "Aún no ha seleccionado un tipo de llantas");
                     }
                 }
                 if ($scope.pasoConfigurador == 4) {
                     if ($scope.bicicleta.sillin) {
                         $scope.pasoConfigurador += 1;
                     } else {
-                        alert("Aún no ha seleccionado un tipo de sillin");
+                        //alert("Aún no ha seleccionado un tipo de sillin");
+                        adicionarAlerta("danger", "Aún no ha seleccionado un tipo de sillin");
                     }
                 }
             }

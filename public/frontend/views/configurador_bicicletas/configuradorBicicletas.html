@@ -8,6 +8,10 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <form name="form" role="form" ng-controller="configuradorBicicletasController">
+                <div class="col-md-8">
+                    <uib-alert ng-repeat="alerta in alertas" type="{{alerta.type}}" close="cerrarAlerta($index)">{{alerta.msg}}
+                    </uib-alert>
+                </div>
                 <div class="row text-center">
                     <div class="col-md-1">
                         <button class="ruedapps-inline-block ruedapps-botones-configurador" ng-click="retroceder()" ng-show="pasoConfigurador != 1">
