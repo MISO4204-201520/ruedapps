@@ -31,7 +31,8 @@ public class ConfiguradorBicicletasController extends Controller {
         Bicicleta bicicleta = SetBicicleta(builder, postForm);
         bicicleta.save();
 
-        if (adicionarBicicletaCiclista(bicicleta).equals(Results.ok())) {
+        boolean result = adicionarBicicletaCiclista(bicicleta);
+        if (result) {
             return Results.created();
         } else {
             return Results.badRequest();
@@ -59,17 +60,20 @@ public class ConfiguradorBicicletasController extends Controller {
         return bicicleta;
     }
 
-    private Result adicionarBicicletaCiclista(Bicicleta bicicleta) {
+    private boolean adicionarBicicletaCiclista(Bicicleta bicicleta) {
         String usuarioLogueado = session().get("loggedUser");
         Usuario usuario = Usuario.find.byId(Long.valueOf(usuarioLogueado));
+        System.out.println("Usuario:" + usuario);
 
         if (usuario != null && usuario instanceof Ciclista) {
+            System.out.println("Buen if");
             Ciclista ciclista = (Ciclista) usuario;
             ciclista.bicicletas.add(bicicleta);
             ciclista.update();
-            return Results.ok();
+            return true;
         } else {
-            return Results.notFound();
+            System.out.println("mal if");
+            return false;
         }
     }
 }
