@@ -3,6 +3,8 @@ package controllers.configurador_bicicletas;
 import models.configurador_bicicletas.Accesorio;
 import models.configurador_bicicletas.Bicicleta;
 import models.configurador_bicicletas.BicicletaDTO;
+import models.perfil.Ciclista;
+import models.perfil.Usuario;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -29,7 +31,12 @@ public class ConfiguradorBicicletasController extends Controller {
         Bicicleta bicicleta = SetBicicleta(builder, postForm);
         bicicleta.save();
 
-        return Results.created();
+        if (adicionarBicicletaCiclista(bicicleta).equals(Results.ok())) {
+            return Results.created();
+        } else {
+            return Results.badRequest();
+        }
+
     }
 
     private static Bicicleta SetBicicleta(Bicicleta.BicicletaBuilder builder, Form<? extends BicicletaDTO> formBicicleta) {
@@ -50,5 +57,19 @@ public class ConfiguradorBicicletasController extends Controller {
 
 
         return bicicleta;
+    }
+
+    private Result adicionarBicicletaCiclista(Bicicleta bicicleta) {
+        String usuarioLogueado = session().get("loggedUser");
+        Usuario usuario = Usuario.find.byId(Long.valueOf(usuarioLogueado));
+
+        if (usuario != null && usuario instanceof Ciclista) {
+            Ciclista ciclista = (Ciclista) usuario;
+            ciclista.bicicletas.add(bicicleta);
+            ciclista.update();
+            return Results.ok();
+        } else {
+            return Results.notFound();
+        }
     }
 }
