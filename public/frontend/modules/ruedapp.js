@@ -249,5 +249,11 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
                 templateUrl: 'assets/frontend/views/reportes/rutas.html'
             }
         )
+            .when(
+            '/rutagrupal/:param',{
+                controller: 'recorridoController',
+                templateUrl: 'assets/frontend/views/ruta/mapa.html'
+            }
+        )
             .otherwise({ redirectTo: '/'})
     }]);

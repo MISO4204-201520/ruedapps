@@ -97,15 +97,9 @@ public class RutaController extends Controller {
     }
 
 
+    public Result SaveRecorrido(long rutaId) {
 
-    public Result SaveRecorrido() {
-        Form<Recorrido> postForm = Form.form(Recorrido.class).bindFromRequest();
-
-        if (postForm.hasErrors() || postForm.get().ruta == null) {
-            return badRequest(postForm.errorsAsJson());
-        }
-
-        Ruta ruta = Ebean.find(Ruta.class, postForm.get().ruta.id);
+        Ruta ruta = Ebean.find(Ruta.class, rutaId);
         if (ruta == null) {
             return Results.notFound("Ruta no encontrada ");
         }
@@ -114,7 +108,7 @@ public class RutaController extends Controller {
         recorrido.ruta = ruta;
         recorrido.save();
 
-        return Results.created(Json.toJson(recorrido));
+        return Results.created(Json.toJson(recorrido.id));
     }
 
 

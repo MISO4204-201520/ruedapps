@@ -3,6 +3,7 @@ package controllers.reporte;
 import com.avaje.ebean.Ebean;
 import models.reporte.Metrica;
 import models.ruta.HistoricoRecorrido;
+import models.ruta.ProgramacionRuta;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -28,9 +29,9 @@ public class ReporteController extends Controller {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaInicioDate = format.parse(fechaInicio);
-            Date fechaFinDate = format.parse(fechaFin);
+            Date fechaFinDate = addDays(format.parse(fechaFin), 1);
 
-            List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).ge("fecha", fechaInicioDate).le("fecha", fechaFinDate).findList();
+            List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).ge("fecha", fechaInicioDate).lt("fecha", fechaFinDate).findList();
             Set<Map.Entry<String, Integer>> set = historicoRecorridos.stream().collect(Collectors.groupingBy(h -> format.format(h.fecha), Collectors.summingInt(s -> s.recorrido.CalcularDistancia()))).entrySet();
 
             List<Metrica> m = new ArrayList<>();
@@ -60,9 +61,9 @@ public class ReporteController extends Controller {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaInicioDate = format.parse(fechaInicio);
-            Date fechaFinDate = format.parse(fechaFin);
+            Date fechaFinDate = addDays(format.parse(fechaFin), 1);
 
-            List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).ge("fecha", fechaInicioDate).le("fecha", fechaFinDate).findList();
+            List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).ge("fecha", fechaInicioDate).lt("fecha", fechaFinDate).findList();
             Set<Map.Entry<String, Integer>> set = historicoRecorridos.stream().collect(Collectors.groupingBy(h -> format.format(h.fecha), Collectors.summingInt(s -> s.duracion))).entrySet();
 
             List<Metrica> m = new ArrayList<>();
@@ -93,9 +94,9 @@ public class ReporteController extends Controller {
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaInicioDate = format.parse(fechaInicio);
-            Date fechaFinDate = format.parse(fechaFin);
+            Date fechaFinDate = addDays(format.parse(fechaFin), 1);
 
-            List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).ge("fecha", fechaInicioDate).le("fecha", fechaFinDate).findList();
+            List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).ge("fecha", fechaInicioDate).lt("fecha", fechaFinDate).findList();
             return ok(Json.toJson(historicoRecorridos));
         }
         catch (ParseException ex)
@@ -111,7 +112,26 @@ public class ReporteController extends Controller {
             id = Long.valueOf(session().get("loggedUser"));
         }
 
-        List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).findList();
-        return ok(Json.toJson(historicoRecorridos));
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaInicioDate = format.parse(fechaInicio);
+            Date fechaFinDate = addDays(format.parse(fechaFin), 1);
+
+            List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().ge("fechaInicio", fechaInicioDate).lt("fechaInicio", fechaFinDate).or(com.avaje.ebean.Expr.eq("participantes.id", id), com.avaje.ebean.Expr.eq("organizador.id", id)).findList();
+            return ok(Json.toJson(programacionRecorrido));
+        }
+        catch (ParseException ex)
+        {
+            return badRequest();
+        }
     }
+
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
+
 }

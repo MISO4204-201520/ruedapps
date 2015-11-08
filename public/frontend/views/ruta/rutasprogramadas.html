@@ -18,7 +18,7 @@
             <td>{{row.nombre}}</td>
             <td>{{row.ruta.origen.nombre + ' (Lt:' + row.ruta.origen.latitud + ') (Lg:' + row.ruta.origen.longitud + ')' }}</td>
             <td>{{row.ruta.destino.nombre + ' (Lt:' + row.ruta.destino.latitud + ') (Lg:' + row.ruta.destino.longitud + ')'}}</td>
-            <td><a href="#/ruta" ng-click="">
+            <td><a href="#/rutagrupal/{{row.id}}">
                 Iniciar
             </a>
             </td>

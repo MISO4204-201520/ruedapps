@@ -2,12 +2,14 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'leafletData', 'ngTableParams',
-    function ($scope, $rootScope, $http, leafletData, ngTableParams) {
+ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams',
+    function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams) {
 
+        $scope.param = $routeParams.param;
         var recorridoInterval = 10000;
         var control;
         var recorridoId = 0;
+        var rutaRecorridoId = 0;
         var inicioRecorrido;
 
         var today = new Date();
@@ -88,6 +90,23 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
                     });
                 });
             });
+
+            if (typeof($scope.param) != 'undefined') {
+                var get = {
+                    method: 'GET',
+                    url: '/recorrido/programacion/' + $scope.param,
+                    headers: {'Content-Type': 'application/json'},
+                };
+
+                $http(get).success(function (data) {
+                    console.log("consulta programacion ok");
+                    rutaRecorridoId = data.ruta.id;
+                    control.spliceWaypoints(0, 1, L.latLng(data.ruta.origen.latitud, data.ruta.origen.longitud));
+                    control.spliceWaypoints(control.getWaypoints().length - 1, 1, L.latLng(data.ruta.destino.latitud, data.ruta.destino.longitud));
+                }).error(function (data) {
+                    console.log("Error consulta programacion : " + data);
+                });
+            }
         };
 
         $scope.guardahistorico = function () {
@@ -185,6 +204,27 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
 
         $scope.iniciarecorrido = function () {
 
+            if (rutaRecorridoId > 0) {
+                var post = {
+                    method: 'POST',
+                    url: '/recorrido/' + rutaRecorridoId,
+                    headers: {'Content-Type': 'application/json'},
+                };
+
+                $http(post).success(function (data) {
+                    recorridoId = data;
+                    inicioRecorrido = new Date();
+                    $scope.hideRecorrido = true;
+                    $scope.hideHistorico = false;
+                    timeoutLocation();
+                    console.log("inicio recorrido grupal id: " + data);
+                }).error(function (data) {
+                    console.log("Error inicio recorrido: " + data);
+                });
+
+                return;
+            }
+
             leafletData.getMap('ruedappmap').then(function () {
 
                 var wayPoints = control.getWaypoints();
@@ -218,7 +258,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', 'lea
                     inicioRecorrido = new Date();
                     $scope.hideRecorrido = true;
                     $scope.hideHistorico = false;
-                    setTimeout(timeoutLocation, recorridoInterval);
+                    timeoutLocation();
                     console.log("inicio recorrido id: " + data);
                 }).error(function (data) {
                     console.log("Error inicio recorrido: " + data);

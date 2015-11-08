@@ -53,7 +53,7 @@ ruedapp.controller('reporteController', ['$scope', '$rootScope', '$http', '$filt
 
             var get = {
                 method: 'get',
-                url: '/reporte/metrica/historico/' + fechaInicial + '/' + fechaFinal + '/0',
+                url: '/reporte/historico/' + fechaInicial + '/' + fechaFinal + '/0',
                 headers: {'Content-Type': 'application/json'}
             };
 
@@ -67,6 +67,33 @@ ruedapp.controller('reporteController', ['$scope', '$rootScope', '$http', '$filt
                 console.log("Error consulta historico : " + data);
             });
         }
+
+        $scope.consultarutas = function () {
+
+            if (typeof($scope.reporte.fechaInicial) == 'undefined' || typeof($scope.reporte.fechaFinal) == 'undefined') {
+                return;
+            }
+
+            var fechaInicial = $scope.reporte.fechaInicial.getFullYear() + '-' +  ($scope.reporte.fechaInicial.getMonth() + 1) + '-' + $scope.reporte.fechaInicial.getDate();
+            var fechaFinal = $scope.reporte.fechaFinal.getFullYear() + '-' +  ($scope.reporte.fechaFinal.getMonth() + 1) + '-' + $scope.reporte.fechaFinal.getDate();
+
+            var get = {
+                method: 'get',
+                url: '/reporte/rutas/' + fechaInicial + '/' + fechaFinal + '/0',
+                headers: {'Content-Type': 'application/json'}
+            };
+
+            $http(get).success(function (data) {
+                console.log("consulta ok");
+                $scope.tableParams.settings({
+                    data: data
+                });
+
+            }).error(function (data) {
+                console.log("Error consulta rutas : " + data);
+            });
+        }
+
 
 
         $scope.consultametricas = function () {
@@ -92,7 +119,7 @@ ruedapp.controller('reporteController', ['$scope', '$rootScope', '$http', '$filt
                     data: data
                 });
             }).error(function (data) {
-                console.log("Error consulta historico : " + data);
+                console.log("Error consulta metricas : " + data);
             });
         }
 
@@ -108,6 +135,5 @@ ruedapp.controller('reporteController', ['$scope', '$rootScope', '$http', '$filt
                 $scope.data[0].push(entry.valor);
             });
         }
-
     }
 ]);
