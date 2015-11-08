@@ -1,8 +1,8 @@
 /*
  * Created by jasmo2 on 9/19/15.
  */
-var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies','satellizer' ,'ngTable'])
-var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies', 'ngTable', 'chart.js'])
+
+var ruedapp = angular.module('ruedapp',['ruedapp.services','ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies' ,'ngTable','chart.js'])
     /**/
 //Constants
     .constant('AUTH_EVENTS', {
@@ -20,89 +20,6 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
     /**/
 //Services
 
-    /**/
-//Factories
-    .factory('SessionFactory', ['$rootScope','$http','$cookies',
-        function ($rootScope, $http, $cookies) {
-            var sessionFactory = {
-                create: function (credentials) {
-                    this.cookie = $cookies.get('PLAY_SESSION');
-                    var userId = this.cookie ? this.cookie.split("User=")[1] : credentials.correoElectronico;
-                    var authdata = Base64.encode(credentials.correoElectronico + ':' + credentials.contrasenia);
-                    $rootScope.globals = {
-                        'currentUser': {
-                            'userId': userId,
-                            'authdata': authdata
-                        }
-                    };
-                    $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-                    $cookies.put('globals', JSON.stringify($rootScope.globals));
-                    return null;
-                },
-                destroy: function () {
-                    this.cookie = null;
-                    $cookies.remove('globals');
-                    $rootScope.globals = {
-                        'currentUser': {
-                            'userId': null,
-                            'authdata': null
-                        }
-                    };
-                    return null;
-                }
-            };
-
-            return sessionFactory;
-        }])
-    .factory('AuthFactory', ['$http', '$rootScope', 'SessionFactory',
-        function ($http, $rootScope, SessionFactory) {
-            var authFactory = {
-                login: function (credentials) {
-                    return $http
-                        .post('/login', JSON.stringify(credentials))
-                        .success(function () {
-                            console.log("Inició sesión");
-                            SessionFactory.create(credentials);
-                            $rootScope.loginFailed = false;
-                            return credentials;
-                        }).error(function (res) {
-                            console.log("Error login.");
-                            console.log("data: "+ res);
-                            $rootScope.loginFailed = true;
-                            return null;
-                        });
-                },
-
-                logout: function() {
-                    return $http.get('/logout')
-                        .success(function() {
-                            console.log("Cerrar sesión");
-                            SessionFactory.destroy();
-                            return null;
-                        })
-                        .error(function(res) {
-                            console.log("Error logout.");
-                            console.log("data: "+ res);
-                            return null;
-                        })
-                }
-            };
-            return authFactory;
-        }])
-    .factory('AuthInterceptor', ['$rootScope','$q', 'AUTH_EVENTS',
-        function ($rootScope, $q,AUTH_EVENTS) {
-            return {
-                responseError: function (response) {
-                    $rootScope.$broadcast({
-                        401: AUTH_EVENTS.notAuthenticated,
-                        403: AUTH_EVENTS.notAuthorized,
-                        419: AUTH_EVENTS.sessionTimeout,
-                        440: AUTH_EVENTS.sessionTimeout
-                    }[response.status], response);
-                    return $q.reject(response);
-                }
-            };
-        }])
     /**/
 //Run
     .run(['$rootScope', '$location', '$cookies', '$http','ALLOW_ROUTES',
@@ -126,18 +43,7 @@ var ruedapp = angular.module('ruedapp',['ngRoute', 'leaflet-directive', 'ui.boot
         }])
 // /**/
 //Configurations
-    .config(['$authProvider',
-      function($authProvider) {
 
-        $authProvider.facebook({
-            clientId: '1626235154309557'
-        });
-
-        $authProvider.google({
-            clientId: '989003573613-6nrpeekrkn11bqcoi1k7lbk4jgmp5f7s.apps.googleusercontent.com'
-        });
-
-    }])
     .config(['$httpProvider',function ($httpProvider) {
         $httpProvider.interceptors.push([
             '$injector',

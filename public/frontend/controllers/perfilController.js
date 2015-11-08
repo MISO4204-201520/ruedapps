@@ -2,12 +2,14 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
-    function ($scope,$auth, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
+ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthServices',
+    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,twitterService) {
         /**
          * Definición datepicker
          * @type {Date}
          */
+
+
         var today = new Date();
         $scope.minDate = '1900/01/01';
         $scope.maxDate = today;
@@ -201,14 +203,14 @@ ruedapp.controller('perfilController', ['$scope', '$auth','$rootScope', '$locati
             });
         }
         $scope.authenticate = function(provider) {
-            debugger
-            $auth.authenticate(provider)
-                .then(function() {
-                    //toastr.success('You have successfully signed in with ' + provider);
-                    $location.path('/');
-                })
-                .catch(function(response) {
-                    //toastr.error(response.data.message);
-                });
+            $scope.tweets; //array of tweets
+            oauthServices.initialize();
+            oauthServices.connect().then(function() {
+                if (oauthServices.isReady()) {
+                    //if the authorization is successful, hide the connect button and display the tweets
+                   alert("conectado a twitter");
+                }
+            });
+
         };
     }]);
