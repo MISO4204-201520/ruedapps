@@ -6,27 +6,24 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
     function ($scope, $rootScope, $http, $cookies) {
         $scope.pasoConfigurador = 1;
 
-        var bicicleta = {};
+        $scope.bicicleta = {};
 
-        bicicleta.accesorios = [];
+        $scope.bicicleta.accesorios = [];
 
         /**
          * Definición selectable de los distintos pasos del configurador
          */
         $(function () {
-            //$scope.accesoriosSeleccionados = [];
 
             var color = $("#ruedapps-selectable-color");
             color.selectable({
                 selected: function (event, ui) {
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
-                        /*$scope.*/bicicleta.color = $(this).attr('value');
-                        alert("Color seleccionado: " + bicicleta.color);
+                        $scope.bicicleta.color = $(this).attr('value');
+                        alert("Color seleccionado: " + $scope.bicicleta.color);
                     });
                 }
-            });
-            color.on("selectableselected", function (event, ui) {
             });
 
             var tamanio = $("#ruedapps-selectable-tamanio");
@@ -34,11 +31,10 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                 selected: function (event, ui) {
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
-                        /*$scope.*/bicicleta.tamanio = $(this).attr('value');
+                        $scope.bicicleta.tamanio = $(this).attr('value');
+                        alert("Tamaño seleccionado: " + $scope.bicicleta.tamanio);
                     });
                 }
-            });
-            tamanio.on("selectableselected", function (event, ui) {
             });
 
             var llantas = $("#ruedapps-selectable-llantas");
@@ -46,11 +42,10 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                 selected: function (event, ui) {
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
-                        /*$scope.*/bicicleta.llantas = $(this).attr('value');
+                        $scope.bicicleta.llantas = $(this).attr('value');
+                        alert("Tipo llantas seleccionadas: " + $scope.bicicleta.llantas);
                     });
                 }
-            });
-            llantas.on("selectableselected", function (event, ui) {
             });
 
             var sillin = $("#ruedapps-selectable-sillin");
@@ -58,23 +53,26 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                 selected: function (event, ui) {
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
-                        /*$scope.*/bicicleta.sillin = $(this).attr('value');
+                        $scope.bicicleta.sillin = $(this).attr('value');
+                        alert("Tipo sillin seleccionado: " + $scope.bicicleta.sillin);
                     });
                 }
-            });
-            sillin.on("selectableselected", function (event, ui) {
             });
 
             var accesorios = $("#ruedapps-selectable-accesorios");
             accesorios.selectable({
                 selected: function (event, ui) {
                     $(".ui-selected", this).each(function () {
-                        console.log($(this).attr('value'));
-                        /*$scope.*/bicicleta.accesorios.push($(this).attr('value'));
+                        var accesorio = $(this).attr('value');
+                        console.log(accesorio);
+                        console.log($.inArray(accesorio, $scope.bicicleta.accesorios))
+                        if ($.inArray(accesorio, $scope.bicicleta.accesorios) > -1) {
+                            alert("Ya seleccionó el accesorio: " + accesorio);
+                        } else {
+                            $scope.bicicleta.accesorios.push(accesorio);
+                        }
                     });
                 }
-            });
-            accesorios.on("accesoriosSeleccionados", function (event, ui) {
             });
         });
 
@@ -86,42 +84,54 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
 
         $scope.avanzar = function() {
             if($scope.pasoConfigurador < 5) {
-                $scope.pasoConfigurador += 1;
+                if ($scope.pasoConfigurador == 1) {
+                    if ($scope.bicicleta.color) {
+                        $scope.pasoConfigurador += 1;
+                    } else {
+                        alert("Aún no ha seleccionado un color");
+                    }
+                }
+                if ($scope.pasoConfigurador == 2) {
+                    if ($scope.bicicleta.tamanio) {
+                        $scope.pasoConfigurador += 1;
+                    } else {
+                        alert("Aún no ha seleccionado un tamaño");
+                    }
+                }
+                if ($scope.pasoConfigurador == 3) {
+                    if ($scope.bicicleta.llantas) {
+                        $scope.pasoConfigurador += 1;
+                    } else {
+                        alert("Aún no ha seleccionado un tipo de llantas");
+                    }
+                }
+                if ($scope.pasoConfigurador == 4) {
+                    if ($scope.bicicleta.sillin) {
+                        $scope.pasoConfigurador += 1;
+                    } else {
+                        alert("Aún no ha seleccionado un tipo de sillin");
+                    }
+                }
             }
         }
 
         $scope.finalizarConfiguracion = function() {
 
-            /*var bicicleta = {
-                color: $scope.colorSeleccionado,
-                tamanio: $scope.tamanioSelecionado,
-                llantas: $scope.llantasSeleccionadas,
-                sillin: $scope.sillinSeleccionado,
-                accesorios: $scope.accesoriosSeleccionados
-            };*/
+            var bicicleta = $scope.bicicleta;
 
-            console.log("Bicicleta: " + JSON.stringify(bicicleta));
-
-            //var bicicleta = $scope.bicicleta;
+            console.log("Bicicleta: " + JSON.stringify($scope.bicicleta));
 
             var post = {
                 method: 'POST',
                 url: '/bicicleta',
                 headers: { 'Content-Type': 'application/json'},
-                //data: JSON.stringify(bicicleta)
-                data: {
-                    color:"Blanco",
-                    tamanio: "Pequeña",
-                    llantas: "Montaña",
-                    sillin: "Carrera",
-                    accesorios: ["Pito"]
-                }
+                data: JSON.stringify(bicicleta)
             };
 
             $http(post).success(function (data) {
                 console.log("Registró");
                 console.log("data: "+ data);
-                //window.location.replace('/');
+                window.location.replace('#/inicio');
 
             }).error(function (data) {
                 console.log("Error registro.");
