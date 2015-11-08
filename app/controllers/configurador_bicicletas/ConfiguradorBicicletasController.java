@@ -15,11 +15,11 @@ public class ConfiguradorBicicletasController extends Controller {
 
     public Result CrearBicicleta() {
         Form<BicicletaDTO> postForm = Form.form(BicicletaDTO.class).bindFromRequest();
-        System.out.print("Post form:" + postForm);
-        System.out.print("Color:" + postForm.get().color);
-        System.out.print("Tamanio:" + postForm.get().tamanio);
-        System.out.print("Llantas:" + postForm.get().llantas);
-        System.out.print("Sillin:" + postForm.get().sillin);
+        System.out.println("Post form:" + postForm);
+        System.out.println("Color:" + postForm.get().color);
+        System.out.println("Tamanio:" + postForm.get().tamanio);
+        System.out.println("Llantas:" + postForm.get().llantas);
+        System.out.println("Sillin:" + postForm.get().sillin);
 
         if (postForm.hasErrors()) {
             return badRequest(postForm.errorsAsJson());
