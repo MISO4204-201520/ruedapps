@@ -8,6 +8,9 @@ GET           /                                               controllers.Applic
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                   controllers.Assets.versioned(path="/public", file: Asset)
 
+## Login externo
+POST          /login/facebook                                  controllers.perfil.PerfilOptionalController.LoginFacebook()
+POST          /login/twitter                                  controllers.perfil.PerfilOptionalController.LoginTwitter()
 # Rutas perfil
 GET           /login                                          controllers.perfil.PerfilKernelController.Login()
 GET           /logout                                         controllers.perfil.PerfilKernelController.LogOut()

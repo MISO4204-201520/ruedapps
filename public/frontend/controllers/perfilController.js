@@ -2,12 +2,14 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
-    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
+ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthServices',
+    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,oauthServices) {
         /**
          * Definición datepicker
          * @type {Date}
          */
+
+
         var today = new Date();
         $scope.minDate = '1900/01/01';
         $scope.maxDate = today;
@@ -200,4 +202,30 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 });
             });
         }
+        $scope.authenticate = function(provider) {
+            $scope.tweets; //array of tweets
+            oauthServices.initialize(provider);
+            oauthServices.connect().then(function() {
+                if (oauthServices.isReady()) {
+                    //if the authorization is successful, hide the connect button and display the tweets
+
+                    oauthServices.getUserInfo().then(function(result){
+                        var credentials = {name: result.name, provider_id: result.id_str};
+                        var post = {
+                            method: 'POST',
+                            url: '/login/' + provider ,
+                            headers: {'Content-Type': 'application/json'},
+                            data: JSON.stringify(credentials)
+                        };
+
+                        $http(post).success(function () {
+                            console.log("login/auth"+provider);
+                            window.location.replace('#/inicio');
+                        })
+                    });
+                    debugger
+                }
+            });
+
+        };
     }]);
