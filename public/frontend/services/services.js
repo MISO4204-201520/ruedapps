@@ -35,12 +35,11 @@ angular.module('ruedapp.services', [])
             authorizationResult = false;
         },
         getUserInfo: function(){
-            debugger
             var deferred = $q.defer(),
                 promise = authorizationResult.get('/1.1/account/verify_credentials.json').done(function(data){
-                    debugger
-                    //deferred.resolve(data)
-                })
+                    deferred.resolve(data)
+                });
+            return deferred.promise;
         },
         getLatestTweets: function () {
             //create a deferred object using Angular's $q service

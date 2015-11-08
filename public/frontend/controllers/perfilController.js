@@ -208,8 +208,22 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
             oauthServices.connect().then(function() {
                 if (oauthServices.isReady()) {
                     //if the authorization is successful, hide the connect button and display the tweets
-                    oauthServices.getUserInfo();
-                   alert("conectado a twitter");
+
+                    oauthServices.getUserInfo().then(function(result){
+                        var credentials = {name: result.name, provider_id: result.id_str};
+                        var post = {
+                            method: 'POST',
+                            url: '/login/' + provider ,
+                            headers: {'Content-Type': 'application/json'},
+                            data: JSON.stringify(credentials)
+                        };
+
+                        $http(post).success(function () {
+                            console.log("login/auth"+provider);
+                            window.location.replace('#/inicio');
+                        })
+                    });
+                    debugger
                 }
             });
 
