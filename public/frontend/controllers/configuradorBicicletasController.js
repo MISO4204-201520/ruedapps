@@ -30,8 +30,6 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.color = $(this).attr('value');
-                        //alert("Color seleccionado: " + $scope.bicicleta.color);
-                        adicionarAlerta("success", "Color seleccionado: " + $scope.bicicleta.color);
                     });
                 }
             });
@@ -42,8 +40,6 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.tamanio = $(this).attr('value');
-                        //alert("Tamaño seleccionado: " + $scope.bicicleta.tamanio);
-                        adicionarAlerta("success", "Tamaño seleccionado: " + $scope.bicicleta.tamanio);
                     });
                 }
             });
@@ -54,8 +50,6 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.llantas = $(this).attr('value');
-                        //alert("Tipo llantas seleccionadas: " + $scope.bicicleta.llantas);
-                        adicionarAlerta("success", "Tipo llantas seleccionadas: " + $scope.bicicleta.llantas);
                     });
                 }
             });
@@ -66,8 +60,6 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                     $(".ui-selected", this).each(function () {
                         console.log($(this).attr('value'));
                         $scope.bicicleta.sillin = $(this).attr('value');
-                        //alert("Tipo sillin seleccionado: " + $scope.bicicleta.sillin);
-                        adicionarAlerta("success", "Tipo sillin seleccionado: " + $scope.bicicleta.sillin);
                     });
                 }
             });

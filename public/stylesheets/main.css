@@ -101,6 +101,16 @@ img {
     padding: 0 !important;
 }
 
+.ruedapps-selectable-configurador .ui-selecting > span,
+.ruedapps-selectable-configurador .ui-selecting > img{
+    border: solid 0.5rem #9696C8 !important;
+}
+
+.ruedapps-selectable-configurador .ui-selected > span,
+.ruedapps-selectable-configurador .ui-selected > img{
+    border: solid 0.5rem #6464C8 !important;
+}
+
 .ruedapps-selectable-configurador li {
     margin: 0.4rem;
     padding-left: 2rem !important;
