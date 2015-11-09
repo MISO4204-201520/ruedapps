@@ -1,0 +1,95 @@
+<style>
+    img {
+    max-width: 100%;
+    max-height: 100%;
+    }
+
+    .img-resize {
+    max-width: 85px;
+    max-height: 85px;
+    }
+</style>
+<div class="container-fluid" ng-init="consultarBicicletasUsuario()">
+    <div class="row text-center">
+        <h1>Bicicletas Configuradas</h1>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Color</th>
+            <th>Tamaño</th>
+            <th>Llantas</th>
+            <th>Sillín</th>
+            <th>Accesorios</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="bicicleta in bicicletas">
+            <td>{{bicicleta.id}}</td>
+            <td>
+                <div class="img-resize" ng-if="bicicleta.color == 'Blanco'">
+                    <img src="assets/images/color-blanco.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.color == 'Verde'">
+                    <img src="assets/images/color-verde.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.color == 'Azul'">
+                    <img src="assets/images/color-azul.png">
+                </div>
+            </td>
+            <td>
+                <div class="img-resize" ng-if="bicicleta.tamanio == 'Pequeña'">
+                    <img src="assets/images/tamanio-pequenia.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.tamanio == 'Mediana'">
+                    <img src="assets/images/tamanio-mediana.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.tamanio == 'Grande'">
+                    <img src="assets/images/tamanio-grande.png">
+                </div>
+            </td>
+            <td>
+                <div class="img-resize" ng-if="bicicleta.llantas == 'Ciudad'">
+                    <img src="assets/images/llanta-ciudad.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.llantas == 'Montaña'">
+                    <img src="assets/images/llanta-montania.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.llantas == 'Velocidad'">
+                    <img src="assets/images/llanta-velocidad.png">
+                </div>
+            </td>
+            <td>
+                <div class="img-resize" ng-if="bicicleta.sillin == 'Abertura'">
+                    <img src="assets/images/sillin-con-abertura.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.sillin == 'Carrera'">
+                    <img src="assets/images/sillin-con-resorte.png">
+                </div>
+                <div class="img-resize" ng-if="bicicleta.sillin == 'Ancho'">
+                    <img src="assets/images/sillin-ancho.png">
+                </div>
+            </td>
+            <td ng-init="obtenerAccesoriosBicicleta(bicicleta.id)">
+                <div ng-repeat="accesorio in accesorios">
+                    <div class="img-resize" ng-if="accesorio.nombre == 'Pito'">
+                        <img src="assets/images/accesorio-pito.png">
+                    </div>
+                    <div class="img-resize" ng-if="accesorio.nombre == 'Canasta'">
+                        <img src="assets/images/accesorio-canasta.png">
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="get" action="#/configuradorBicicletas">
+        <button class="btn btn-primary center-block">Configurar Nueva Bicicleta</button>
+    </form>
+    <br/>
+
+    <form method="get" action="#/inicio">
+        <button class="btn btn-primary center-block">Regresar</button>
+    </form>
+</div>

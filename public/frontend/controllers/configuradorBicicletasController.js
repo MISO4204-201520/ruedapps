@@ -13,7 +13,7 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
 
         $scope.cerrarAlerta = function (index) {
             $scope.alertas.splice(index, 1);
-        };
+        }
 
         function adicionarAlerta(alertaTipo, alertaTexto) {
             $scope.alertas.push({type: alertaTipo, msg: alertaTexto});
@@ -71,10 +71,10 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                         var accesorio = $(this).attr('value');
                         console.log(accesorio);
                         console.log($.inArray(accesorio, $scope.bicicleta.accesorios))
-                        if ($.inArray(accesorio, $scope.bicicleta.accesorios) > -1) {
-                            alert("Ya seleccionó el accesorio: " + accesorio);
-                        } else {
+                        if ($.inArray(accesorio, $scope.bicicleta.accesorios) == -1) {
                             $scope.bicicleta.accesorios.push(accesorio);
+                        } else {
+                            console.log("Ya fue seleccionado el accesorio: " + accesorio);
                         }
                     });
                 }
