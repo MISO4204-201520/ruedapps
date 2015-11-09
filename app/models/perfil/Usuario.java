@@ -34,7 +34,7 @@ public abstract class Usuario extends Model {
 
 
     @Column(unique = true, nullable = true)
-    public String proovedor_id;
+    public String proveedor_id;
     /**
      * Representa los nombres ingresados por el usuario en el registro.
      */

@@ -4,47 +4,58 @@
 package controllers.perfil;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.feth.play.module.pa.providers.oauth2.facebook.FacebookAuthInfo;
-import play.libs.oauth.OAuth.ConsumerKey;
-import play.libs.oauth.OAuth.ServiceInfo;
-import play.libs.oauth.OAuth.RequestToken;
+import models.perfil.Ciclista;
+import models.perfil.LoginOAuth;
+import models.perfil.Usuario;
+import play.data.Form;
+import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
-import play.libs.ws.WSClient;
-import play.libs.ws.WSResponse;
 
-import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.List;
 
-public class PerfilOptionalController extends PerfilKernelController {
+public class PerfilOptionalController extends Controller {
 
+
+    private Usuario usuario;
+    private Form<LoginOAuth> p;
 
     public Result LoginFacebook() {
-        JsonNode json = request().body().asJson();
-        if(json == null) {
-            return badRequest("Expecting Json data");
-        } else {
-            String name = json.findPath("code").textValue();
-//            RequestToken requestToken = PerfilOptionalController.retrieveRequestToken(url);
-//
-            if(name == null) {
-                return badRequest("Missing parameter [name]");
-            } else {
-                return Results.ok("ok");
-            }
-        }
+        Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
+            CheckUserExistance(postForm);
+        return ok("Login externo");
+
     }
     public Result LoginTwitter() {
+        Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
+        CheckUserExistance(postForm);
+        return ok("Login externo");
+    }
+    public Result LoginGoogle() {
+        Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
+        CheckUserExistance(postForm);
+        return ok("Login externo");
 
-        JsonNode json = request().body().asJson();
-        if(json == null) {
-            return badRequest("Expecting Json data");
+    }
+    private void CheckUserExistance(Form<LoginOAuth> postForm){
+        String oauthLogin = postForm.get().getProveedor_id();
+
+        List<Usuario> usuario = Usuario.find.where().eq("proveedor_id", oauthLogin).findList();
+
+        if (usuario != null && usuario.size() > 0 ) {
+            session().put("loggedUser", String.valueOf(usuario.get(0).id));
         } else {
-            String name = json.findPath("name").textValue();
-            if(name == null) {
-                return badRequest("Missing parameter [name]");
-            } else {
-                return Results.ok("ok");
-            }
+            Ciclista ciclista = new Ciclista();
+            SetUsuario(ciclista, postForm);
+            //ciclista.fechaNacimiento = postForm.get().fechaNacimiento;
+            ciclista.save();
         }
     }
+
+    protected void SetUsuario(Usuario usuario, Form<LoginOAuth> p) {
+        usuario.nombres =  p.get().getNombre();
+        usuario.proveedor_id =  p.get().getProveedor_id();
+    }
+
 }
