@@ -29,7 +29,7 @@ public class PerfilKernelController extends Controller {
 
         if (usuario != null && usuario.size() > 0 && usuario.get(0).verificaContrasenia(postForm.get().getContrasenia())) {
             session().put("loggedUser", String.valueOf(usuario.get(0).id));
-            return ok("Bienvenido!");
+            return ok( String.valueOf(usuario.get(0).id));
         } else {
             return Results.unauthorized("El usuario y la clave no coinciden");
         }

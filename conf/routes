@@ -11,7 +11,6 @@ GET           /assets/*file                                   controllers.Assets
 ## Login externo
 POST          /login/facebook                                  controllers.perfil.PerfilOptionalController.LoginFacebook()
 POST          /login/twitter                                  controllers.perfil.PerfilOptionalController.LoginTwitter()
-POST          /login/google                                  controllers.perfil.PerfilOptionalController.LoginTwitter()
 # Rutas perfil
 GET           /login                                          controllers.perfil.PerfilKernelController.Login()
 GET           /logout                                         controllers.perfil.PerfilKernelController.LogOut()
