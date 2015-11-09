@@ -189,10 +189,13 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
                 });
             });
         }
+
         $scope.authenticate = function(provider) {
-            $scope.tweets; //array of tweets
             oauthServices.initialize(provider);
-            oauthServices.connect();
+            oauthServices.connect().then(function(){
+                $rootScope.loggedIn = true;
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            });
 
         };
 

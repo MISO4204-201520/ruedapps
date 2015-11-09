@@ -7,7 +7,6 @@ angular.module('ruedapp.services', [])
         var provider = typeof provider !== 'undefined' ? provider : '';
 
         function getUserInfo(provider){
-            //ToDo Add  authorizationResult.get() for FB and Google
             authorizationResult.get(OAUTH_PROVIDER_URL[provider]).done(function(result){
                 var credentials = {nombre: result[OAUTH_USER_INFO[provider]['nombre']], proveedor_id: result[OAUTH_USER_INFO[provider]['proveedor_id']] || "not_null"};
                 var post = {
@@ -38,16 +37,17 @@ angular.module('ruedapp.services', [])
             return (authorizationResult);
         },
         connect: function() {
-
+            var deferred = $q.defer();
             OAuth.popup(provider, {cache:false}, function(error, result) { //cache means to execute the callback if the tokens are already present
                 if (!error) {
                     authorizationResult = result;
                     getUserInfo(provider);
-
+                    deferred.resolve(null);
                 } else {
                     console.log("API error");
                 }
             });
+            return deferred.promise;
         },
         clearCache: function() {
             OAuth.clearCache(provider);
