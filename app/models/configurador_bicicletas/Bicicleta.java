@@ -1,10 +1,11 @@
 package models.configurador_bicicletas;
 
 import com.avaje.ebean.Model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +57,8 @@ public class Bicicleta extends Model {
     /**
      * Accesorios de la bicicleta
      */
-    @OneToMany(mappedBy="bicicleta")
-    private List<Accesorio> accesorios;
+    /*@OneToMany(mappedBy="bicicleta")
+    private List<Accesorio> accesorios;*/
 
     /**
      * Constructor de la clase bicicleta
@@ -68,7 +69,7 @@ public class Bicicleta extends Model {
         this.tamanio = builder.tamanio;
         this.llantas = builder.llantas;
         this.sillin = builder.sillin;
-        this.accesorios = builder.accesorios;
+        //this.accesorios = builder.accesorios;
     }
 
     /**
@@ -107,9 +108,9 @@ public class Bicicleta extends Model {
      * Getter de los accesorios
      * @return
      */
-    public List<Accesorio> getAccesorios() {
+    /*public List<Accesorio> getAccesorios() {
         return accesorios;
-    }
+    }*/
 
     /**
      * Builder de una bicicleta.
