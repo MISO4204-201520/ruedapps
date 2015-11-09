@@ -3,8 +3,25 @@
  */
 //Factories
 angular.module('ruedapp.services', [])
-    .factory('oauthServices', function($q) {
+    .factory('oauthServices', function($q,$http,SessionFactory) {
+    var getUserInfo = function(){
+            authorizationResult.get('/1.1/account/verify_credentials.json').done(function(result){
+                var credentials = {nombre: result.name, proveedor_id: result.id_str || "not_null"};
+                var post = {
+                    method: 'POST',
+                    url: '/login/' + provider ,
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(credentials)
+                };
 
+                $http(post).success(function () {
+                    SessionFactory.create(credentials);
+                    console.log("login/auth"+provider);
+                    //window.location.replace('#/inicio');
+                })
+
+            });
+        };
     var authorizationResult = false;
     var provider = typeof provider !== 'undefined' ? provider : '';
     return {
@@ -19,28 +36,22 @@ angular.module('ruedapp.services', [])
             return (authorizationResult);
         },
         connect: function() {
-            var deferred = $q.defer();
+
             OAuth.popup(provider, {cache:true}, function(error, result) { //cache means to execute the callback if the tokens are already present
                 if (!error) {
                     authorizationResult = result;
-                    deferred.resolve();
+                    getUserInfo();
+
                 } else {
                     console.log("API error");
                 }
             });
-            return deferred.promise;
         },
         clearCache: function() {
             OAuth.clearCache(provider);
             authorizationResult = false;
         },
-        getUserInfo: function(){
-            var deferred = $q.defer(),
-                promise = authorizationResult.get('/1.1/account/verify_credentials.json').done(function(data){
-                    deferred.resolve(data)
-                });
-            return deferred.promise;
-        },
+
         getLatestTweets: function () {
             //create a deferred object using Angular's $q service
             var deferred = $q.defer();
