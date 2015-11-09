@@ -3,11 +3,13 @@
  */
 //Factories
 angular.module('ruedapp.services', [])
-    .factory('oauthServices', function($q,$http,SessionFactory) {
-    var getUserInfo = function(){
+    .factory('oauthServices', function($q,$http,SessionFactory,OAUTH_PROVIDER_URL,OAUTH_USER_INFO) {
+        var provider = typeof provider !== 'undefined' ? provider : '';
+
+        function getUserInfo(provider){
             //ToDo Add  authorizationResult.get() for FB and Google
-            authorizationResult.get('/1.1/account/verify_credentials.json').done(function(result){
-                var credentials = {nombre: result.name, proveedor_id: result.id_str || "not_null"};
+            authorizationResult.get(OAUTH_PROVIDER_URL[provider]).done(function(result){
+                var credentials = {nombre: result[OAUTH_USER_INFO[provider]['nombre']], proveedor_id: result[OAUTH_USER_INFO[provider]['proveedor_id']] || "not_null"};
                 var post = {
                     method: 'POST',
                     url: '/login/' + provider ,
@@ -15,21 +17,20 @@ angular.module('ruedapp.services', [])
                     data: JSON.stringify(credentials)
                 };
 
-                $http(post).success(function () {
-                    SessionFactory.create(credentials);
+                $http(post).success(function (id) {
+                    SessionFactory.create(credentials,id);
                     console.log("login/auth"+provider);
-                    //window.location.replace('#/inicio');
+                    window.location.replace('#/inicio');
                 })
 
             });
         };
     var authorizationResult = false;
-    var provider = typeof provider !== 'undefined' ? provider : '';
     return {
         initialize: function(provide) {
             provider = provide
             //initialize OAuth.io with public key of the application
-            OAuth.initialize('aRz8k9AQSMZrgo1xnjeEU9_FDac', {cache:true});
+            OAuth.initialize('aRz8k9AQSMZrgo1xnjeEU9_FDac', {cache:false});
             //try to create an authorization result when the page loads, this means a returning user won't have to click the twitter button again
             authorizationResult = OAuth.create(provider);
         },
@@ -38,10 +39,10 @@ angular.module('ruedapp.services', [])
         },
         connect: function() {
 
-            OAuth.popup(provider, {cache:true}, function(error, result) { //cache means to execute the callback if the tokens are already present
+            OAuth.popup(provider, {cache:false}, function(error, result) { //cache means to execute the callback if the tokens are already present
                 if (!error) {
                     authorizationResult = result;
-                    getUserInfo();
+                    getUserInfo(provider);
 
                 } else {
                     console.log("API error");
@@ -69,9 +70,8 @@ angular.module('ruedapp.services', [])
     .factory('SessionFactory', ['$rootScope','$http','$cookies',
         function ($rootScope, $http, $cookies) {
             var sessionFactory = {
-                create: function (credentials) {
-                    this.cookie = $cookies.get('PLAY_SESSION');
-                    var userId = this.cookie ? this.cookie.split("User=")[1] : credentials.correoElectronico;
+                create: function (credentials,id) {
+                    var userId = id;
                     var authdata = Base64.encode(credentials.correoElectronico + ':' + credentials.contrasenia);
                     $rootScope.globals = {
                         'currentUser': {
@@ -104,9 +104,9 @@ angular.module('ruedapp.services', [])
                 login: function (credentials) {
                     return $http
                         .post('/login', JSON.stringify(credentials))
-                        .success(function () {
+                        .success(function (id) {
                             console.log("Inició sesión");
-                            SessionFactory.create(credentials);
+                            SessionFactory.create(credentials,id);
                             $rootScope.loginFailed = false;
                             return credentials;
                         }).error(function (res) {
