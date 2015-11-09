@@ -4,19 +4,21 @@
 
 <html lang="en">
     <head>
-        <title></title>
+        <!--This line make if true responsive page-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--End of the responsive page-->
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/ui-bootstrap-csp.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/font-awesome.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/bootstrap-social.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/leaflet.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/leaflet-routing-machine.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     </head>
         <!--Do don't style this page style the subpages exteded by angular-->
     <body ng-app="ruedapp">
-
         <nav class="navbar navbar-default navbar-fixed-top" ng-show="loggedIn">
-            <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#/inicio">Ruedapps</a>
                 </div>
@@ -48,7 +50,6 @@
                             Cerrar sesión</button></li>
                     </ul>
                 </div>
-            </div>
         </nav>
         <div class="row" id="ruedapps-navbar" ng-hide="loggedIn">
             <div class="pull-left">
@@ -80,6 +81,7 @@
         <script src="@routes.Assets.versioned("javascripts/angular-route.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/angular-leaflet-directive.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/angular-cookies.min.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/oauth.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/ui-bootstrap.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/ui-bootstrap-tpls.min.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/ng-table.min.js")"></script>
@@ -93,8 +95,10 @@
 
             <!--Load angular App-->
         <script src="@routes.Assets.versioned("frontend/modules/ruedapp.js")"></script>
+        <script src="@routes.Assets.versioned("frontend/services/services.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/directorioController.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/inicioController.js")"></script>
+        <script src="@routes.Assets.versioned("frontend/controllers/inicioExternoController.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/mensajeController.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/perfilController.js")"></script>
         <script src="@routes.Assets.versioned("frontend/controllers/recorridoController.js")"></script>

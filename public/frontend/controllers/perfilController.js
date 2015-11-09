@@ -2,12 +2,14 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
-    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
+ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthServices',
+    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,oauthServices) {
         /**
          * Definición datepicker
          * @type {Date}
          */
+
+
         var today = new Date();
         $scope.minDate = '1900/01/01';
         $scope.maxDate = today;
@@ -200,4 +202,10 @@ ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$h
                 });
             });
         }
+        $scope.authenticate = function(provider) {
+            $scope.tweets; //array of tweets
+            oauthServices.initialize(provider);
+            oauthServices.connect();
+
+        };
     }]);

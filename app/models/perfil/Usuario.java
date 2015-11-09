@@ -32,33 +32,36 @@ public abstract class Usuario extends Model {
     @Id
     public long id;
 
+
+    @Column(unique = true, nullable = true)
+    public String proveedor_id;
     /**
      * Representa los nombres ingresados por el usuario en el registro.
      */
-    @Column(nullable = false)
-    @Constraints.Required
+    @Column(nullable = true)
+    //@Constraints.Required
     public String nombres;
 
     /**
      * Representa los apellidos ingresados por el usuario en el registro.
      */
-    @Column(nullable = false)
-    @Constraints.Required
+    @Column(nullable = true)
+    //@Constraints.Required
     public String apellidos;
 
     /**
      * Representa el correo electrónico ingresado por el usuario en el registro.
      */
-    @Column(unique = true, nullable = false)
-    @Constraints.Required
+    @Column(unique = true, nullable = true)
+    //@Constraints.Required
     @Constraints.Email
     public String correoElectronico;
 
     /**
      * Representa la contraseña ingresada por el usuario en el registro.
      */
-    @Column(nullable = false)
-    @Constraints.Required
+    @Column(nullable = true)
+    //@Constraints.Required
     @JsonIgnore
     public String contrasenia;
 
@@ -66,16 +69,15 @@ public abstract class Usuario extends Model {
      * Representa la ciudad ingresada por el usuario en el registro.
      */
     @Column
-    @Constraints.Required
+    //@Constraints.Required
     public String ciudad;
 
     /**
      * Representa el numero de celular ingresado por el usuario en el registro.
      */
-    @Column(unique = true, nullable = false)
-    @Constraints.Required
+    @Column(unique = true, nullable = true)
+    //@Constraints.Required
     public String celular;
-
 
     /**
      * Asigna el valor del atributo contrasenia.
