@@ -5,6 +5,7 @@
 angular.module('ruedapp.services', [])
     .factory('oauthServices', function($q,$http,SessionFactory) {
     var getUserInfo = function(){
+            //ToDo Add  authorizationResult.get() for FB and Google
             authorizationResult.get('/1.1/account/verify_credentials.json').done(function(result){
                 var credentials = {nombre: result.name, proveedor_id: result.id_str || "not_null"};
                 var post = {
