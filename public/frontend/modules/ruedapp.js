@@ -14,12 +14,17 @@ var ruedapp = angular.module('ruedapp',['ruedapp.services','ngRoute', 'leaflet-d
         notAuthorized: 'auth-not-authorized'
     })
     .constant('ALLOW_ROUTES', ['','/','/login','/register'])
+    .constant('OAUTH_PROVIDER_URL',{
+        twitter:'/1.1/account/verify_credentials.json',
+        facebook:'/me'
+    })
+    .constant('OAUTH_USER_INFO',{
+        twitter: {nombre: 'name', proveedor_id: 'id_str'},
+        facebook: {nombre: 'name', proveedor_id: 'id'}
+    })
 /**
 
  */
-    /**/
-//Services
-
     /**/
 //Run
     .run(['$rootScope', '$location', '$cookies', '$http','ALLOW_ROUTES',
