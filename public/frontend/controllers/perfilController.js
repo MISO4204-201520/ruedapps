@@ -59,42 +59,27 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
          * Obtención de amigos y ciclistas de la plataforma.
          */
         $scope.consultaAmigosCiclistas = function () {
-            var get = {
+            var get1 = {
                 method: 'GET',
-                url: '/usuario/' + $rootScope.globals.currentUser.userId
+                url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/amigos'
             };
-
-            $http(get).success(function (data) {
-                console.log("Obtuvo usuario");
-                console.log("data: " + data);
-                $scope.userGlobalId = data;
-
-                var get1 = {
-                    method: 'GET',
-                    url: '/ciclista/' + $scope.userGlobalId + '/amigos'
-                };
-                $http(get1).success(function (data) {
-                    $scope.amigos = data;
-
-                }).error(function (data) {
-                    console.log("Error consulta amigos");
-                    console.log("data: " + data);
-                });
-
-                var get2 = {
-                    method: 'GET',
-                    url: '/ciclista/' + $scope.userGlobalId + '/no-amigos'
-                };
-                $http(get2).success(function (data) {
-                    $scope.noAmigos = data;
-
-                }).error(function (data) {
-                    console.log("Error consulta no amigos");
-                    console.log("data: " + data);
-                });
+            $http(get1).success(function (data) {
+                $scope.amigos = data;
 
             }).error(function (data) {
-                console.log("Error obtención ciclista");
+                console.log("Error consulta amigos");
+                console.log("data: " + data);
+            });
+
+            var get2 = {
+                method: 'GET',
+                url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/no-amigos'
+            };
+            $http(get2).success(function (data) {
+                $scope.noAmigos = data;
+
+            }).error(function (data) {
+                console.log("Error consulta no amigos");
                 console.log("data: " + data);
             });
         };

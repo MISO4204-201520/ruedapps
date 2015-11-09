@@ -19,7 +19,7 @@ POST          /usuario                                        controllers.perfil
 POST          /proveedor                                      controllers.perfil.PerfilKernelController.CrearProveedor()
 PUT           /usuario                                        controllers.perfil.PerfilKernelController.ActualizarUsuario()
 GET           /usuario/:id                                    controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
-GET           /ciclista/:email                                controllers.perfil.PerfilKernelController.ConsultarUsuarioPorEmail(email: String)
+GET           /usuario/:email                                 controllers.perfil.PerfilKernelController.ConsultarUsuarioPorEmail(email: String)
 GET           /ciclistas                                      controllers.perfil.PerfilKernelController.Ciclistas()
 GET           /ciclista/:id/amigos                            controllers.perfil.PerfilKernelController.Amigos(id: Long)
 POST          /ciclista/:id/amigos/:idAmigo                   controllers.perfil.PerfilKernelController.AgregarAmigo(id:Long, idAmigo:Long)

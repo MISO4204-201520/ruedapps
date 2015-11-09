@@ -174,32 +174,17 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
         };
 
         $scope.consultaamigos = function () {
-
             var get = {
                 method: 'GET',
-                url: '/usuario/' + $rootScope.globals.currentUser.userId
+                url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/amigos'
             };
 
             $http(get).success(function (data) {
-                $scope.userGlobalId = data;
-
-                var get1 = {
-                    method: 'GET',
-                    url: '/ciclista/' + $scope.userGlobalId + '/amigos'
-                };
-
-                $http(get1).success(function (data) {
-                    console.log("consulta ok");
-                    $scope.amigos = data;
-                }).error(function (data) {
-                    console.log("Error consulta amigos : " + data);
-                });
+                console.log("consulta ok");
+                $scope.amigos = data;
             }).error(function (data) {
-                console.log("Error obtención id.");
-                console.log("data: " + data);
+                console.log("Error consulta amigos : " + data);
             });
-
-
         };
 
         $scope.iniciarecorrido = function () {
