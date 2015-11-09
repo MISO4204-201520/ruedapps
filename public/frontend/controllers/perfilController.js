@@ -154,12 +154,13 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
             $scope.noAmigosSeleccionados.forEach(function (element) {
                 var post = {
                     method: 'POST',
-                    url: '/ciclista/' + $scope.userGlobalId + '/amigos/' + element,
+                    url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/amigos/' + element,
                     headers: {'Content-Type': 'application/json'}
                 };
 
-                $http(post).success(function () {
+                $http(post).success(function (data) {
                     console.log("Creó amigo");
+                    $scope.consultaAmigosCiclistas();
                     window.location.replace('#/amigos');
 
                 }).error(function (data) {
@@ -173,12 +174,13 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
             $scope.amigosSeleccionados.forEach(function (element) {
                 var del = {
                     method: 'DELETE',
-                    url: '/ciclista/' + $scope.userGlobalId + '/amigos/' + element,
+                    url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/amigos/' + element,
                     headers: {'Content-Type': 'application/json'}
                 };
 
                 $http(del).success(function () {
                     console.log("Eliminó amigo");
+                    $scope.consultaAmigosCiclistas();
                     window.location.replace('#/amigos');
 
                 }).error(function (data) {
