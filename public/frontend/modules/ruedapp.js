@@ -179,5 +179,11 @@ var ruedapp = angular.module('ruedapp',['ruedapp.services','ngRoute', 'leaflet-d
                 templateUrl: 'assets/frontend/views/ruta/mapa.html'
             }
         )
+            .when(
+                '/historicoBicicletas',{
+                controller: 'perfilController',
+                templateUrl: 'assets/frontend/views/configurador_bicicletas/historicoBicicletas.html'
+            }
+        )
             .otherwise({ redirectTo: '/'})
     }]);

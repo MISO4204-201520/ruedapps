@@ -3,7 +3,7 @@
  */
 
 ruedapp.controller('directorioController', ['$scope', '$rootScope', '$http', '$cookies', 'leafletData',
-    function ($scope, $rootScope, $http, $cookies,leafletData) {
+    function ($scope, $rootScope, $http, $cookies, leafletData) {
 
         $scope.categorias = null;
         $scope.serviciosPorCategoria = null;
@@ -60,7 +60,7 @@ ruedapp.controller('directorioController', ['$scope', '$rootScope', '$http', '$c
                 $http(post).success(function (data) {
                     console.log("Registró");
                     console.log("data: "+ data);
-                    window.location.replace('/');
+                    window.location.replace('#/inicio');
 
                 }).error(function (data) {
                     console.log("Error registro.");

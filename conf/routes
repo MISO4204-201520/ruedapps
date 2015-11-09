@@ -9,7 +9,7 @@ GET           /                                               controllers.Applic
 GET           /assets/*file                                   controllers.Assets.versioned(path="/public", file: Asset)
 
 ## Login externo
-POST          /login/facebook                                  controllers.perfil.PerfilOptionalController.LoginFacebook()
+POST          /login/facebook                                 controllers.perfil.PerfilOptionalController.LoginFacebook()
 POST          /login/twitter                                  controllers.perfil.PerfilOptionalController.LoginTwitter()
 # Rutas perfil
 GET           /login                                          controllers.perfil.PerfilKernelController.Login()
@@ -37,7 +37,7 @@ POST          /recorrido/programacion                         controllers.ruta.R
 POST          /recorrido/programacion/ciclista/:id            controllers.ruta.RutaController.AddCiclistaProgramacionRuta(id: Long)
 GET           /recorrido/programacion/:id                     controllers.ruta.RutaController.ConsultaProgramacionRuta(id: Long)
 GET           /recorrido/programacion/organizador/:id         controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
-GET        /recorrido/programacion/invitado/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorInvitado(id: Long)
+GET           /recorrido/programacion/invitado/:id            controllers.ruta.RutaController.ListaProgramacionRutaPorInvitado(id: Long)
 GET           /recorrido/programacion/participante/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorParticipante(id: Long)
 POST          /recorrido/:id                                  controllers.ruta.RutaController.SaveRecorrido(id: Long)
 
@@ -63,3 +63,4 @@ GET           /mensajeSocket                                  controllers.comuni
 
 #Rutas configurador bicicletas
 POST          /bicicleta                                      controllers.configurador_bicicletas.ConfiguradorBicicletasController.CrearBicicleta()
+GET           /bicicleta/:id/accesorios                       controllers.configurador_bicicletas.ConfiguradorBicicletasController.obtenerAccesoriosBicicleta(id: Long)

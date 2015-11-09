@@ -2,6 +2,7 @@ package controllers.perfil;
 
 
 import com.avaje.ebean.Ebean;
+import models.configurador_bicicletas.Bicicleta;
 import models.perfil.Ciclista;
 import models.perfil.LoginDTO;
 import models.perfil.Proveedor;
@@ -15,6 +16,9 @@ import views.html.login;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static play.libs.Json.toJson;
+
 
 /*
  * Created by Lina8a on 06/09/2015.
@@ -208,5 +212,15 @@ public class PerfilKernelController extends Controller {
         usuario.hashContrasenia(formUsuario.get().contrasenia);
     }
 
+    public Result obtenerBicicletasUsuario(long idUsuario) {
+        Usuario usuario = Ebean.find(Usuario.class, idUsuario);
+
+        List<Bicicleta> bicicletas = new ArrayList<>();
+        if (usuario != null && usuario instanceof Ciclista) {
+            Ciclista ciclista = (Ciclista) usuario;
+            bicicletas = ciclista.bicicletas;
+        }
+        return ok(toJson(bicicletas));
+    }
 
 }

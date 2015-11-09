@@ -50,6 +50,10 @@
             <div class="row">
                 <h2>Servicios Cercanos</h2>
 
+                <div class="form-group" ng-if="serviciosCercanos.length <= 0">
+                    <h4><font color="orange">No hay servicios cercanos</font></h4>
+                </div>
+
                 <div class="form-group" ng-repeat="servicioCercano in serviciosCercanos">
                     <h4>- {{servicioCercano.nombre}}</h4>
                 </div>
