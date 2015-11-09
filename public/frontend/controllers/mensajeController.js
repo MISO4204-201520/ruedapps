@@ -76,7 +76,7 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
         $scope.consultaAmigos = function () {
             var get = {
                 method: 'GET',
-                url: '/ciclista/' + $rootScope.globals.currentUser.userId
+                url: '/usuario/' + $rootScope.globals.currentUser.userId
             };
 
             $http(get).success(function (data) {
