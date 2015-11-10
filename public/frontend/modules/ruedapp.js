@@ -30,17 +30,22 @@ var ruedapp = angular.module('ruedapp',['ruedapp.services','ngRoute', 'leaflet-d
     .run(['$rootScope', '$location', '$cookies', '$http','ALLOW_ROUTES',
         function($rootScope, $location, $cookies, $http,ALLOW_ROUTES) {
             // keep user logged in after page refresh
-            var globals = $cookies.get('globals');
+            var globals =  $cookies.get('globals'),
+                provider = $cookies.get('provider');
+;
             $rootScope.globals = (globals ? JSON.parse(globals) : null) || {};
 
             if ($rootScope.globals.currentUser) {
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+                $rootScope.loggedIn = true;
+                $rootScope.provider = (provider ? provider : null) || null;
             }
 
             $rootScope.$on('$locationChangeStart', function () {
                 // redirect to login page if not logged in and trying to access a restricted page
                 var restrictedPage = $.inArray($location.path(),ALLOW_ROUTES) === -1;
                 var loggedIn = $rootScope.globals.currentUser;
+
                 if (restrictedPage && !loggedIn) {
                     $location.path('/login');
                 }

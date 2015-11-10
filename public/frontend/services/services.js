@@ -3,7 +3,7 @@
  */
 //Factories
 angular.module('ruedapp.services', [])
-    .factory('oauthServices', function($q,$http,SessionFactory,OAUTH_PROVIDER_URL,OAUTH_USER_INFO) {
+    .factory('oauthServices', function($q,$cookies,$http,SessionFactory,OAUTH_PROVIDER_URL,OAUTH_USER_INFO) {
         var provider = typeof provider !== 'undefined' ? provider : '';
 
         function getUserInfo(provider){
@@ -24,12 +24,12 @@ angular.module('ruedapp.services', [])
 
             });
         };
-    var authorizationResult = false;
+    var     authorizationResult = false;
     return {
         initialize: function(provide) {
             provider = provide
             //initialize OAuth.io with public key of the application
-            OAuth.initialize('aRz8k9AQSMZrgo1xnjeEU9_FDac', {cache:false});
+            OAuth.initialize('aRz8k9AQSMZrgo1xnjeEU9_FDac', {cache:true});
             //try to create an authorization result when the page loads, this means a returning user won't have to click the twitter button again
             authorizationResult = OAuth.create(provider);
         },
@@ -38,9 +38,10 @@ angular.module('ruedapp.services', [])
         },
         connect: function() {
             var deferred = $q.defer();
-            OAuth.popup(provider, {cache:false}, function(error, result) { //cache means to execute the callback if the tokens are already present
+            OAuth.popup(provider, {cache:true}, function(error, result) { //cache means to execute the callback if the tokens are already present
                 if (!error) {
                     authorizationResult = result;
+                    $cookies.put('provider', provider);
                     getUserInfo(provider);
                     deferred.resolve(null);
                 } else {
@@ -54,10 +55,10 @@ angular.module('ruedapp.services', [])
             authorizationResult = false;
         },
 
-        getLatestTweets: function () {
+        share: function (data) {
             //create a deferred object using Angular's $q service
             var deferred = $q.defer();
-            var promise = authorizationResult.get('/1.1/statuses/home_timeline.json').done(function(data) { //https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
+            var promise = authorizationResult.post('1.1/statuses/update.json').done(function(data) { //https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
                 //when the data is retrieved resolved the deferred object
                 deferred.resolve(data)
             });
@@ -92,6 +93,7 @@ angular.module('ruedapp.services', [])
                             'authdata': null
                         }
                     };
+                    OAuth.clearCache();
                     return null;
                 }
             };
