@@ -2,13 +2,18 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
-    function ($scope, $rootScope, $http) {
+ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http', '$location',
+    function ($scope, $rootScope, $http, $location) {
         $scope.conectar = function () {
-            // Abrir socket
-            // TODO: URL socket relativa
+            // ruta del socket armada a partir de la url de la página actual
+            var socketUrl =
+                ($location.protocol() == "https" ? "wss" : "ws") + "://" +
+                $location.host() +
+                ($location.port() != "80" ? ":" + $location.port() : "") +
+                "/mensajeSocket";
 
-            var websocket = new WebSocket("ws://localhost:9000/mensajeSocket");
+            // Abrir socket
+            var websocket = new WebSocket(socketUrl);
             websocket.onopen = function (evt) {
                 onOpen(evt)
             };
