@@ -23,8 +23,20 @@ img {
     margin: 17rem 0;
 }
 
+.ruedapps-carousel-container {
+    background-color: #000;
+}
+
+.ruedapps-carousel-caption {
+    text-align: left !important;
+}
+
+.ruedapps-carousel-img {
+    margin: auto;
+}
+
 .ruedapps-container-gray {
-    background-color: #eee;
+    background-color: #dff0d8;
 }
 
 .ruedapps-glyphicons {
@@ -55,12 +67,16 @@ img {
     display: inline-block;
 }
 
+.ruedapps-margin-top-index {
+ margin-top: -5rem;
+}
+
 .ruedapps-navbar-item {
     margin: 0.7em;
 }
 
 #ruedapps-navbar {
-    background-color: #0078A8;
+    background-color: #28a4c9;
     height: 4em;
 }
 
