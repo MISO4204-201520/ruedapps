@@ -140,7 +140,8 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
             $http(post).success(function (data) {
                 console.log("Registró");
                 console.log("data: "+ data);
-                window.location.replace('#/inicio');
+                alert("Felicidades! Su bicicleta ha sido configurada.");
+                window.location.replace('#/historicoBicicletas');
 
             }).error(function (data) {
                 console.log("Error registro.");

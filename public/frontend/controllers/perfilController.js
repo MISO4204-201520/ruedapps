@@ -210,7 +210,7 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
 
                 get = {
                     method: 'GET',
-                    url: '/usuario/' + $rootScope.globals.currentUser.userId + '/bicicletas'
+                    url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/bicicletas'
                 };
 
                 $http(get).success(function (data) {

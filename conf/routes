@@ -11,6 +11,7 @@ GET           /assets/*file                                   controllers.Assets
 ## Login externo
 POST          /login/facebook                                 controllers.perfil.PerfilOptionalController.LoginFacebook()
 POST          /login/twitter                                  controllers.perfil.PerfilOptionalController.LoginTwitter()
+
 # Rutas perfil
 GET           /login                                          controllers.perfil.PerfilKernelController.Login()
 GET           /logout                                         controllers.perfil.PerfilKernelController.LogOut()
@@ -25,6 +26,7 @@ GET           /ciclista/:id/amigos                            controllers.perfil
 POST          /ciclista/:id/amigos/:idAmigo                   controllers.perfil.PerfilKernelController.AgregarAmigo(id:Long, idAmigo:Long)
 DELETE        /ciclista/:id/amigos/:idAmigo                   controllers.perfil.PerfilKernelController.EliminarAmigo(id:Long, idAmigo:Long)
 GET           /ciclista/:id/no-amigos                         controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
+GET           /ciclista/:id/bicicletas                        controllers.perfil.PerfilKernelController.ObtenerBicicletasUsuario(id: Long)
 
 # Rutas recorridos
 POST          /ubicacion/:id                                  controllers.ruta.RutaController.SaveUbicacion(id: Long)
