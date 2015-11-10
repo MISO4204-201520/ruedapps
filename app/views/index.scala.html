@@ -1,5 +1,4 @@
-@(message: String)
-
+@(message: String,opcionesMenu: Array[Boolean])
 <!DOCTYPE html>
 
 <html lang="en">
@@ -20,28 +19,28 @@
     <body ng-app="ruedapp">
         <nav class="navbar navbar-default navbar-fixed-top" ng-show="loggedIn">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#/inicio">Ruedapps</a>
+                    <!--<a class="navbar-brand" href="#/inicio">Ruedapps</a>-->
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#/ruta">Ruta</a></li>
-                                <li><a href="#/recorridos">Planear Recorridos</a></li>
-                                <li><a href="#/recorridos/prog">Recorridos Programados</a></li>
-                                <li><a href="#/categorias">Directorio</a></li>
-                                <li><a href="#/ruta/hist">Histórico</a></li>
+                                @if(opcionesMenu(0)) { <li><a href="#/ruta">Ruta</a></li> }
+                                @if(opcionesMenu(1)) { <li><a href="#/recorridos">Planear Recorridos</a></li> }
+                                @if(opcionesMenu(2)) { <li><a href="#/recorridos/prog">Recorridos Programados</a></li> }
+                                @if(opcionesMenu(3)) { <li><a href="#/categorias">Directorio</a></li> }
+                                @if(opcionesMenu(4)) { <li><a href="#/ruta/hist">Histórico</a></li> }
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#/historicoBicicletas">Configurador Bicicletas</a></li>
+                                @if(opcionesMenu(5)) { <li><a href="#/historicoBicicletas">Configurador Bicicletas</a></li> }
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#/mensaje">Mensajería</a></li>
-                                <li><a href="#/amigos">Mis Amigos</a></li>
-                                <li><a href="#/perfil">Mi Perfil</a></li>
+                                @if(opcionesMenu(6)) { <li><a href="#/mensaje">Mensajería</a></li> }
+                                @if(opcionesMenu(7)) { <li><a href="#/amigos">Mis Amigos</a></li> }
+                                @if(opcionesMenu(8)) { <li><a href="#/perfil">Mi Perfil</a></li> }
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#/reporte/metricas">Reporte Métricas</a></li>
-                                <li><a href="#/reporte/historico">Reporte Histórico</a></li>
-                                <li><a href="#/reporte/rutas">Reporte Rutas</a></li>
+                                @if(opcionesMenu(9)) { <li><a href="#/reporte/metricas">Reporte Métricas</a></li> }
+                                @if(opcionesMenu(10)) { <li><a href="#/reporte/historico">Reporte Histórico</a></li> }
+                                @if(opcionesMenu(11)) { <li><a href="#/reporte/rutas">Reporte Rutas</a></li> }
                             </ul>
                         </li>
                     </ul>

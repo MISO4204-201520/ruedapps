@@ -212,7 +212,7 @@ public class PerfilKernelController extends Controller {
         usuario.hashContrasenia(formUsuario.get().contrasenia);
     }
 
-    public Result obtenerBicicletasUsuario(long idUsuario) {
+    public Result ObtenerBicicletasUsuario(long idUsuario) {
         Usuario usuario = Ebean.find(Usuario.class, idUsuario);
 
         List<Bicicleta> bicicletas = new ArrayList<>();

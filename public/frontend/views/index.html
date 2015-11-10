@@ -1,14 +1,55 @@
 <!--suppress ALL -->
-<div class="container-fluid">
+<div class="container-fluid ruedapps-margin-top-index">
 
-    <div class="row jumbotron">
+    <div class="row ruedapps-carousel-container">
         <div class="container-fluid">
-            <div class="col-md-6 pull-left">
-                <h1>RuedApps</h1>
-                <p>RuedApps busca suministrar a las personas que se transportan en bicicleta información confiable, precisa,
-                    y actualizada, con el fin de agilizar sus desplazamientos y hacerlos más seguros.</p>
-            </div>
+            <!-- Tomado de http://www.w3schools.com/bootstrap/bootstrap_carousel.asp -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
 
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img class="ruedapps-carousel-img" src="assets/images/index-1.jpg" alt="Ruedapps">
+                        <div class="carousel-caption ruedapps-carousel-caption pull-left">
+                            <h1 >RuedApps</h1>
+                            <p class="col-md-6">RuedApps busca suministrar a las personas que se transportan en bicicleta información confiable, precisa,
+                                y actualizada, con el fin de agilizar sus desplazamientos y hacerlos más seguros.</p>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <img class="ruedapps-carousel-img" src="assets/images/index-2.jpg" alt="Ruedapps">
+                        <div class="carousel-caption ruedapps-carousel-caption pull-left">
+                            <h1 >Personalización</h1>
+                            <p class="col-md-6">No dudes en personalizar tus propias aplicaciones. Puedes ser único dentro de nuestra comunidad.</p>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <img class="ruedapps-carousel-img" src="assets/images/index-3.jpg" alt="Ruedapps">
+                        <div class="carousel-caption ruedapps-carousel-caption pull-left">
+                            <h1 >Funcionalidades</h1>
+                            <p class="col-md-6">Revisa tus métricas, reportes, y bicicletas. El valor agregado del producto está en tus manos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -17,12 +58,12 @@
     </div>
     <br/>
     <br/>
-    <div class="row">
+    <div class="row text-center">
         <div class="col-md-2"></div>
-        <div class="col-md-3 ruedapps-glyphicons text-right">
+        <div class="col-md-3 ruedapps-glyphicons text-right center-block ruedapps-inline-block">
             <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 text-left center-block ruedapps-inline-block">
             <h3>Recorridos</h3>
 
             <p>Calcula tu mejor ruta, desplázate solo o con amigos, descubre sitios de interés y maneja tu historial de
