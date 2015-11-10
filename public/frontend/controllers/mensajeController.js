@@ -7,6 +7,7 @@ ruedapp.controller('mensajeController', ['$scope', '$rootScope', '$http',
         $scope.conectar = function () {
             // Abrir socket
             // TODO: URL socket relativa
+
             var websocket = new WebSocket("ws://localhost:9000/mensajeSocket");
             websocket.onopen = function (evt) {
                 onOpen(evt)

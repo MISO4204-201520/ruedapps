@@ -9,7 +9,6 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
          * @type {Date}
          */
 
-
         var today = new Date();
         $scope.minDate = '1900/01/01';
         $scope.maxDate = today;
@@ -112,6 +111,7 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
                 AuthFactory.login(credentials).then(function () {
                     $rootScope.loggedIn = true;
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $rootScope.provider = "";
                     window.location.replace('#/inicio');
                 }, function () {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -195,6 +195,8 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
             oauthServices.connect().then(function(){
                 $rootScope.loggedIn = true;
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                $rootScope.provider = provider;
+
             });
 
         };

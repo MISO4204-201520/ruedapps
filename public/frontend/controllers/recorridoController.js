@@ -2,20 +2,20 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams',
-    function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams) {
+ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams','oauthServices',
+    function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams,oauthServices) {
 
         $scope.param = $routeParams.param;
-        var recorridoInterval = 10000;
-        var control;
-        var recorridoId = 0;
-        var rutaRecorridoId = 0;
-        var inicioRecorrido;
+        var recorridoInterval = 10000,
+         control,
+         recorridoId = 0,
+         rutaRecorridoId = 0,
+         inicioRecorrido = null,
+         datosCompartir = {},
+         today = new Date(),
 
-        var today = new Date();
-
-        var radioCercaniaServicios = 1000;
-        var marcadoresServicios = [];
+         radioCercaniaServicios = 1000,
+         marcadoresServicios = [];
 
         $scope.amigosruta = [];
         $scope.hideHistorico = true;
@@ -136,6 +136,10 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
                 recorridoId = 0;
                 $scope.hideRecorrido = false;
                 $scope.hideHistorico = true;
+                datosCompartir.historico = historico;
+                datosCompartir.ok = "ok";
+
+
             }).error(function (data) {
                 console.log("Error ubicacion/crear data: " + data);
             });
@@ -186,7 +190,17 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
                 console.log("Error consulta amigos : " + data);
             });
         };
-
+        $scope.compartir = function(){
+            if(datosCompartir.ok != null){
+                var d = "origen: " + datosCompartir.ruta.origen.nombre +
+                    "\n destino "+datosCompartir.ruta.destino.nombre;
+                oauthServices.share(d).then(function(response){
+                    alert(response+" al compatir los datos");
+                });
+            }else{
+                alert("primero terminar la ruta");
+            }
+        };
         $scope.iniciarecorrido = function () {
 
             if (rutaRecorridoId > 0) {
@@ -201,6 +215,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
                     inicioRecorrido = new Date();
                     $scope.hideRecorrido = true;
                     $scope.hideHistorico = false;
+                    datosCompartir.ok = null;
                     timeoutLocation();
                     console.log("inicio recorrido grupal id: " + data);
                 }).error(function (data) {
@@ -230,7 +245,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
                         nombre: wayPoints[wayPoints.length - 1].name
                     }
                 };
-
+                datosCompartir.ruta  = ruta;
                 var post = {
                     method: 'POST',
                     url: '/recorrido',
@@ -365,6 +380,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
                     nombre: wayPoints[wayPoints.length - 1].name
                 }
             };
+            datosCompartir.ruta = programacion.ruta;
 
             programacion.fechaInicio = programacion.fecha;
             programacion.fechaInicio.setMinutes(programacion.hora.getMinutes());

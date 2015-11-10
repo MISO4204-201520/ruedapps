@@ -40,6 +40,13 @@
                     </button>
                     <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar
                     </button>
+                    <br>
+                    <br>
+
+                    <button ng-show="provider" class="btn btn-block btn-social btn-{{provider}}" ng-click="compartir()">
+                        <span class="fa fa-{{provider}}"></span>Compartir en {{provider}}
+                    </button>
+
                 </div>
             </div>
             <br/>

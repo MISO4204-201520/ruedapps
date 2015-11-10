@@ -5,7 +5,8 @@
 angular.module('ruedapp.services', [])
     .factory('oauthServices', function($q,$cookies,$http,SessionFactory,OAUTH_PROVIDER_URL,OAUTH_USER_INFO) {
         var provider = typeof provider !== 'undefined' ? provider : '';
-
+        var  authorizationResult = false;
+        //FixMe When the page is reload the authentication should be done again.
         function getUserInfo(provider){
             authorizationResult.get(OAUTH_PROVIDER_URL[provider]).done(function(result){
                 var credentials = {nombre: result[OAUTH_USER_INFO[provider]['nombre']], proveedor_id: result[OAUTH_USER_INFO[provider]['proveedor_id']] || "not_null"};
@@ -24,15 +25,15 @@ angular.module('ruedapp.services', [])
 
             });
         };
-    var     authorizationResult = false;
+        function initialize(provide) {
+             provider = provide
+             //initialize OAuth.io with public key of the application
+             OAuth.initialize('aRz8k9AQSMZrgo1xnjeEU9_FDac', {cache:true});
+             //try to create an authorization result when the page loads, this means a returning user won't have to click the twitter button again
+             authorizationResult = OAuth.create(provider);
+         }
     return {
-        initialize: function(provide) {
-            provider = provide
-            //initialize OAuth.io with public key of the application
-            OAuth.initialize('aRz8k9AQSMZrgo1xnjeEU9_FDac', {cache:true});
-            //try to create an authorization result when the page loads, this means a returning user won't have to click the twitter button again
-            authorizationResult = OAuth.create(provider);
-        },
+        initialize: function(p){initialize(p)},
         isReady: function() {
             return (authorizationResult);
         },
@@ -55,10 +56,15 @@ angular.module('ruedapp.services', [])
             authorizationResult = false;
         },
 
-        share: function (data) {
+        share: function (poster) {
             //create a deferred object using Angular's $q service
             var deferred = $q.defer();
-            var promise = authorizationResult.post('1.1/statuses/update.json').done(function(data) { //https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
+            authorizationResult = authorizationResult || initialize($cookies.get("provider"));
+            var promise = authorizationResult.post({
+                url: '/1.1/statuses/update.json',
+                data: {status: poster }
+            })
+                .done(function(data) { //https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
                 //when the data is retrieved resolved the deferred object
                 deferred.resolve(data)
             });
@@ -87,6 +93,8 @@ angular.module('ruedapp.services', [])
                 destroy: function () {
                     this.cookie = null;
                     $cookies.remove('globals');
+                    $cookies.remove("oauthio_provider_"+$cookies.get("provider"))
+                    $cookies.remove('provider');
                     $rootScope.globals = {
                         'currentUser': {
                             'userId': null,
