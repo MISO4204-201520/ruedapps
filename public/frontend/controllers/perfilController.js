@@ -2,8 +2,8 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthServices',
-    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,oauthServices) {
+ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthFactory',
+    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,oauthFactory) {
         /**
          * Definición datepicker
          * @type {Date}
@@ -191,8 +191,8 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
         }
 
         $scope.authenticate = function(provider) {
-            oauthServices.initialize(provider);
-            oauthServices.connect().then(function(){
+            oauthFactory.initialize(provider);
+            oauthFactory.connect().then(function(){
                 $rootScope.loggedIn = true;
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 $rootScope.provider = provider;

@@ -3,7 +3,33 @@
  */
 //Factories
 angular.module('ruedapp.services', [])
-    .factory('oauthServices', function($q,$cookies,$http,SessionFactory,OAUTH_PROVIDER_URL,OAUTH_USER_INFO) {
+        .factory('ShareProvider', ['$q','$cookies','$http','SessionFactory','OAUTH_PROVIDER_URL','OAUTH_USER_INFO',
+        function($q,$cookies,$http,SessionFactory,OAUTH_PROVIDER_URL,OAUTH_USER_INFO) {
+            return {
+                params: function(authorizationResult,provider,poster){
+                    var deferred = $q.defer();
+                    switch(provider) {
+                        case 'facebook':
+                            authorizationResult.post('/me/feed',{
+                                    data: {
+                                        message: 'poster'
+                                    }
+                                }).done(function(){deferred.resolve(null)});
+                            break;
+                        case 'twitter':
+                            poster = poster.substring(0, 140);
+                            authorizationResult.post({
+                                url: '/1.1/statuses/update.json',
+                                data: {status: poster }
+                            }).done(function(){deferred.resolve(null)});
+                            break;
+                    }
+                    return deferred.promise;
+                }
+            }
+        }])
+        .factory('oauthFactory', ['$q','$cookies','$http','SessionFactory','OAUTH_PROVIDER_URL','OAUTH_USER_INFO','ShareProvider',
+        function($q,$cookies,$http,SessionFactory,OAUTH_PROVIDER_URL,OAUTH_USER_INFO,ShareProvider) {
         var provider = typeof provider !== 'undefined' ? provider : '';
         var  authorizationResult = false;
         //FixMe When the page is reload the authentication should be done again.
@@ -59,21 +85,12 @@ angular.module('ruedapp.services', [])
         share: function (poster) {
             //create a deferred object using Angular's $q service
             var deferred = $q.defer();
-            authorizationResult = authorizationResult || initialize($cookies.get("provider"));
-            var promise = authorizationResult.post({
-                url: '/1.1/statuses/update.json',
-                data: {status: poster }
-            })
-                .done(function(data) { //https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
-                //when the data is retrieved resolved the deferred object
-                deferred.resolve(data)
-            });
-            //return the promise of the deferred object
+                deferred.resolve(ShareProvider.params(authorizationResult,provider,poster));
             return deferred.promise;
         }
     }
 
-})
+}])
     .factory('SessionFactory', ['$rootScope','$http','$cookies',
         function ($rootScope, $http, $cookies) {
             var sessionFactory = {

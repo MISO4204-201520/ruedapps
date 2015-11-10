@@ -2,8 +2,8 @@
  * Created by lina on 9/30/15.
  */
 
-ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams','oauthServices',
-    function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams,oauthServices) {
+ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams','oauthFactory',
+    function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams,oauthFactory) {
 
         $scope.param = $routeParams.param;
         var recorridoInterval = 10000,
@@ -194,7 +194,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
             if(datosCompartir.ok != null){
                 var d = "origen: " + datosCompartir.ruta.origen.nombre +
                     "\n destino "+datosCompartir.ruta.destino.nombre;
-                oauthServices.share(d).then(function(response){
+                oauthFactory.share(d).then(function(response){
                     alert(response+" al compatir los datos");
                 });
             }else{
