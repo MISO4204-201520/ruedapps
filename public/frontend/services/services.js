@@ -11,9 +11,7 @@ angular.module('ruedapp.services', [])
                     switch(provider) {
                         case 'facebook':
                             authorizationResult.post('/me/feed',{
-                                    data: {
-                                        message: 'poster'
-                                    }
+                                    data: { message: poster}
                                 }).done(function(){deferred.resolve(null)});
                             break;
                         case 'twitter':
