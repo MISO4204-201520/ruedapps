@@ -219,21 +219,28 @@ public class RutaController extends Controller {
         }
     }
 
-    public Result ListaProgramacionRutaPorParticipante(long id) {
-        if (id == 0) {
-            id = Long.valueOf(session().get("loggedUser"));
-        }
+    protected ProgramacionRuta ValoresProgramacionRuta (Form<ProgramacionRuta> postForm, Ciclista organizador, Date fechaInicio)
+    {
+        Ruta ruta = new Ruta();
+        ruta.origen = new Ubicacion();
+        ruta.origen.latitud  = postForm.get().ruta.origen.latitud;
+        ruta.origen.longitud  = postForm.get().ruta.origen.longitud;
+        ruta.origen.nombre  = postForm.get().ruta.origen.nombre;
 
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where()
-                .or(
-                        Expr.eq("participantes.id", id),
-                        Expr.eq("organizador.id", id)
-                ).findList();
-        if (programacionRecorrido != null) {
-            return Results.ok(Json.toJson(programacionRecorrido));
-        } else {
-            return Results.notFound("Programacion recorrido participante no encontrada");
-        }
+        ruta.destino = new Ubicacion();
+        ruta.destino.latitud  = postForm.get().ruta.destino.latitud;
+        ruta.destino.longitud  = postForm.get().ruta.destino.longitud;
+        ruta.destino.nombre  = postForm.get().ruta.destino.nombre;
+        ruta.save();
+
+        ProgramacionRuta programacionRuta = new ProgramacionRuta();
+        programacionRuta.organizador = organizador;
+        programacionRuta.ruta = ruta;
+        programacionRuta.descripcion = postForm.get().descripcion;
+        programacionRuta.fechaInicio = fechaInicio;
+        programacionRuta.nombre= postForm.get().nombre;
+
+        return programacionRuta;
     }
 
     // Metodos para notificaciones
@@ -256,7 +263,7 @@ public class RutaController extends Controller {
             id = Long.valueOf(session().get("loggedUser"));
         }
 
-        // Fechas de hoy y mañana
+        // Fechas de hoy y maÃ±ana
         Calendar c = new GregorianCalendar();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
