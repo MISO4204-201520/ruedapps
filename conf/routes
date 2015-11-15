@@ -35,19 +35,20 @@ POST          /recorrido                                      controllers.ruta.R
 POST          /historico                                      controllers.ruta.RutaController.SaveHistoricoRecorrido()
 GET           /historico/:id                                  controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
 GET           /historico/usuario/:id                          controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
-POST          /recorrido/programacion                         controllers.ruta.RutaGrupalController.SaveProgramacionRuta()
-POST          /recorrido/programacion/ciclista/:id            controllers.ruta.RutaGrupalController.AddCiclistaProgramacionRuta(id: Long)
+POST          /recorrido/programacion                         controllers.ruta.RutaController.SaveProgramacionRuta()
+POST          /recorrido/programacion/ciclista/:id            controllers.ruta.RutaController.AddCiclistaProgramacionRuta(id: Long)
 GET           /recorrido/programacion/:id                     controllers.ruta.RutaController.ConsultaProgramacionRuta(id: Long)
 GET           /recorrido/programacion/organizador/:id         controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
-GET           /recorrido/programacion/invitado/:id            controllers.ruta.RutaGrupalController.ListaProgramacionRutaPorInvitado(id: Long)
-GET           /recorrido/programacion/participante/:id        controllers.ruta.RutaGrupalController.ListaProgramacionRutaPorParticipante(id: Long)
+GET           /recorrido/programacion/participante/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorParticipante(id: Long)
+GET        /recorrido/programacion/notifinvitado/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorInvitado(id: Long)
+GET        /recorrido/programacion/notifhoy/:id             controllers.ruta.RutaController.ListaProgramacionRutaPorParticipanteHoy(id: Long)
 POST          /recorrido/:id                                  controllers.ruta.RutaController.SaveRecorrido(id: Long)
 
 # Reportes
 GET           /reporte/metrica/distancia/:finicio/:ffin/:id   controllers.reporte.ReporteController.ConsultarMetricaPorDistancia(finicio:String, ffin:String, id: Long)
 GET           /reporte/metrica/tiempo/:finicio/:ffin/:id      controllers.reporte.ReporteController.ConsultarMetricaPorTiempo(finicio:String, ffin:String, id: Long)
 GET           /reporte/historico/:finicio/:ffin/:id           controllers.reporte.ReporteController.ConsultarHistoricoPorUsuario(finicio:String, ffin:String, id: Long)
-GET        /reporte/rutas/:finicio/:ffin/:id        controllers.reporte.ReporteController.ConsultarRutasPorUsuario(finicio:String, ffin:String, id: Long)
+GET        /reporte/rutas/:finicio/:ffin/:id                controllers.reporte.ReporteController.ConsultarRutasPorUsuario(finicio:String, ffin:String, id: Long)
 
 # Rutas directorio
 GET           /categoria                                      controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()

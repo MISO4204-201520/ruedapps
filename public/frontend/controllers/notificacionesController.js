@@ -26,7 +26,7 @@ ruedapp.controller('notificacionesController', ['$scope', '$rootScope', '$locati
         function consultaRutasInvitado() {
             var get = {
                 method: 'get',
-                url: '/recorrido/programacion/invitado/0',
+                url: '/recorrido/programacion/notifinvitado/0',
                 headers: {'Content-Type': 'application/json'}
             };
 
@@ -43,23 +43,17 @@ ruedapp.controller('notificacionesController', ['$scope', '$rootScope', '$locati
         function consultaRutasHoy() {
             var get = {
                 method: 'get',
-                url: '/recorrido/programacion/participante/0',
+                url: '/recorrido/programacion/notifhoy/0',
                 headers: {'Content-Type': 'application/json'}
             };
 
             $http(get).success(function (data) {
                 console.log("consulta rutas hoy ok");
                 data.forEach(function (ruta) {
-                    if (myDayDiff(ruta.fechaInicio, Date.now()) <= 1) {
-                        addAlert("warning", "Ruta: Hoy usted tiene programada la ruta '" + ruta.nombre + "'.");
-                    }
+                    addAlert("warning", "Ruta: Hoy usted tiene programada la ruta '" + ruta.nombre + "'.");
                 });
             }).error(function (data) {
                 console.log("info", "Error consulta rutas hoy: " + data);
             });
-        }
-
-        function myDayDiff(first, second) {
-            return Math.abs(Math.round((second - first) / (1000 * 60 * 60 * 24)));
         }
     }]);
