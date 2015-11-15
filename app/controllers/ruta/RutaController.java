@@ -4,6 +4,7 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import models.perfil.Ciclista;
 import models.ruta.*;
+import models.ruta.desplazamiento.Desplazamiento;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -162,7 +163,7 @@ public class RutaController extends Controller {
     }
 
 
-    public Result SaveProgramacionRuta() throws ParseException {
+    public Result SaveProgramacionRuta() {
 
         Form<ProgramacionRuta> postForm = Form.form(ProgramacionRuta.class).bindFromRequest();
         DynamicForm dynamicForm = Form.form().bindFromRequest();
@@ -177,58 +178,21 @@ public class RutaController extends Controller {
             return Results.notFound("organizador no encontrado ");
         }
 
-        String fechaString = dynamicForm.get("fechaInicio");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
-        format.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Date fechaInicio;
 
-        Ruta ruta = new Ruta();
-        ruta.origen = new Ubicacion();
-        ruta.origen.latitud  = postForm.get().ruta.origen.latitud;
-        ruta.origen.longitud  = postForm.get().ruta.origen.longitud;
-        ruta.origen.nombre  = postForm.get().ruta.origen.nombre;
+        try {
+            String fechaString = dynamicForm.get("fechaInicio");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
+            format.setTimeZone(TimeZone.getTimeZone("GMT"));
+            fechaInicio = format.parse(fechaString);
 
-        ruta.destino = new Ubicacion();
-        ruta.destino.latitud  = postForm.get().ruta.destino.latitud;
-        ruta.destino.longitud  = postForm.get().ruta.destino.longitud;
-        ruta.destino.nombre  = postForm.get().ruta.destino.nombre;
-        ruta.save();
-
-        ProgramacionRuta programacionRuta = new ProgramacionRuta();
-        programacionRuta.organizador = organizador;
-        programacionRuta.ruta = ruta;
-        programacionRuta.descripcion = postForm.get().descripcion;
-        programacionRuta.fechaInicio = format.parse(fechaString) ;
-        programacionRuta.nombre= postForm.get().nombre;
-
-        if (postForm.get().participantes != null) {
-            for (Ciclista ciclista : postForm.get().participantes) {
-                Ciclista participante = Ebean.find(Ciclista.class, ciclista.id);
-                if (participante != null) {
-                    programacionRuta.participantes.add(participante);
-                }
-            }
+        } catch (ParseException ex) {
+            return badRequest();
         }
 
-        programacionRuta.save();
-        return Results.created();
-    }
-
-
-    public Result AddCiclistaProgramacionRuta(long idCiclista) {
-
-        DynamicForm postForm = Form.form().bindFromRequest();
-        ProgramacionRuta programacionRuta = Ebean.find(ProgramacionRuta.class, postForm.get("id"));
-        if (programacionRuta == null) {
-            return Results.notFound("Programacion Ruta no encontrada");
-        }
-
-        Ciclista ciclista = Ebean.find(Ciclista.class, idCiclista);
-        if (ciclista == null) {
-            return Results.notFound("Ciclista no encontrado ");
-        }
-
-        programacionRuta.participantes.add(ciclista);
-        programacionRuta.save();
+        ProgramacionRuta programacionRuta = this.ValoresProgramacionRuta(postForm, organizador, fechaInicio);
+        Desplazamiento desplazamiento = new Desplazamiento();
+        desplazamiento.Programar(programacionRuta);
 
         return Results.created();
     }
@@ -257,30 +221,28 @@ public class RutaController extends Controller {
         }
     }
 
-    public Result ListaProgramacionRutaPorInvitado(long id) {
-        if (id == 0) {
-            id = Long.valueOf(session().get("loggedUser"));
-        }
+    protected ProgramacionRuta ValoresProgramacionRuta (Form<ProgramacionRuta> postForm, Ciclista organizador, Date fechaInicio)
+    {
+        Ruta ruta = new Ruta();
+        ruta.origen = new Ubicacion();
+        ruta.origen.latitud  = postForm.get().ruta.origen.latitud;
+        ruta.origen.longitud  = postForm.get().ruta.origen.longitud;
+        ruta.origen.nombre  = postForm.get().ruta.origen.nombre;
 
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("participantes.id", id).findList();
-        if (programacionRecorrido != null) {
-            return Results.ok(Json.toJson(programacionRecorrido));
-        } else {
-            return Results.notFound("Programacion recorrido invitado no encontrada");
-        }
+        ruta.destino = new Ubicacion();
+        ruta.destino.latitud  = postForm.get().ruta.destino.latitud;
+        ruta.destino.longitud  = postForm.get().ruta.destino.longitud;
+        ruta.destino.nombre  = postForm.get().ruta.destino.nombre;
+        ruta.save();
+
+        ProgramacionRuta programacionRuta = new ProgramacionRuta();
+        programacionRuta.organizador = organizador;
+        programacionRuta.ruta = ruta;
+        programacionRuta.descripcion = postForm.get().descripcion;
+        programacionRuta.fechaInicio = fechaInicio;
+        programacionRuta.nombre= postForm.get().nombre;
+
+        return programacionRuta;
     }
 
-    public Result ListaProgramacionRutaPorParticipante(long id) {
-        if (id == 0) {
-            id = Long.valueOf(session().get("loggedUser"));
-        }
-
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().or(Expr.eq("participantes.id", id),
-                Expr.eq("organizador.id", id)).findList();
-        if (programacionRecorrido != null) {
-            return Results.ok(Json.toJson(programacionRecorrido));
-        } else {
-            return Results.notFound("Programacion recorrido participante no encontrada");
-        }
-    }
 }

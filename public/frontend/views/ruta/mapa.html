@@ -22,8 +22,6 @@
 <div class="container-fluid footer" ng-init="loadmap()">
     <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="iniciarecorrido()">Iniciar recorrido</button>
     <button class="btn btn-default" ng-hide="hideHistorico" ng-click="guardahistorico()">Terminar recorrido</button>
-    <form class="ruedapps-inline-block" method="get" action="#/ruta/hist">
-        <button class="btn btn-default" ng-hide="hideRecorrido" ng-click="">Consulta Hist&oacute;rico</button>
-    </form>
+    <b><timer ng-hide="hideHistorico" auto-start="false" interval="1000">{{hours}}:{{minutes}}:{{seconds}}</timer></b>
 </div>
 

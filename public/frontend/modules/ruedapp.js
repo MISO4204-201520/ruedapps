@@ -2,7 +2,7 @@
  * Created by jasmo2 on 9/19/15.
  */
 
-var ruedapp = angular.module('ruedapp',['ruedapp.services','ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies' ,'ngTable','chart.js'])
+var ruedapp = angular.module('ruedapp',['ruedapp.services','ngRoute', 'leaflet-directive', 'ui.bootstrap', 'ngCookies','ngTable', 'chart.js', 'timer'])
     /**/
 //Constants
     .constant('AUTH_EVENTS', {

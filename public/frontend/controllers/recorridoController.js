@@ -132,6 +132,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
             };
 
             $http(post).success(function () {
+                $scope.$broadcast('timer-stop');
                 console.log("historico creado");
                 recorridoId = 0;
                 $scope.hideRecorrido = false;
@@ -211,6 +212,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
                 };
 
                 $http(post).success(function (data) {
+                    $scope.$broadcast('timer-start');
                     recorridoId = data;
                     inicioRecorrido = new Date();
                     $scope.hideRecorrido = true;
@@ -254,6 +256,7 @@ ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$ro
                 };
 
                 $http(post).success(function (data) {
+                    $scope.$broadcast('timer-start');
                     recorridoId = data;
                     inicioRecorrido = new Date();
                     $scope.hideRecorrido = true;
