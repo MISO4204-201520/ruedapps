@@ -47,7 +47,7 @@ POST          /recorrido/:id                                  controllers.ruta.R
 GET           /reporte/metrica/distancia/:finicio/:ffin/:id   controllers.reporte.ReporteController.ConsultarMetricaPorDistancia(finicio:String, ffin:String, id: Long)
 GET           /reporte/metrica/tiempo/:finicio/:ffin/:id      controllers.reporte.ReporteController.ConsultarMetricaPorTiempo(finicio:String, ffin:String, id: Long)
 GET           /reporte/historico/:finicio/:ffin/:id           controllers.reporte.ReporteController.ConsultarHistoricoPorUsuario(finicio:String, ffin:String, id: Long)
-GET           /reporte/rutas/:finicio/:ffin/:id               controllers.reporte.ReporteController.ConsultarRutasPorUsusario(finicio:String, ffin:String, id: Long)
+GET        /reporte/rutas/:finicio/:ffin/:id        controllers.reporte.ReporteController.ConsultarRutasPorUsuario(finicio:String, ffin:String, id: Long)
 
 # Rutas directorio
 GET           /categoria                                      controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
