@@ -1,7 +1,7 @@
 package controllers.reporte;
 
 import factory.reporte.IReporte;
-import factory.reporte.ReporteFactory;
+import factory.reporte.ReporteFact;
 import factory.reporte.TipoReporte;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -32,7 +32,7 @@ public class ReporteController extends Controller {
             return badRequest();
         }
 
-        IReporte reporte = ReporteFactory.crearReporte(TipoReporte.MetricaDistancia);
+        IReporte reporte = ReporteFact.crearReporte(TipoReporte.MetricaDistancia);
         List data = reporte.ConsultarReporte(fechaInicioDate, fechaFinDate, id);
 
         if (data != null) {
@@ -56,7 +56,7 @@ public class ReporteController extends Controller {
             return badRequest();
         }
 
-        IReporte reporte = ReporteFactory.crearReporte(TipoReporte.MetricaTiempo);
+        IReporte reporte = ReporteFact.crearReporte(TipoReporte.MetricaTiempo);
         List data = reporte.ConsultarReporte(fechaInicioDate, fechaFinDate, id);
 
         if (data != null) {
@@ -80,7 +80,7 @@ public class ReporteController extends Controller {
             return badRequest();
         }
 
-        IReporte reporte = ReporteFactory.crearReporte(TipoReporte.HistoricoUsuario);
+        IReporte reporte = ReporteFact.crearReporte(TipoReporte.HistoricoUsuario);
         List data = reporte.ConsultarReporte(fechaInicioDate, fechaFinDate, id);
 
         if (data != null) {
@@ -104,7 +104,7 @@ public class ReporteController extends Controller {
             return badRequest();
         }
 
-        IReporte reporte = ReporteFactory.crearReporte(TipoReporte.RutasUsuario);
+        IReporte reporte = ReporteFact.crearReporte(TipoReporte.RutasUsuario);
         List data = reporte.ConsultarReporte(fechaInicioDate, fechaFinDate, id);
 
         if (data != null) {
