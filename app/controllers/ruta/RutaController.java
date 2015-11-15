@@ -13,9 +13,7 @@ import play.mvc.Results;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 /**\
  * Created by Juan on 9/12/2015.
@@ -244,7 +242,6 @@ public class RutaController extends Controller {
     }
 
     public Result ListaProgramacionRutaPorOrganizador(long id) {
-
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
         }
@@ -256,6 +253,25 @@ public class RutaController extends Controller {
             return Results.notFound("Programacion recorrido organizador no encontrada");
         }
     }
+
+    public Result ListaProgramacionRutaPorParticipante(long id) {
+        if (id == 0) {
+            id = Long.valueOf(session().get("loggedUser"));
+        }
+
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where()
+                .or(
+                        Expr.eq("participantes.id", id),
+                        Expr.eq("organizador.id", id)
+                ).findList();
+        if (programacionRecorrido != null) {
+            return Results.ok(Json.toJson(programacionRecorrido));
+        } else {
+            return Results.notFound("Programacion recorrido participante no encontrada");
+        }
+    }
+
+    // Metodos para notificaciones
 
     public Result ListaProgramacionRutaPorInvitado(long id) {
         if (id == 0) {
@@ -270,13 +286,29 @@ public class RutaController extends Controller {
         }
     }
 
-    public Result ListaProgramacionRutaPorParticipante(long id) {
+    public Result ListaProgramacionRutaPorParticipanteHoy(long id) {
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
         }
 
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().or(Expr.eq("participantes.id", id),
-                Expr.eq("organizador.id", id)).findList();
+        // Fechas de hoy y mañana
+        Calendar c = new GregorianCalendar();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        Date hoy = c.getTime();
+        c.add(Calendar.DATE, 1);
+        Date manana = c.getTime();
+
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where()
+                .ge("fechaInicio", hoy)
+                .le("fechaInicio", manana)
+                .or(
+                        Expr.eq("participantes.id", id),
+                        Expr.eq("organizador.id", id)
+                )
+                .findList();
         if (programacionRecorrido != null) {
             return Results.ok(Json.toJson(programacionRecorrido));
         } else {
