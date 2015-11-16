@@ -8,13 +8,13 @@ import play.data.Form;
  */
 public abstract class DesplazamientoDecorator implements IDesplazamiento {
 
-    private IDesplazamiento dezplazamiento;
+    private IDesplazamiento desplazamiento;
 
     public DesplazamientoDecorator(IDesplazamiento dezplazamiento) {
-        this.dezplazamiento = dezplazamiento;
+        this.desplazamiento = dezplazamiento;
     }
 
     public void Programar(ProgramacionRuta programacion) {
-        this.dezplazamiento.Programar(programacion);
+        this.desplazamiento.Programar(programacion);
     }
 }
