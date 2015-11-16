@@ -3,8 +3,8 @@
  */
 (function() {
     var ruedapp = angular.module('ruedapp');
-    ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory', 'oauthFactory',
-        function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory, oauthFactory) {
+    ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
+        function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
             /**
              * Definición datepicker
              * @type {Date}
@@ -73,16 +73,6 @@
                 });
             };
 
-            $scope.authenticate = function (provider) {
-                oauthFactory.initialize(provider);
-                oauthFactory.connect().then(function () {
-                    $rootScope.loggedIn = true;
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                    $rootScope.provider = provider;
-
-                });
-
-            };
 
             $scope.consultarBicicletasUsuario = function () {
                 var get = {

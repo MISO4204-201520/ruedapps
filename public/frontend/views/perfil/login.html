@@ -24,17 +24,20 @@
                 <button type="submit" class="btn-block btn-primary center-block">Cancelar</button>
             </form>
             <div ng-show="loginFailed">Usuario o clave inválida</div>
-            <br><br><br>
-            <div id="social-separator">
-                <span>ó</span>
+
+            <div ng-controller="perfilOptionalController">
+                <br><br><br>
+                <div id="social-separator" ng-show="facebook || twitter" >
+                    <span>ó</span>
+                </div>
+                <br><br><br>
+                <button ng-show="facebook" class="btn btn-block btn-social btn-facebook" ng-click="authenticate('facebook')">
+                    <span class="fa fa-facebook"></span> Inicia sesión con Facebook
+                </button>
+                <button ng-show="twitter" class="btn btn-block btn-social btn-twitter" ng-click="authenticate('twitter')">
+                    <span class="fa fa-twitter"></span> Inicia sesión con Twitter
+                </button>
             </div>
-            <br><br><br>
-            <button class="btn btn-block btn-social btn-facebook" ng-click="authenticate('facebook')">
-                <span class="fa fa-facebook"></span> Inicia sesión con Facebook
-            </button>
-            <button class="btn btn-block btn-social btn-twitter" ng-click="authenticate('twitter')">
-                <span class="fa fa-twitter"></span> Inicia sesión con Twitter
-            </button>
             <!--button class="btn btn-block btn-social btn-google" ng-click="authenticate('google')">
                 <span class="fa fa-google"></span> Inicia sesión con Google
             </button>

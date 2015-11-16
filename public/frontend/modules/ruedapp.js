@@ -32,7 +32,6 @@ var ruedapp = angular.module('ruedapp',['ruedapp.services','ngRoute', 'leaflet-d
             // keep user logged in after page refresh
             var globals =  $cookies.get('globals'),
                 provider = $cookies.get('provider');
-;
             $rootScope.globals = (globals ? JSON.parse(globals) : null) || {};
 
             if ($rootScope.globals.currentUser) {
