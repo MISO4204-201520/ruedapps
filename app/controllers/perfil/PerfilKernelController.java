@@ -3,10 +3,7 @@ package controllers.perfil;
 
 import com.avaje.ebean.Ebean;
 import models.configurador_bicicletas.Bicicleta;
-import models.perfil.Ciclista;
-import models.perfil.LoginDTO;
-import models.perfil.Proveedor;
-import models.perfil.Usuario;
+import models.perfil.*;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -14,7 +11,10 @@ import play.mvc.Result;
 import play.mvc.Results;
 import views.html.login;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static play.libs.Json.toJson;
@@ -49,14 +49,13 @@ public class PerfilKernelController extends Controller {
     }
 
     public Result CrearUsuario() {
-        Form<Ciclista> postForm = Form.form(Ciclista.class).bindFromRequest();
+        Form<RegistroDTO> postForm = Form.form(RegistroDTO.class).bindFromRequest();
         if (postForm.hasErrors()) {
             return badRequest(postForm.errorsAsJson());
         }
 
         Ciclista ciclista = new Ciclista();
-        SetUsuario(ciclista, postForm);
-        //ciclista.fechaNacimiento = postForm.get().fechaNacimiento;
+        SetCiclista(ciclista, postForm);
         ciclista.save();
 
         return Results.created();
@@ -73,27 +72,6 @@ public class PerfilKernelController extends Controller {
         proveedor.nit = postForm.get().nit;
         proveedor.nombreNegocio = postForm.get().nombreNegocio;
         proveedor.save();
-
-        return Results.created();
-    }
-
-
-    public Result ActualizarUsuario() {
-        Form<Ciclista> postForm = Form.form(Ciclista.class).bindFromRequest();
-        if (postForm.hasErrors()) {
-            return badRequest(postForm.errorsAsJson());
-        } else {
-            String correoLogin = postForm.get().correoElectronico;
-            List<Usuario> usuario = Usuario.find.where().eq("correoElectronico", correoLogin).findList();
-
-            if (usuario != null && usuario.size() > 0) {
-                Ciclista ciclista = (Ciclista) usuario.get(0);
-                SetUsuario(ciclista, postForm);
-                ciclista.update();
-            } else {
-                return Results.notFound();
-            }
-        }
 
         return Results.created();
     }
@@ -129,80 +107,6 @@ public class PerfilKernelController extends Controller {
         return Results.notFound();
     }
 
-    public Result AgregarAmigo(long id, long idAmigo) {
-        Ciclista usuario = Ebean.find(Ciclista.class, id);
-        Ciclista amigo = Ebean.find(Ciclista.class, idAmigo);
-
-        if (usuario != null && amigo != null) {
-            usuario.amigos.add(amigo);
-            usuario.save();
-            return ok(Json.toJson(usuario));
-        } else {
-            return Results.notFound();
-        }
-    }
-
-    public Result EliminarAmigo(long id, long idAmigo) {
-        Ciclista usuario = Ebean.find(Ciclista.class, id);
-
-        if (usuario != null) {
-            for(int i = 0; i < usuario.amigos.size(); i++) {
-                Ciclista c = usuario.amigos.get(i);
-                if (c.id == idAmigo) {
-                    usuario.amigos.remove(i);
-                    usuario.save();
-                }
-            }
-
-            return ok(Json.toJson(usuario));
-        } else {
-            return Results.notFound();
-        }
-    }
-
-    public Result Amigos(long id) {
-        Ciclista usuario = Ebean.find(Ciclista.class, id);
-
-        if (usuario != null) {
-            List<Ciclista> amigos = usuario.amigos;
-            return ok(Json.toJson(amigos));
-        } else {
-            return Results.notFound();
-        }
-    }
-
-    public Result NoAmigos(long id) {
-        Ciclista usuario = Ebean.find(Ciclista.class, id);
-
-        if (usuario != null) {
-            List<Ciclista> amigos = usuario.amigos;
-            List<Ciclista> ciclistas = Ebean.find(Ciclista.class).findList();
-            List<Ciclista> noAmigos = new ArrayList<>();
-
-            for (Ciclista ciclista : ciclistas) {
-                boolean existe = false;
-
-                if (ciclista.id != id) {
-                    for (int j = 0; j < amigos.size(); j++) {
-                        Ciclista c2 = amigos.get(j);
-                        if (ciclista.id == c2.id) {
-                            existe = true;
-                            amigos.remove(c2);
-                        }
-                    }
-
-                    if (!existe && ciclista.id != id) {
-                        noAmigos.add(ciclista);
-                    }
-                }
-            }
-
-            return ok(Json.toJson(noAmigos));
-        } else {
-            return Results.notFound();
-        }
-    }
-
     private static void SetUsuario(Usuario usuario, Form<? extends Usuario> formUsuario) {
         usuario.nombres = formUsuario.get().nombres;
         usuario.celular = formUsuario.get().celular;
@@ -210,6 +114,24 @@ public class PerfilKernelController extends Controller {
         usuario.apellidos = formUsuario.get().apellidos;
         usuario.ciudad = formUsuario.get().ciudad;
         usuario.hashContrasenia(formUsuario.get().contrasenia);
+    }
+
+    private static void SetCiclista(Ciclista usuario, Form<? extends RegistroDTO> formUsuario) {
+        usuario.nombres = formUsuario.get().getNombres();
+        usuario.celular = formUsuario.get().getCelular();
+        usuario.correoElectronico = formUsuario.get().getCorreoElectronico();
+        usuario.apellidos = formUsuario.get().getApellidos();
+        usuario.ciudad = formUsuario.get().getCiudad();
+
+        try {
+            DateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+            usuario.fechaNacimiento = formato.parse(formUsuario.get().fechaNacimiento);
+        }
+        catch (Exception e) {
+            usuario.fechaNacimiento = new Date();
+        }
+
+        usuario.hashContrasenia(formUsuario.get().getContrasenia());
     }
 
     public Result ObtenerBicicletasUsuario(long idUsuario) {

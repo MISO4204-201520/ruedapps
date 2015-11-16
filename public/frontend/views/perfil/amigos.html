@@ -1,33 +1,34 @@
-<div class="container-fluid"
-     ng-init="consultaAmigosCiclistas(); llenarSelectableAmigos(); llenarSelectableCiclistas();">
-    <div class="row text-center">
-        <h1>Mis Amigos</h1>
-    </div>
-    <br/>
-    <br/>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <div>
-                <h2>Amigos</h2>
-                <ol class="ruedapps-selectable" id="ruedapps-selectable-amigos">
-                    <li class="ui-widget-content" ng-repeat="x in amigos" value="{{x.id}}">
-                        {{ x.nombres }}
-                    </li>
-                </ol>
-                <button type="submit" class="btn btn-default center-block" ng-click="eliminarAmigo()">Eliminar</button>
-            </div>
-            <br/>
-            <br/>
-            <div>
-                <h2>Otros Ciclistas</h2>
-                <ol class="ruedapps-selectable" id="ruedapps-selectable-ciclistas">
-                    <li class="ui-widget-content" ng-repeat="x in noAmigos" value="{{x.id}}">
-                        {{ x.nombres }}
-                    </li>
-                </ol>
-                <button type="submit" class="btn btn-info center-block" ng-click="agregarAmigo()">Agregar</button>
-            </div>
-        </div>
+<div class="container-fluid" ng-controller="amigosController">
+     <div ng-init="consultaAmigosCiclistas(); llenarSelectableAmigos(); llenarSelectableCiclistas();">
+         <div class="row text-center">
+             <h1>Mis Amigos</h1>
+         </div>
+         <br/>
+         <br/>
+         <div class="row">
+             <div class="col-md-4"></div>
+             <div class="col-md-4">
+                 <div>
+                     <h2>Amigos</h2>
+                     <ol class="ruedapps-selectable" id="ruedapps-selectable-amigos">
+                         <li class="ui-widget-content" ng-repeat="x in amigos" value="{{x.id}}">
+                             {{ x.nombres }}
+                         </li>
+                     </ol>
+                     <button type="submit" class="btn btn-default center-block" ng-click="eliminarAmigo()">Eliminar</button>
+                 </div>
+                 <br/>
+                 <br/>
+                 <div>
+                     <h2>Otros Ciclistas</h2>
+                     <ol class="ruedapps-selectable" id="ruedapps-selectable-ciclistas">
+                         <li class="ui-widget-content" ng-repeat="x in noAmigos" value="{{x.id}}">
+                             {{ x.nombres }}
+                         </li>
+                     </ol>
+                     <button type="submit" class="btn btn-info center-block" ng-click="agregarAmigo()">Agregar</button>
+                 </div>
+             </div>
+         </div>
     </div>
 </div>

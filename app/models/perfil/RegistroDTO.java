@@ -40,6 +40,11 @@ public class RegistroDTO {
      */
     private String celular;
 
+    /**
+     * Representa la fecha de nacimiento del usuario.
+     */
+    public String fechaNacimiento;
+
 
     // --------------------------------------------------------------------
     // Metodos
@@ -55,7 +60,7 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo nombres.
+     * Asigna el valor del atributo nombres.
      *
      * @param nombres Nuevo nombre
      */
@@ -73,7 +78,7 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo apellidos.
+     * Asigna el valor del atributo apellidos.
      *
      * @param apellidos Nuevo apellido
      */
@@ -91,7 +96,7 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo correo electrónico.
+     * Asigna el valor del atributo correo electrónico.
      *
      * @param correoElectronico Nuevo correo electrónico
      */
@@ -109,7 +114,7 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo contraseña.
+     * Asigna el valor del atributo contraseña.
      *
      * @param contrasenia Nueva contraseña
      */
@@ -127,7 +132,7 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo ciudad.
+     * Asigna el valor del atributo ciudad.
      *
      * @param ciudad Nueva ciudad
      */
@@ -145,7 +150,7 @@ public class RegistroDTO {
     }
 
     /**
-     * Aigna el valor del atributo celular.
+     * Asigna el valor del atributo celular.
      *
      * @param celular Nuevo celular
      */
@@ -153,5 +158,21 @@ public class RegistroDTO {
         this.celular = celular;
     }
 
+    /**
+     * Retorna el atributo fecha nacimiento.
+     *
+     * @return celular
+     */
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
 
+    /**
+     * Asigna el valor del atributo fecha nacimiento.
+     *
+     * @param fechaNacimiento Nueva fecha de nacimiento
+     */
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
 }

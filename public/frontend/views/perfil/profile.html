@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="manejoPerfilController" ng-init="consultarPerfil()">
     <div class="row text-center">
         <h1>Mi Perfil</h1>
     </div>
@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <form name="form" role="form" ng-controller = "perfilController">
+            <form name="form" role="form">
                 <div class="form-group" required>
                     <label for="nombres">Nombres:</label>
                     <input name="nombres" ng-model="userInfo.nombres" class="form-control" id="nombres" placeholder="eg. Juan">

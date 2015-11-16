@@ -26,63 +26,6 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
             startingDay: 1
         };
 
-        /**
-         * Definición selectable amigos
-         */
-        $scope.llenarSelectableAmigos = function () {
-            $scope.amigosSeleccionados = [];
-
-            var amigos = $("#ruedapps-selectable-amigos");
-            amigos.selectable({
-                selected: function (event, ui) {
-                    $scope.amigosSeleccionados.push(ui.selected.value);
-                }
-            });
-        };
-
-        /**
-         * Definición selectable ciclistas (no amigos)
-         */
-        $scope.llenarSelectableCiclistas = function () {
-            $scope.noAmigosSeleccionados = [];
-
-            var ciclistas = $("#ruedapps-selectable-ciclistas");
-            ciclistas.selectable({
-                selected: function (event, ui) {
-                    $scope.noAmigosSeleccionados.push(ui.selected.value);
-                }
-            });
-        };
-
-        /**
-         * Obtención de amigos y ciclistas de la plataforma.
-         */
-        $scope.consultaAmigosCiclistas = function () {
-            var get1 = {
-                method: 'GET',
-                url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/amigos'
-            };
-            $http(get1).success(function (data) {
-                $scope.amigos = data;
-
-            }).error(function (data) {
-                console.log("Error consulta amigos");
-                console.log("data: " + data);
-            });
-
-            var get2 = {
-                method: 'GET',
-                url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/no-amigos'
-            };
-            $http(get2).success(function (data) {
-                $scope.noAmigos = data;
-
-            }).error(function (data) {
-                console.log("Error consulta no amigos");
-                console.log("data: " + data);
-            });
-        };
-
         $scope.registrar = function () {
             if ($scope.form.$valid) {
                 var userInfo = $scope.userInfo;
@@ -129,67 +72,6 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
             });
         };
 
-        $scope.editarPerfil = function () {
-            if ($scope.form.$valid) {
-                var userInfo = $scope.userInfo;
-                var put = {
-                    method: 'PUT',
-                    url: '/usuario',
-                    headers: {'Content-Type': 'application/json'},
-                    data: JSON.stringify(userInfo)
-                };
-
-                $http(put).success(function () {
-                    console.log("Modificó");
-                    window.location.replace('/');
-
-                }).error(function (data) {
-                    console.log("Error registro.");
-                    console.log("data: " + data);
-                });
-            }
-        };
-
-        $scope.agregarAmigo = function () {
-            $scope.noAmigosSeleccionados.forEach(function (element) {
-                var post = {
-                    method: 'POST',
-                    url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/amigos/' + element,
-                    headers: {'Content-Type': 'application/json'}
-                };
-
-                $http(post).success(function (data) {
-                    console.log("Creó amigo");
-                    $scope.consultaAmigosCiclistas();
-                    window.location.replace('#/amigos');
-
-                }).error(function (data) {
-                    console.log("Error creación amigo.");
-                    console.log("data: " + data);
-                });
-            });
-        };
-
-        $scope.eliminarAmigo = function () {
-            $scope.amigosSeleccionados.forEach(function (element) {
-                var del = {
-                    method: 'DELETE',
-                    url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/amigos/' + element,
-                    headers: {'Content-Type': 'application/json'}
-                };
-
-                $http(del).success(function () {
-                    console.log("Eliminó amigo");
-                    $scope.consultaAmigosCiclistas();
-                    window.location.replace('#/amigos');
-
-                }).error(function (data) {
-                    console.log("Error eliminar amigo.");
-                    console.log("data: " + data);
-                });
-            });
-        }
-
         $scope.authenticate = function(provider) {
             oauthFactory.initialize(provider);
             oauthFactory.connect().then(function(){
@@ -202,12 +84,10 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
         };
 
         $scope.consultarBicicletasUsuario = function () {
-
             var get = {
                 method: 'GET',
                 url: '/usuario/' + $rootScope.globals.currentUser.userId
             };
-
             $http(get).success(function (data) {
                 console.log("Obtuvo usuario");
                 console.log("data: " + data);
@@ -238,9 +118,7 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
         $scope.obtenerAccesoriosBicicleta = function (value) {
 
             console.log("VALOR: " + value)
-
             var idBicicleta = value;
-
             console.log("Id de bicicleta: " + idBicicleta);
 
             var get = {
