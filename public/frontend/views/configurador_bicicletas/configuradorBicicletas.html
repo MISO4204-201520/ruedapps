@@ -64,8 +64,8 @@
                         <p class="text-left">Selecciona los accesorios que desees agregar a tu bicicleta.</p>
                         <br>
                         <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-accesorios">
-                            <li class="ui-widget-content" value="Canasta" ng-if="bicicleta.tamanio != 'Pequeña'"><img ng-class="bicicleta.accesorioCanasta" src="assets/images/accesorio-canasta.png"></li>
-                            <li class="ui-widget-content" value="Pito"><img ng-class="bicicleta.accesorioPito" src="assets/images/accesorio-pito.png"></li>
+                            <li class="ui-widget-content" value="Canasta" ng-if="bicicleta.tamanio != 'Pequeña'"><img ng-class="{'ruedapps-selected-configurador-option' : bicicleta.accesorioCanasta}" src="assets/images/accesorio-canasta.png"></li>
+                            <li class="ui-widget-content" value="Pito"><img ng-class="{'ruedapps-selected-configurador-option' : bicicleta.accesorioPito}" src="assets/images/accesorio-pito.png"></li>
                         </ol>
                     </div>
 

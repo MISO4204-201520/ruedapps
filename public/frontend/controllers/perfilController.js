@@ -1,133 +1,85 @@
 /*
  * Created by lina on 9/30/15.
  */
-(function() {
-    var ruedapp = angular.module('ruedapp');
-    ruedapp.controller('perfilController', ['$scope', '$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory',
-        function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory) {
-            /**
-             * Definición datepicker
-             * @type {Date}
-             */
 
-            var today = new Date();
-            $scope.minDate = '1900/01/01';
-            $scope.maxDate = today;
+ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthFactory',
+    function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,oauthFactory) {
+        /**
+         * Definición datepicker
+         * @type {Date}
+         */
 
-            $scope.open = function () {
-                $scope.status.opened = true;
-            };
+        var today = new Date();
+        $scope.minDate = '1900/01/01';
+        $scope.maxDate = today;
 
-            $scope.status = {
-                opened: false
-            };
+        $scope.open = function () {
+            $scope.status.opened = true;
+        };
 
-            $scope.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-            };
+        $scope.status = {
+            opened: false
+        };
 
-            $scope.registrar = function () {
-                if ($scope.form.$valid) {
-                    var userInfo = $scope.userInfo;
-                    var post = {
-                        method: 'POST',
-                        url: '/usuario',
-                        headers: {'Content-Type': 'application/json'},
-                        data: JSON.stringify(userInfo)
-                    };
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
 
-                    $http(post).success(function (data) {
-                        console.log("Registró");
-                        console.log("data: " + data);
-                        window.location.replace('/');
+        $scope.registrar = function () {
+            if ($scope.form.$valid) {
+                var userInfo = $scope.userInfo;
+                var post = {
+                    method: 'POST',
+                    url: '/usuario',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(userInfo)
+                };
 
-                    }).error(function (data) {
-                        console.log("Error registro.");
-                        console.log("data: " + data);
-                    });
-                }
-            };
-
-            $scope.login = function () {
-                var credentials = $scope.credentials;
-                if ($scope.form.$valid) {
-                    AuthFactory.login(credentials).then(function () {
-                        $rootScope.loggedIn = true;
-                        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                        $rootScope.provider = "";
-                        window.location.replace('#/inicio');
-                    }, function () {
-                        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                    });
-                }
-            };
-
-            $scope.logout = function () {
-                AuthFactory.logout().then(function () {
-                    $rootScope.loggedIn = false;
-                    $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+                $http(post).success(function (data) {
+                    console.log("Registró");
+                    console.log("data: " + data);
                     window.location.replace('/');
+
+                }).error(function (data) {
+                    console.log("Error registro.");
+                    console.log("data: " + data);
+                });
+            }
+        };
+
+        $scope.login = function () {
+            var credentials = $scope.credentials;
+            if ($scope.form.$valid) {
+                AuthFactory.login(credentials).then(function () {
+                    $rootScope.loggedIn = true;
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $rootScope.provider = "";
+                    window.location.replace('#/inicio');
                 }, function () {
-                    console.error("Error logout.");
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
-            };
-
-
-            $scope.consultarBicicletasUsuario = function () {
-                var get = {
-                    method: 'GET',
-                    url: '/usuario/' + $rootScope.globals.currentUser.userId
-                };
-                $http(get).success(function (data) {
-                    console.log("Obtuvo usuario");
-                    console.log("data: " + data);
-                    $scope.userGlobalId = data;
-
-                    get = {
-                        method: 'GET',
-                        url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/bicicletas'
-                    };
-
-                    $http(get).success(function (data) {
-                        console.log("Obtuvo bicicletas");
-                        console.log("data: " + data);
-                        $scope.bicicletas = data;
-
-                    }).error(function (data) {
-                        console.log("Error consulta bicicletas");
-                        console.log("data: " + data);
-                    });
-
-                }).error(function (data) {
-                    console.log("Error obtención ciclista");
-                    console.log("data: " + data);
-                });
-
             }
+        };
 
-            $scope.obtenerAccesoriosBicicleta = function (value) {
+        $scope.logout = function () {
+            AuthFactory.logout().then(function () {
+                $rootScope.loggedIn = false;
+                $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+                window.location.replace('/');
+            }, function () {
+                console.error("Error logout.");
+            });
+        };
 
-                console.log("VALOR: " + value)
-                var idBicicleta = value;
-                console.log("Id de bicicleta: " + idBicicleta);
+        $scope.authenticate = function(provider) {
+            oauthFactory.initialize(provider);
+            oauthFactory.connect().then(function(){
+                $rootScope.loggedIn = true;
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                $rootScope.provider = provider;
 
-                var get = {
-                    method: 'GET',
-                    url: '/bicicleta/' + idBicicleta + '/accesorios'
-                };
+            });
 
-                $http(get).success(function (data) {
-                    console.log("Recuperó los accesorios de la bicicleta: " + idBicicleta);
-                    console.log("data: " + data);
-                    $scope.accesorios = data;
-
-                }).error(function (data) {
-                    console.log("Error recuperando los accesorios de la bicicleta: " + idBicicleta);
-                    console.log("data: " + data);
-                });
-
-            }
-
-        }]);
-})();
+        };
+    }]);
