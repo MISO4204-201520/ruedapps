@@ -3,6 +3,7 @@ package controllers.configurador_bicicletas;
 import com.avaje.ebean.Ebean;
 import models.configurador_bicicletas.Accesorio;
 import models.configurador_bicicletas.Bicicleta;
+import models.configurador_bicicletas.BicicletaBuilder;
 import models.configurador_bicicletas.BicicletaDTO;
 import models.perfil.Ciclista;
 import models.perfil.Usuario;
@@ -26,7 +27,7 @@ public class ConfiguradorBicicletasController extends Controller {
         if (postForm.hasErrors()) {
             return badRequest(postForm.errorsAsJson());
         } else {
-            Bicicleta.BicicletaBuilder builder = new Bicicleta.BicicletaBuilder();
+            BicicletaBuilder builder = new BicicletaBuilder();
             Bicicleta bicicleta = SetBicicleta(builder, postForm);
             bicicleta.save();
 
@@ -38,7 +39,7 @@ public class ConfiguradorBicicletasController extends Controller {
         }
     }
 
-    private static Bicicleta SetBicicleta(Bicicleta.BicicletaBuilder builder, Form<? extends BicicletaDTO> formBicicleta) {
+    private static Bicicleta SetBicicleta(BicicletaBuilder builder, Form<? extends BicicletaDTO> formBicicleta) {
         builder.color(formBicicleta.get().color);
         builder.llantas(formBicicleta.get().llantas);
         builder.sillin(formBicicleta.get().sillin);
