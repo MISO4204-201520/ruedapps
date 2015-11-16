@@ -127,7 +127,6 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
         $scope.finalizarConfiguracion = function() {
 
             var bicicleta = $scope.bicicleta;
-
             console.log("Bicicleta: " + JSON.stringify($scope.bicicleta));
 
             var post = {
@@ -145,6 +144,51 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
 
             }).error(function (data) {
                 console.log("Error registro.");
+                console.log("data: "+ data);
+            });
+
+        }
+
+        $scope.consultarBicicletasUsuario = function () {
+            get = {
+                method: 'GET',
+                url: '/ciclista/' + $rootScope.globals.currentUser.userId + '/bicicletas'
+            };
+
+            $http(get).success(function (data) {
+                console.log("Obtuvo bicicletas");
+                console.log("data: " + data);
+                $scope.bicicletas = data;
+
+                for(var i = 0; i < $scope.bicicletas.length; i++) {
+                    $scope.obtenerAccesoriosBicicleta($scope.bicicletas[i].id, i);
+                }
+
+            }).error(function (data) {
+                console.log("Error consulta bicicletas");
+                console.log("data: " + data);
+            });
+
+        }
+
+        $scope.obtenerAccesoriosBicicleta = function (value, posicion) {
+
+            console.log("VALOR: " + value)
+            var idBicicleta = value;
+            console.log("Id de bicicleta: " + idBicicleta);
+
+            var get = {
+                method: 'GET',
+                url: '/bicicleta/' + idBicicleta + '/accesorios'
+            };
+
+            $http(get).success(function (data) {
+                console.log("Recuperó los accesorios de la bicicleta: " + idBicicleta);
+                console.log("data: " + data);
+                $scope.bicicletas[posicion].accesorios = data;
+
+            }).error(function (data) {
+                console.log("Error recuperando los accesorios de la bicicleta: " + idBicicleta);
                 console.log("data: "+ data);
             });
 

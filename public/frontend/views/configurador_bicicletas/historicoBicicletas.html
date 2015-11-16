@@ -9,7 +9,7 @@
     max-height: 85px;
     }
 </style>
-<div class="container-fluid" ng-init="consultarBicicletasUsuario()">
+<div class="container-fluid" ng-controller="configuradorBicicletasController" ng-init="consultarBicicletasUsuario()">
     <div class="row text-center">
         <h1>Bicicletas Configuradas</h1>
     </div>
@@ -71,8 +71,8 @@
                     <img src="assets/images/sillin-ancho.png">
                 </div>
             </td>
-            <td ng-init="obtenerAccesoriosBicicleta(bicicleta.id)">
-                <div ng-repeat="accesorio in accesorios">
+            <td>
+                <div ng-repeat="accesorio in bicicleta.accesorios">
                     <div class="img-resize" ng-if="accesorio.nombre == 'Pito'">
                         <img src="assets/images/accesorio-pito.png">
                     </div>
