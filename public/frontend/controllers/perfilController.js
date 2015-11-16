@@ -1,7 +1,8 @@
 /*
  * Created by lina on 9/30/15.
  */
-
+(function() {
+    var ruedapp = angular.module('ruedapp');
 ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$http', '$cookies', 'AUTH_EVENTS', 'AuthFactory','oauthFactory',
     function ($scope, $rootScope, $location, $http, $cookies, AUTH_EVENTS, AuthFactory,oauthFactory) {
         /**
@@ -83,3 +84,4 @@ ruedapp.controller('perfilController', ['$scope','$rootScope', '$location', '$ht
 
         };
     }]);
+})();

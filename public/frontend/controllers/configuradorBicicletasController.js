@@ -1,7 +1,8 @@
 /**
  * Created by Lina8a on 06/11/2015.
  */
-
+(function() {
+    var ruedapp = angular.module('ruedapp');
 ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', '$http', '$cookies',
     function ($scope, $rootScope, $http, $cookies) {
         $scope.pasoConfigurador = 1;
@@ -207,3 +208,4 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
 
         }
     }]);
+})();
