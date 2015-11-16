@@ -9,8 +9,8 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
         $scope.bicicleta = {};
         $scope.bicicleta.accesorios = [];
 
-        $scope.bicicleta.accesorioCanasta = '';
-        $scope.bicicleta.accesorioPito = '';
+        $scope.bicicleta.accesorioCanasta = false;
+        $scope.bicicleta.accesorioPito = false;
 
         $scope.alertas = []
 
@@ -74,11 +74,11 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                         var accesorio = $(this).attr('value');
 
                         if(accesorio == "Canasta") {
-                            $scope.bicicleta.accesorioCanasta = 'ruedapps-selected-configurador-option';
+                            $scope.bicicleta.accesorioCanasta = true;
                             console.log("Registra Canasta" + $scope.bicicleta.accesorioCanasta);
                         }
                         else {
-                            $scope.bicicleta.accesorioPito = 'ruedapps-selected-configurador-option';
+                            $scope.bicicleta.accesorioPito = true;
                             console.log("Registra Pito" + $scope.bicicleta.accesorioPito);
                         }
 
