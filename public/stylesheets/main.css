@@ -123,7 +123,8 @@ img {
 }
 
 .ruedapps-selectable-configurador .ui-selected > span,
-.ruedapps-selectable-configurador .ui-selected > img{
+.ruedapps-selectable-configurador .ui-selected > img,
+.ruedapps-selected-configurador-option {
     border: solid 0.5rem #6464C8 !important;
 }
 
@@ -136,7 +137,6 @@ img {
 #ruedapps-selectable-color li img {
     border: solid 1px #adadad;
 }
-
 
 #social-separator {
     border-top:1px dotted #AAAAAA;

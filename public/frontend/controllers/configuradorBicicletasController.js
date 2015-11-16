@@ -9,6 +9,9 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
         $scope.bicicleta = {};
         $scope.bicicleta.accesorios = [];
 
+        $scope.bicicleta.accesorioCanasta = '';
+        $scope.bicicleta.accesorioPito = '';
+
         $scope.alertas = []
 
         $scope.cerrarAlerta = function (index) {
@@ -69,6 +72,16 @@ ruedapp.controller('configuradorBicicletasController', ['$scope', '$rootScope', 
                 selected: function (event, ui) {
                     $(".ui-selected", this).each(function () {
                         var accesorio = $(this).attr('value');
+
+                        if(accesorio == "Canasta") {
+                            $scope.bicicleta.accesorioCanasta = 'ruedapps-selected-configurador-option';
+                            console.log("Registra Canasta" + $scope.bicicleta.accesorioCanasta);
+                        }
+                        else {
+                            $scope.bicicleta.accesorioPito = 'ruedapps-selected-configurador-option';
+                            console.log("Registra Pito" + $scope.bicicleta.accesorioPito);
+                        }
+
                         console.log(accesorio);
                         console.log($.inArray(accesorio, $scope.bicicleta.accesorios))
                         if ($.inArray(accesorio, $scope.bicicleta.accesorios) == -1) {

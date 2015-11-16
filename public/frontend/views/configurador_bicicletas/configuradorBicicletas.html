@@ -53,9 +53,9 @@
                         <p class="text-left">Selecciona el sillín que se acomode a tu estilo.</p>
                         <br>
                         <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-sillin">
-                            <li class="ui-widget-content" value="Abertura"><img src="assets/images/sillin-con-abertura.png"></li>
+                            <li class="ui-widget-content" value="Abertura" ng-if="bicicleta.llantas != 'Velocidad'"><img src="assets/images/sillin-con-abertura.png"></li>
                             <li class="ui-widget-content" value="Carrera"><img src="assets/images/sillin-con-resorte.png"></li>
-                            <li class="ui-widget-content" value="Ancho"><img src="assets/images/sillin-ancho.png"></li>
+                            <li class="ui-widget-content" value="Ancho" ng-if="bicicleta.llantas != 'Velocidad'"><img src="assets/images/sillin-ancho.png"></li>
                         </ol>
                     </div>
 
@@ -64,8 +64,8 @@
                         <p class="text-left">Selecciona los accesorios que desees agregar a tu bicicleta.</p>
                         <br>
                         <ol class="ruedapps-selectable-configurador list-inline text-center" id="ruedapps-selectable-accesorios">
-                            <li class="ui-widget-content" value="Canasta"><img src="assets/images/accesorio-canasta.png"></li>
-                            <li class="ui-widget-content" value="Pito"><img src="assets/images/accesorio-pito.png"></li>
+                            <li class="ui-widget-content" value="Canasta" ng-if="bicicleta.tamanio != 'Pequeña'"><img ng-class="bicicleta.accesorioCanasta" src="assets/images/accesorio-canasta.png"></li>
+                            <li class="ui-widget-content" value="Pito"><img ng-class="bicicleta.accesorioPito" src="assets/images/accesorio-pito.png"></li>
                         </ol>
                     </div>
 
