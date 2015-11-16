@@ -3,67 +3,71 @@
 #
 
 # Home page
-GET           /                                               controllers.Application.index()
+GET           /                                                    controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                                   controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                                        controllers.Assets.versioned(path="/public", file: Asset)
 
 ## Login externo
-POST          /login/facebook                                 controllers.perfil.PerfilOptionalController.LoginFacebook()
-POST          /login/twitter                                  controllers.perfil.PerfilOptionalController.LoginTwitter()
+POST          /login/facebook                                      controllers.perfil.PerfilOptionalController.LoginFacebook()
+POST          /login/twitter                                       controllers.perfil.PerfilOptionalController.LoginTwitter()
 
 # Rutas perfil
-GET           /login                                          controllers.perfil.PerfilKernelController.Login()
-GET           /logout                                         controllers.perfil.PerfilKernelController.LogOut()
-POST          /login                                          controllers.perfil.PerfilKernelController.LoginPost()
-POST          /usuario                                        controllers.perfil.PerfilKernelController.CrearUsuario()
-POST          /proveedor                                      controllers.perfil.PerfilKernelController.CrearProveedor()
-PUT           /usuario                                        controllers.perfil.PerfilKernelController.ActualizarUsuario()
-GET           /usuario/:id                                    controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
-GET           /usuario/:email                                 controllers.perfil.PerfilKernelController.ConsultarUsuarioPorEmail(email: String)
-GET           /ciclistas                                      controllers.perfil.PerfilKernelController.Ciclistas()
-GET           /ciclista/:id/amigos                            controllers.perfil.PerfilKernelController.Amigos(id: Long)
-POST          /ciclista/:id/amigos/:idAmigo                   controllers.perfil.PerfilKernelController.AgregarAmigo(id:Long, idAmigo:Long)
-DELETE        /ciclista/:id/amigos/:idAmigo                   controllers.perfil.PerfilKernelController.EliminarAmigo(id:Long, idAmigo:Long)
-GET           /ciclista/:id/no-amigos                         controllers.perfil.PerfilKernelController.NoAmigos(id: Long)
-GET           /ciclista/:id/bicicletas                        controllers.perfil.PerfilKernelController.ObtenerBicicletasUsuario(id: Long)
+GET           /login                                               controllers.perfil.PerfilKernelController.Login()
+GET           /logout                                              controllers.perfil.PerfilKernelController.LogOut()
+POST          /login                                               controllers.perfil.PerfilKernelController.LoginPost()
+POST          /usuario                                             controllers.perfil.PerfilKernelController.CrearUsuario()
+POST          /proveedor                                           controllers.perfil.PerfilKernelController.CrearProveedor()
+GET           /usuario/:id                                         controllers.perfil.PerfilKernelController.ConsultarUsuarioPorId(id: Long)
+GET           /usuario/:email                                      controllers.perfil.PerfilKernelController.ConsultarUsuarioPorEmail(email: String)
+GET           /ciclistas                                           controllers.perfil.PerfilKernelController.Ciclistas()
+GET           /ciclista/:id/bicicletas                             controllers.perfil.PerfilKernelController.ObtenerBicicletasUsuario(id: Long)
+
+#Rutas manejo perfiles
+PUT           /usuario                                             controllers.perfil.ManejoPerfilOptionalController.ActualizarUsuario()
+
+#Rutas amigos
+GET           /ciclista/:id/amigos                                 controllers.perfil.AmigosOptionalController.Amigos(id: Long)
+POST          /ciclista/:id/amigos/:idAmigo                        controllers.perfil.AmigosOptionalController.AgregarAmigo(id:Long, idAmigo:Long)
+DELETE        /ciclista/:id/amigos/:idAmigo                        controllers.perfil.AmigosOptionalController.EliminarAmigo(id:Long, idAmigo:Long)
+GET           /ciclista/:id/no-amigos                              controllers.perfil.AmigosOptionalController.NoAmigos(id: Long)
 
 # Rutas recorridos
-POST          /ubicacion/:id                                  controllers.ruta.RutaController.SaveUbicacion(id: Long)
-POST          /ruta                                           controllers.ruta.RutaController.SaveRuta()
-POST          /recorrido                                      controllers.ruta.RutaController.SaveRutaRecorrido()
-POST          /historico                                      controllers.ruta.RutaController.SaveHistoricoRecorrido()
-GET           /historico/:id                                  controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
-GET           /historico/usuario/:id                          controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
-POST          /recorrido/programacion                         controllers.ruta.RutaGrupalController.SaveProgramacionRuta()
-POST          /recorrido/programacion/ciclista/:id            controllers.ruta.RutaGrupalController.AddCiclistaProgramacionRuta(id: Long)
-GET           /recorrido/programacion/:id                     controllers.ruta.RutaController.ConsultaProgramacionRuta(id: Long)
-GET           /recorrido/programacion/organizador/:id         controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
-GET           /recorrido/programacion/participante/:id        controllers.ruta.RutaGrupalController.ListaProgramacionRutaPorParticipante(id: Long)
-GET        /recorrido/programacion/notifinvitado/:id        controllers.ruta.RutaController.ListaProgramacionRutaPorInvitado(id: Long)
-GET        /recorrido/programacion/notifhoy/:id             controllers.ruta.RutaController.ListaProgramacionRutaPorParticipanteHoy(id: Long)
-POST          /recorrido/:id                                  controllers.ruta.RutaController.SaveRecorrido(id: Long)
+POST          /ubicacion/:id                                       controllers.ruta.RutaController.SaveUbicacion(id: Long)
+POST          /ruta                                                controllers.ruta.RutaController.SaveRuta()
+POST          /recorrido                                           controllers.ruta.RutaController.SaveRutaRecorrido()
+POST          /historico                                           controllers.ruta.RutaController.SaveHistoricoRecorrido()
+GET           /historico/:id                                       controllers.ruta.RutaController.ConsutaHistoricoPorId(id: Long)
+GET           /historico/usuario/:id                               controllers.ruta.RutaController.ConsultarHistoricoPorUsusario(id: Long)
+POST          /recorrido/programacion                              controllers.ruta.RutaGrupalController.SaveProgramacionRuta()
+POST          /recorrido/programacion/ciclista/:id                 controllers.ruta.RutaGrupalController.AddCiclistaProgramacionRuta(id: Long)
+GET           /recorrido/programacion/:id                          controllers.ruta.RutaController.ConsultaProgramacionRuta(id: Long)
+GET           /recorrido/programacion/organizador/:id              controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
+GET           /recorrido/programacion/participante/:id             controllers.ruta.RutaGrupalController.ListaProgramacionRutaPorParticipante(id: Long)
+GET           /recorrido/programacion/notifinvitado/:id            controllers.ruta.RutaController.ListaProgramacionRutaPorInvitado(id: Long)
+GET           /recorrido/programacion/notifhoy/:id                 controllers.ruta.RutaController.ListaProgramacionRutaPorParticipanteHoy(id: Long)
+POST          /recorrido/:id                                       controllers.ruta.RutaController.SaveRecorrido(id: Long)
 
 # Reportes
-GET           /reporte/metrica/distancia/:finicio/:ffin/:id   controllers.reporte.ReporteController.ConsultarMetricaPorDistancia(finicio:String, ffin:String, id: Long)
-GET           /reporte/metrica/tiempo/:finicio/:ffin/:id      controllers.reporte.ReporteController.ConsultarMetricaPorTiempo(finicio:String, ffin:String, id: Long)
-GET           /reporte/historico/:finicio/:ffin/:id           controllers.reporte.ReporteController.ConsultarHistoricoPorUsuario(finicio:String, ffin:String, id: Long)
-GET        /reporte/rutas/:finicio/:ffin/:id                controllers.reporte.ReporteController.ConsultarRutasPorUsuario(finicio:String, ffin:String, id: Long)
+GET           /reporte/metrica/distancia/:finicio/:ffin/:id        controllers.reporte.ReporteController.ConsultarMetricaPorDistancia(finicio:String, ffin:String, id: Long)
+GET           /reporte/metrica/tiempo/:finicio/:ffin/:id           controllers.reporte.ReporteController.ConsultarMetricaPorTiempo(finicio:String, ffin:String, id: Long)
+GET           /reporte/historico/:finicio/:ffin/:id                controllers.reporte.ReporteController.ConsultarHistoricoPorUsuario(finicio:String, ffin:String, id: Long)
+GET           /reporte/rutas/:finicio/:ffin/:id                    controllers.reporte.ReporteController.ConsultarRutasPorUsuario(finicio:String, ffin:String, id: Long)
 
 # Rutas directorio
-GET           /categoria                                      controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
-GET           /servicio                                       controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServicios()
-GET           /categoria/:id/servicio                         controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(id: Long)
-POST          /categoria                                      controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
-POST          /categoria/:id/servicio                         controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio(id: Long)
-PUT           /servicio/:id                                   controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio(id: Long)
-DELETE        /servicio/:id                                   controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio(id: Long)
+GET           /categoria                                           controllers.directorio_servicios.DirectorioServiciosKernelController.retornarCategorias()
+GET           /servicio                                            controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServicios()
+GET           /categoria/:id/servicio                              controllers.directorio_servicios.DirectorioServiciosKernelController.retornarServiciosPorCategoria(id: Long)
+POST          /categoria                                           controllers.directorio_servicios.DirectorioServiciosKernelController.registrarCategoria()
+POST          /categoria/:id/servicio                              controllers.directorio_servicios.DirectorioServiciosKernelController.registrarServicio(id: Long)
+PUT           /servicio/:id                                        controllers.directorio_servicios.DirectorioServiciosKernelController.editarServicio(id: Long)
+DELETE        /servicio/:id                                        controllers.directorio_servicios.DirectorioServiciosKernelController.eliminarServicio(id: Long)
 
 #Rutas Comunicacion
-GET           /mensaje                                        controllers.comunicacion.MensajeController.Mensaje()
-POST          /mensaje                                        controllers.comunicacion.MensajeController.MensajePost()
-GET           /mensajeSocket                                  controllers.comunicacion.MensajeController.MensajeSocket()
+GET           /mensaje                                             controllers.comunicacion.MensajeController.Mensaje()
+POST          /mensaje                                             controllers.comunicacion.MensajeController.MensajePost()
+GET           /mensajeSocket                                       controllers.comunicacion.MensajeController.MensajeSocket()
 
 #Rutas configurador bicicletas
-POST          /bicicleta                                      controllers.configurador_bicicletas.ConfiguradorBicicletasController.CrearBicicleta()
-GET           /bicicleta/:id/accesorios                       controllers.configurador_bicicletas.ConfiguradorBicicletasController.obtenerAccesoriosBicicleta(id: Long)
+POST          /bicicleta                                           controllers.configurador_bicicletas.ConfiguradorBicicletasController.CrearBicicleta()
+GET           /bicicleta/:id/accesorios                            controllers.configurador_bicicletas.ConfiguradorBicicletasController.obtenerAccesoriosBicicleta(id: Long)
