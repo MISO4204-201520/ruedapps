@@ -1,5 +1,6 @@
 package factory.reporte;
 
+import annotations.Feature;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import models.ruta.ProgramacionRuta;
@@ -10,6 +11,7 @@ import java.util.List;
 /*
  * Created by franciscoluisrv on 11/14/2015.
  */
+@Feature(nombre = "Reportes")
 public class ReporteRutaUsuario implements IReporte {
     @Override
     public List ConsultarReporte(Date fechaInicio, Date fechaFin, long id) {

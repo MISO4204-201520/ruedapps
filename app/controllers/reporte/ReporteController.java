@@ -1,5 +1,6 @@
 package controllers.reporte;
 
+import annotations.Feature;
 import factory.reporte.IReporte;
 import factory.reporte.ReporteFact;
 import factory.reporte.TipoReporte;
@@ -16,6 +17,7 @@ import java.util.List;
 /*
  * Created by Juan on 11/7/2015.
  */
+@Feature(nombre = "Reportes")
 public class ReporteController extends Controller {
 
     public Result ConsultarMetricaPorDistancia(String fechaInicio, String fechaFin, long id) {

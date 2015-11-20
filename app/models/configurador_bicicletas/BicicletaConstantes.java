@@ -1,9 +1,12 @@
 package models.configurador_bicicletas;
 
+import annotations.Feature;
+
 /**
  * Created by Lina8a on 06/11/2015.
  * Constantes de la clase Bicicleta
  */
+@Feature(nombre = "ConfiguradorBicicletas")
 public class BicicletaConstantes {
     public static final String COLOR_BLANCO = "Blanco";
     public static final String COLOR_VERDE = "Verde";

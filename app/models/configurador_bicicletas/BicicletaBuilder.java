@@ -1,5 +1,7 @@
 package models.configurador_bicicletas;
 
+import annotations.Feature;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  * Created by Lina8a on 16/11/2015.
  * Builder de una bicicleta.
  */
+@Feature(nombre = "ConfiguradorBicicletas")
 public class BicicletaBuilder {
 
     /**

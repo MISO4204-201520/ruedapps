@@ -1,8 +1,11 @@
 package factory.reporte;
 
+import annotations.Feature;
+
 /*
  * Created by franciscoluisrv on 11/14/2015.
  */
+@Feature(nombre = "Reportes")
 public class ReporteFact {
     public static IReporte crearReporte(TipoReporte tipo) {
         switch (tipo) {

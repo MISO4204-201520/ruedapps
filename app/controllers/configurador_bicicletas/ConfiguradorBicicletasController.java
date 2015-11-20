@@ -1,5 +1,6 @@
 package controllers.configurador_bicicletas;
 
+import annotations.Feature;
 import com.avaje.ebean.Ebean;
 import models.configurador_bicicletas.Accesorio;
 import models.configurador_bicicletas.Bicicleta;
@@ -20,6 +21,7 @@ import static play.libs.Json.toJson;
 /**
  * Created by Lina8a on 06/11/2015.
  */
+@Feature(nombre = "ConfiguradorBicicletas")
 public class ConfiguradorBicicletasController extends Controller {
 
     public Result CrearBicicleta() {

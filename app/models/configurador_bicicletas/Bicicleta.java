@@ -1,5 +1,6 @@
 package models.configurador_bicicletas;
 
+import annotations.Feature;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by Lina8a on 06/11/2015.
  * Entidad bicicleta.
  */
+@Feature(nombre = "ConfiguradorBicicletas")
 @Entity
 public class Bicicleta extends Model {
 
