@@ -1,5 +1,6 @@
 package controllers.perfil;
 
+import annotations.Feature;
 import com.avaje.ebean.Ebean;
 import models.perfil.Ciclista;
 import play.libs.Json;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by Lina8a on 15/11/2015.
  */
+@Feature(nombre = "GestionAmigos")
 public class AmigosOptionalController extends Controller {
 
     public Result AgregarAmigo(long id, long idAmigo) {

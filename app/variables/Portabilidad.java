@@ -11,6 +11,6 @@ public class Portabilidad {
     }
 
     public Portabilidad(Boolean responsiveDesign){
-        responsiveDesign = responsiveDesign;
+        this.responsiveDesign = responsiveDesign;
     }
 }
