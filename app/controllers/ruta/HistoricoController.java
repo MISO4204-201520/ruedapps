@@ -1,5 +1,6 @@
 package controllers.ruta;
 
+import annotations.Feature;
 import com.avaje.ebean.Ebean;
 import models.perfil.Ciclista;
 import models.ruta.HistoricoRecorrido;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created by Juan on 11/16/2015.
  */
+@Feature(nombre = "HistorialViajes")
 public class HistoricoController extends Controller {
 
     public Result SaveHistoricoRecorrido() {
@@ -55,7 +57,6 @@ public class HistoricoController extends Controller {
         return Results.notFound();
     }
 
-
     public Result ConsultarHistoricoPorUsusario(long id) {
 
         if (id == 0)
@@ -66,5 +67,4 @@ public class HistoricoController extends Controller {
         List<HistoricoRecorrido> historicoRecorridos = Ebean.find(HistoricoRecorrido.class).where().eq("ciclista.id", id).findList();
         return ok(Json.toJson(historicoRecorridos));
     }
-
 }

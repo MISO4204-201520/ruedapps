@@ -20,6 +20,7 @@ import java.util.List;
 @Feature(nombre = "Reportes")
 public class ReporteController extends Controller {
 
+    @Feature(nombre = "ReporteMetricas")
     public Result ConsultarMetricaPorDistancia(String fechaInicio, String fechaFin, long id) {
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
@@ -44,6 +45,7 @@ public class ReporteController extends Controller {
         }
     }
 
+    @Feature(nombre = "ReporteMetricas")
     public Result ConsultarMetricaPorTiempo(String fechaInicio, String fechaFin, long id) {
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
@@ -68,6 +70,7 @@ public class ReporteController extends Controller {
         }
     }
 
+    @Feature(nombre = "ReporteHistorialViajes")
     public Result ConsultarHistoricoPorUsuario(String fechaInicio, String fechaFin, long id)  {
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
@@ -92,6 +95,7 @@ public class ReporteController extends Controller {
         }
     }
 
+    @Feature(nombre = "ReporteRutas")
     public Result ConsultarRutasPorUsuario(String fechaInicio, String fechaFin, long id) {
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
@@ -122,5 +126,4 @@ public class ReporteController extends Controller {
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
     }
-
 }

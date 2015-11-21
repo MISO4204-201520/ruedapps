@@ -1,5 +1,6 @@
 package models.ruta.desplazamiento;
 
+import annotations.Feature;
 import com.avaje.ebean.Ebean;
 import models.perfil.Ciclista;
 import models.ruta.ProgramacionRuta;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by Juan on 11/14/2015.
  */
-
+@Feature(nombre = "Grupal")
 public class DesplazamientoGrupal extends DesplazamientoDecorator {
 
     public List<Ciclista> participantes;

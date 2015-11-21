@@ -1,5 +1,6 @@
 package controllers.ruta;
 
+import annotations.Feature;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import models.perfil.Ciclista;
@@ -22,6 +23,7 @@ import java.util.TimeZone;
 /**
  * Created by Juan on 11/15/2015.
  */
+@Feature(nombre = "Grupal")
 public class RutaGrupalController extends RutaController {
 
     public Result SaveProgramacionRuta() {
