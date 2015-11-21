@@ -22,3 +22,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-play-enhancer" % "1.1.0")
 
 // Database plugins
 //addSbtPlugin("org.xerial" % "sqlite-jdbc" % "3.8.9")
+
+// AspectJ plugins
+addSbtPlugin("com.typesafe.sbt" % "sbt-aspectj" % "0.10.4")
