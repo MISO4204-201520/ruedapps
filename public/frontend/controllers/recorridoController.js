@@ -4,10 +4,12 @@
 
 (function() {
     var ruedapp = angular.module('ruedapp');
-    ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams', 'oauthFactory',
-        function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams, oauthFactory) {
+    ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams', 'oauthFactory', 'APP_CONFIG',
+        function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams, oauthFactory, APP_CONFIG) {
 
             $scope.param = $routeParams.param;
+            $scope.grupal = APP_CONFIG.grupal;
+
             var recorridoInterval = 10000,
                 control,
                 recorridoId = 0,

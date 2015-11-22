@@ -1,6 +1,6 @@
 @import variables.Portabilidad
 @import variables.RedesSociales
-@(message: String,opcionesMenu: Array[Boolean],redesSociales: RedesSociales, portabilidad: Portabilidad)
+@(message: String,opcionesMenu: Array[Boolean],redesSociales: RedesSociales, portabilidad: Portabilidad, opcionesApp: Array[Boolean])
 <!DOCTYPE html>
 
 <html lang="en">
@@ -21,6 +21,7 @@
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/leaflet-routing-machine.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     </head>
+
         <!--Do don't style this page style the subpages exteded by angular-->
     <body ng-app="ruedapp">
         <nav class="navbar navbar-default navbar-fixed-top" ng-show="loggedIn">
@@ -128,5 +129,18 @@
         </div>
             <!--Encargado de la variabilidad-->
         <script src="@routes.Assets.versioned("frontend/controllers/variabilidadController.js")"></script>
+
+        <script>
+
+            (function() {
+                var app = angular.module('ruedapp');
+                    app.constant('APP_CONFIG',{
+                        grupal:@{opcionesApp(0)},
+                        amigos:@{opcionesApp(1)},
+                })
+            })();
+
+        </script>
+
     </body>
 </html>

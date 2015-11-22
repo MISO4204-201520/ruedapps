@@ -7,17 +7,16 @@ import play.mvc.Result;
 import variables.*;
 import views.html.index;
 
-
-import java.util.HashMap;
-
 public class Application extends Controller {
-
-    RedesSociales redesSociales = new RedesSociales(true, false);
-    Portabilidad portabilidad = new Portabilidad(false);
 
     public Result index()   {
         Boolean opcionesMenu[] = this.leerOpcionesMenu();
-        return ok(index.render("ok", opcionesMenu,redesSociales,portabilidad));
+        Boolean opcionesApp[] = this.leerOpcionesAplicacion();
+
+        RedesSociales redesSociales = this.leerRedesSociales();
+        Portabilidad portabilidad = this.leerPortabilidad();
+
+        return ok(index.render("ok", opcionesMenu, redesSociales, portabilidad, opcionesApp));
     }
 
     private Boolean[] leerOpcionesMenu()  {
@@ -33,4 +32,34 @@ public class Application extends Controller {
 
         return opcionesMenu;
     }
+
+    private Boolean[] leerOpcionesAplicacion()  {
+
+        Boolean opciones[] = new Boolean[2];
+        int index = 0;
+
+        opciones[index++] = this.leerOpcion("derivacion.grupal");
+        opciones[index++] = this.leerOpcion("derivacion.gestionAmigos");
+
+        return opciones;
+    }
+
+    private Boolean leerOpcion(String nombre) {
+        String derivacion = Play.application().configuration().getString(nombre);
+        return derivacion.equalsIgnoreCase("1");
+    }
+
+    private RedesSociales leerRedesSociales()  {
+
+        RedesSociales redesSociales = new RedesSociales(this.leerOpcion("derivacion.twitter"), this.leerOpcion("derivacion.facebook"));
+        return redesSociales;
+
+    }
+    private Portabilidad leerPortabilidad()  {
+
+        Portabilidad portabilidad = new Portabilidad(this.leerOpcion("derivacion.responsive"));
+        return portabilidad;
+
+    }
+
 }
