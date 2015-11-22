@@ -3,6 +3,7 @@
  */
 package controllers.perfil;
 
+import annotations.Feature;
 import models.perfil.Ciclista;
 import models.perfil.LoginOAuth;
 import models.perfil.Usuario;
@@ -13,29 +14,35 @@ import play.mvc.Result;
 import java.util.HashMap;
 import java.util.List;
 
+@Feature(nombre = "RedesSociales")
 public class PerfilOptionalController extends Controller {
 
 
     private Usuario usuario;
     private Form<LoginOAuth> p;
 
+    @Feature(nombre = "Twitter")
     public Result LoginFacebook() {
         Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
             ;
         return ok(CheckUserExistance(postForm));
 
     }
+
+    @Feature(nombre = "Facebook")
     public Result LoginTwitter() {
         Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
 
         return ok(CheckUserExistance(postForm));
     }
+
     public Result LoginGoogle() {
         Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
         CheckUserExistance(postForm);
         return ok("Login externo");
 
     }
+
     private String CheckUserExistance (Form<LoginOAuth> postForm){
         String oauthLogin = postForm.get().getProveedor_id();
 

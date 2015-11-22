@@ -1,5 +1,6 @@
 package controllers.perfil;
 
+import annotations.Feature;
 import models.perfil.Ciclista;
 import models.perfil.RegistroDTO;
 import models.perfil.Usuario;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created by Lina8a on 15/11/2015.
  */
+@Feature(nombre = "ManejoPerfiles")
 public class ManejoPerfilOptionalController extends Controller {
 
     public Result ActualizarUsuario() {
