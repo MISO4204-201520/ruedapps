@@ -1,6 +1,7 @@
 @import variables.Portabilidad
 @import variables.RedesSociales
-@(message: String,opcionesMenu: Array[Boolean],redesSociales: RedesSociales, portabilidad: Portabilidad, opcionesApp: Array[Boolean])
+@import variables.Eficiencia
+@(message: String,opcionesMenu: Array[Boolean],redesSociales: RedesSociales, portabilidad: Portabilidad, eficiencia : Eficiencia,opcionesApp: Array[Boolean])
 <!DOCTYPE html>
 
 <html lang="en">
@@ -125,6 +126,8 @@
             <ol>
                 <li id="redesSociales.twitter">@redesSociales.getTwitter()</li>
                 <li id="redesSociales.facebook">@redesSociales.getFacebook()</li>
+                <li id="eficiencia">@eficiencia.isOptimize()</li>
+
             </ol>
         </div>
             <!--Encargado de la variabilidad-->

@@ -4,13 +4,13 @@
 
 (function() {
     var ruedapp = angular.module('ruedapp');
-    ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$routeParams', 'leafletData', 'ngTableParams', 'oauthFactory', 'APP_CONFIG',
-        function ($scope, $rootScope, $http, $routeParams, leafletData, ngTableParams, oauthFactory, APP_CONFIG) {
+    ruedapp.controller('recorridoController', ['$scope', '$rootScope', '$http', '$cookies','$routeParams', 'leafletData', 'ngTableParams', 'oauthFactory', 'APP_CONFIG',
+        function ($scope, $rootScope, $http, $cookies,$routeParams, leafletData, ngTableParams, oauthFactory, APP_CONFIG) {
 
             $scope.param = $routeParams.param;
             $scope.grupal = APP_CONFIG.grupal;
 
-            var recorridoInterval = 10000,
+            var recorridoInterval = ($cookies.get('eficiencia') === 'true') ?  10000 : 60000,
                 control,
                 recorridoId = 0,
                 rutaRecorridoId = 0,

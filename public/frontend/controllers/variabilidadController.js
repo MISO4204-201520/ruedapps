@@ -9,6 +9,8 @@
             angular.element(document).ready(function () {
                 $cookies.put('twitter',document.getElementById('redesSociales.twitter').innerHTML);
                 $cookies.put('facebook',document.getElementById('redesSociales.facebook').innerHTML);
+
+                $cookies.put('eficiencia', document.getElementById('eficiencia').innerHTML)
             })
         }]);
 })();

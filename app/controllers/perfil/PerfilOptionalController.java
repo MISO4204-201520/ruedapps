@@ -21,7 +21,7 @@ public class PerfilOptionalController extends Controller {
     private Usuario usuario;
     private Form<LoginOAuth> p;
 
-    @Feature(nombre = "Twitter")
+    @Feature(nombre = "Facebook")
     public Result LoginFacebook() {
         Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
             ;
@@ -29,7 +29,7 @@ public class PerfilOptionalController extends Controller {
 
     }
 
-    @Feature(nombre = "Facebook")
+    @Feature(nombre = "Twitter")
     public Result LoginTwitter() {
         Form<LoginOAuth> postForm = Form.form(LoginOAuth.class).bindFromRequest();
 
