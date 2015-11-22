@@ -17,7 +17,7 @@ public class Application extends Controller {
         Portabilidad portabilidad = this.leerPortabilidad();
         Eficiencia eficiencia = this.leerEficiencia();
 
-        return ok(index.render("ok", opcionesMenu, redesSociales, portabilidad, eficiencia,opcionesApp));
+        return ok(index.render("ok", opcionesMenu, redesSociales, portabilidad, eficiencia, opcionesApp));
     }
 
     private Boolean[] leerOpcionesMenu()  {
