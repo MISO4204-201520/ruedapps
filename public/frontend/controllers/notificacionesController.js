@@ -9,6 +9,9 @@
             // Detecta si las rutas grupales están activas en la derivación
             $scope.grupal = APP_CONFIG.grupal;
 
+            //Detecta si las notificaciones están activas en la derivación
+            $scope.notificaciones = APP_CONFIG.notificaciones;
+
             // No hay alertas iniciales
             $scope.alerts = [];
 
@@ -16,10 +19,12 @@
              Mostrar notificaciones
              */
             $scope.consultaNotificaciones = function () {
-                consultaRutasHoy();
+                if ($scope.notificaciones) {
+                    consultaRutasHoy();
+                }
 
                 // Esto solo va si hay rutas grupales
-                if ($scope.grupal) {
+                if ($scope.grupal && $scope.notificaciones) {
                     consultaRutasInvitado();
                 }
             };
