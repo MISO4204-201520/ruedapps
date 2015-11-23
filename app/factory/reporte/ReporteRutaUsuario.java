@@ -11,7 +11,7 @@ import java.util.List;
 /*
  * Created by franciscoluisrv on 11/14/2015.
  */
-@Feature(nombre = "Reportes")
+@Feature(nombre = "ReporteRutas")
 public class ReporteRutaUsuario implements IReporte {
     @Override
     public List ConsultarReporte(Date fechaInicio, Date fechaFin, long id) {
