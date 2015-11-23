@@ -11,6 +11,8 @@
             $scope.grupal = APP_CONFIG.grupal;
             $scope.historico = APP_CONFIG.historico;
             $scope.directorio = APP_CONFIG.directorio;
+            $scope.sitios = APP_CONFIG.sitios;
+            $scope.alquileres = APP_CONFIG.alquileres;
 
             var recorridoInterval = ($cookies.get('eficiencia') === 'true') ?  10000 : 60000,
                 control,
@@ -358,6 +360,20 @@
                                 }
                             })
 
+                            if ($scope.sitios) {
+                                marcadoresServicios.push(L.marker(L.latLng(4.63481, -74.07974)).bindPopup(L.popup().setContent('Universidad Nacional')).openPopup());
+                                marcadoresServicios.push(L.marker(L.latLng(4.60232, -74.06549)).bindPopup(L.popup().setContent('Universidad Los Andes')).openPopup());
+                                marcadoresServicios.push(L.marker(L.latLng(4.60013, -74.07335)).bindPopup(L.popup().setContent('Universidad Del Rosario')).openPopup());
+                                marcadoresServicios.push(L.marker(L.latLng(4.59559, -74.06836)).bindPopup(L.popup().setContent('Universidad Exernado')).openPopup());
+                            }
+
+                            if ($scope.alquileres) {
+                                marcadoresServicios.push(L.marker(L.latLng(4.60178, -74.06193)).bindPopup(L.popup().setContent('Alquirer America')).openPopup());
+                                marcadoresServicios.push(L.marker(L.latLng(4.59983, -74.06594)).bindPopup(L.popup().setContent('Alquirer Media Torta')).openPopup());
+                                marcadoresServicios.push(L.marker(L.latLng(4.59794, -74.07588)).bindPopup(L.popup().setContent('Alquirer Bolivar')).openPopup());
+                                marcadoresServicios.push(L.marker(L.latLng(4.59773, -74.08141)).bindPopup(L.popup().setContent('Alquirer San Victorino')).openPopup());
+                            }
+
                             angular.forEach(marcadoresServicios, function (marcador) {
                                 map.addLayer(marcador);
                             });
@@ -369,7 +385,6 @@
 
                     });
                 }
-
             }
 
             function createMapButton(label, container) {
