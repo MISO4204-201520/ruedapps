@@ -6,7 +6,7 @@
     ruedapp.controller('notificacionesController', ['$scope', '$rootScope', '$location', '$http', 'APP_CONFIG',
         function ($scope, $rootScope, $location, $http, APP_CONFIG) {
 
-            // Detecta si las rutas grupales están activas en la configuración
+            // Detecta si las rutas grupales están activas en la derivación
             $scope.grupal = APP_CONFIG.grupal;
 
             // No hay alertas iniciales

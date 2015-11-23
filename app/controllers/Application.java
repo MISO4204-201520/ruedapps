@@ -4,7 +4,9 @@ package controllers;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
-import variables.*;
+import variables.Eficiencia;
+import variables.Portabilidad;
+import variables.RedesSociales;
 import views.html.index;
 
 public class Application extends Controller {
@@ -36,7 +38,7 @@ public class Application extends Controller {
 
     private Boolean[] leerOpcionesAplicacion()  {
 
-        Boolean opciones[] = new Boolean[7];
+        Boolean opciones[] = new Boolean[8];
         int index = 0;
 
         opciones[index++] = this.leerOpcion("derivacion.grupal");
@@ -46,6 +48,7 @@ public class Application extends Controller {
         opciones[index++] = this.leerOpcion("derivacion.sitios");
         opciones[index++] = this.leerOpcion("derivacion.alquileres");
         opciones[index++] = this.leerOpcion("derivacion.notificaciones");
+        opciones[index++] = this.leerOpcion("derivacion.mensajes");
 
         return opciones;
     }

@@ -1,6 +1,4 @@
-@import variables.Portabilidad
-@import variables.RedesSociales
-@import variables.Eficiencia
+@import variables.{Eficiencia, Portabilidad, RedesSociales}
 @(message: String,opcionesMenu: Array[Boolean],redesSociales: RedesSociales, portabilidad: Portabilidad, eficiencia : Eficiencia, opcionesApp: Array[Boolean])
 <!DOCTYPE html>
 
@@ -145,6 +143,9 @@
                         sitios:@{opcionesApp(4)},
                         alquileres:@{opcionesApp(5)},
                         notificaciones:@{opcionesApp(6)},
+                        mensajes:@{
+            opcionesApp(7)
+        }
                 })
             })();
 
