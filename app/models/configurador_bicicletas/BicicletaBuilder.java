@@ -9,7 +9,6 @@ import java.util.List;
  * Created by Lina8a on 16/11/2015.
  * Builder de una bicicleta.
  */
-@Feature(nombre = "ConfiguradorBicicletas")
 public class BicicletaBuilder {
 
     /**

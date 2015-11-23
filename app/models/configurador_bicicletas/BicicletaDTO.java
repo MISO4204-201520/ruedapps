@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Created by Lina8a on 06/11/2015.
  */
-@Feature(nombre = "ConfiguradorBicicletas")
 public class BicicletaDTO {
     /**
      * Color de la biclicleta

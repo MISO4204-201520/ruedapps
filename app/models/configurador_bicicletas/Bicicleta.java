@@ -14,7 +14,6 @@ import java.util.List;
  * Created by Lina8a on 06/11/2015.
  * Entidad bicicleta.
  */
-@Feature(nombre = "ConfiguradorBicicletas")
 @Entity
 public class Bicicleta extends Model {
 
