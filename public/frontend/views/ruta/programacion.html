@@ -42,7 +42,7 @@
                     <uib-timepicker ng-model="programacion.hora" id="hora"></uib-timepicker>
                 </div>
 
-                <div ng-hide="!grupal">
+                <div ng-if="grupal">
                 <div class="form-group" required>
                     <label for="amigo">Amigos:</label>
                     <p class="input-group">

@@ -9,6 +9,8 @@
 
             $scope.param = $routeParams.param;
             $scope.grupal = APP_CONFIG.grupal;
+            $scope.historico = APP_CONFIG.historico;
+            $scope.directorio = APP_CONFIG.directorio;
 
             var recorridoInterval = ($cookies.get('eficiencia') === 'true') ?  10000 : 60000,
                 control,
@@ -17,7 +19,6 @@
                 inicioRecorrido = null,
                 datosCompartir = {},
                 today = new Date(),
-
                 radioCercaniaServicios = 1000,
                 marcadoresServicios = [];
 
@@ -115,39 +116,45 @@
 
             $scope.guardahistorico = function () {
 
-                var finRecorrido = new Date();
+                if ($scope.historico) {
 
-                var historico = {
-                    ciclista: {
-                        id: 1
-                    },
-                    recorrido: {
-                        id: recorridoId
-                    },
-                    duracion: Math.ceil((finRecorrido - inicioRecorrido) / 60000),
-                    fecha: finRecorrido
-                };
+                    var finRecorrido = new Date();
+                    var historico = {
+                        ciclista: {
+                            id: 1
+                        },
+                        recorrido: {
+                            id: recorridoId
+                        },
+                        duracion: Math.ceil((finRecorrido - inicioRecorrido) / 60000),
+                        fecha: finRecorrido
+                    };
 
-                var post = {
-                    method: 'POST',
-                    url: '/historico',
-                    headers: {'Content-Type': 'application/json'},
-                    data: JSON.stringify(historico)
-                };
+                    var post = {
+                        method: 'POST',
+                        url: '/historico',
+                        headers: {'Content-Type': 'application/json'},
+                        data: JSON.stringify(historico)
+                    };
 
-                $http(post).success(function () {
+                    $http(post).success(function () {
+                        $scope.$broadcast('timer-stop');
+                        console.log("historico creado");
+                        recorridoId = 0;
+                        $scope.hideRecorrido = false;
+                        $scope.hideHistorico = true;
+                        datosCompartir.historico = historico;
+                        datosCompartir.ok = "ok";
+                    }).error(function (data) {
+                        console.log("Error ubicacion/crear data: " + data);
+                    });
+                }
+                else {
                     $scope.$broadcast('timer-stop');
-                    console.log("historico creado");
                     recorridoId = 0;
                     $scope.hideRecorrido = false;
                     $scope.hideHistorico = true;
-                    datosCompartir.historico = historico;
-                    datosCompartir.ok = "ok";
-
-
-                }).error(function (data) {
-                    console.log("Error ubicacion/crear data: " + data);
-                });
+                }
             };
 
             $scope.consultahistorico = function () {
@@ -195,6 +202,7 @@
                     console.log("Error consulta amigos : " + data);
                 });
             };
+
             $scope.compartir = function () {
                 if (datosCompartir.ok != null) {
                     var d = "origen: " + datosCompartir.ruta.origen.nombre +
@@ -206,6 +214,7 @@
                     alert("primero terminar la ruta");
                 }
             };
+
             $scope.iniciarecorrido = function () {
 
                 if (rutaRecorridoId > 0) {
@@ -281,11 +290,11 @@
 
             function onLocationFound(e) {
 
-                if (recorridoId > 0) {
+                leafletData.getMap('ruedappmap').then(function (map) {
+                    L.circle(e.latlng, 10).addTo(map);
+                });
 
-                    leafletData.getMap('ruedappmap').then(function (map) {
-                        L.circle(e.latlng, 10).addTo(map);
-                    });
+                if (recorridoId > 0) {
 
                     var ubicacion = {
                         latitud: e.latlng.lat,
@@ -309,52 +318,56 @@
                     setTimeout(timeoutLocation, recorridoInterval);
                 }
 
-                // Obtiene todos los servicios y ubica en el mapa los que estan cerca a la ubicación actual del usuario
-                // teniendo en cuenta una constante de distancia
-                leafletData.getMap('ruedappmap').then(function (map) {
 
-                    if (marcadoresServicios && marcadoresServicios.length > 0) {
-                        angular.forEach(marcadoresServicios, function (marcador) {
-                            map.removeLayer(marcador);
-                        })
-                        marcadoresServicios = [];
-                    }
+                if ($scope.directorio) {
 
-                    var get = {
-                        method: 'GET',
-                        url: '/servicio'
-                    };
+                    // Obtiene todos los servicios y ubica en el mapa los que estan cerca a la ubicación actual del usuario
+                    // teniendo en cuenta una constante de distancia
+                    leafletData.getMap('ruedappmap').then(function (map) {
 
-                    $http(get).success(function (data) {
-                        console.log("Obtuvo todos los servicios");
-                        console.log("data: " + data);
-                        $scope.servicios = data;
+                        if (marcadoresServicios && marcadoresServicios.length > 0) {
+                            angular.forEach(marcadoresServicios, function (marcador) {
+                                map.removeLayer(marcador);
+                            })
+                            marcadoresServicios = [];
+                        }
 
-                        var ubicacionActual = L.latLng(e.latitude, e.longitude);
-                        console.log("Ubicación actual: " + ubicacionActual);
+                        var get = {
+                            method: 'GET',
+                            url: '/servicio'
+                        };
 
-                        angular.forEach($scope.servicios, function (servicio) {
-                            if (servicio.ubicacion) {
-                                var ubicacionServicio = L.latLng(servicio.ubicacion.latitud, servicio.ubicacion.longitud);
-                                var distancia = ubicacionActual.distanceTo(ubicacionServicio).toFixed(0);
-                                console.log("Distancia: " + distancia);
-                                if (distancia <= radioCercaniaServicios) {
-                                    $scope.serviciosCercanos.push(servicio);
-                                    marcadoresServicios.push(L.marker(ubicacionServicio).bindPopup(L.popup().setContent(servicio.nombre)).openPopup());
+                        $http(get).success(function (data) {
+                            console.log("Obtuvo todos los servicios");
+                            console.log("data: " + data);
+                            $scope.servicios = data;
+
+                            var ubicacionActual = L.latLng(e.latitude, e.longitude);
+                            console.log("Ubicación actual: " + ubicacionActual);
+
+                            angular.forEach($scope.servicios, function (servicio) {
+                                if (servicio.ubicacion) {
+                                    var ubicacionServicio = L.latLng(servicio.ubicacion.latitud, servicio.ubicacion.longitud);
+                                    var distancia = ubicacionActual.distanceTo(ubicacionServicio).toFixed(0);
+                                    console.log("Distancia: " + distancia);
+                                    if (distancia <= radioCercaniaServicios) {
+                                        $scope.serviciosCercanos.push(servicio);
+                                        marcadoresServicios.push(L.marker(ubicacionServicio).bindPopup(L.popup().setContent(servicio.nombre)).openPopup());
+                                    }
                                 }
-                            }
-                        })
+                            })
 
-                        angular.forEach(marcadoresServicios, function (marcador) {
-                            map.addLayer(marcador);
+                            angular.forEach(marcadoresServicios, function (marcador) {
+                                map.addLayer(marcador);
+                            });
+
+                        }).error(function (data) {
+                            console.log("Error consultando servicios.");
+                            console.log("data: " + data);
                         });
 
-                    }).error(function (data) {
-                        console.log("Error consultando servicios.");
-                        console.log("data: " + data);
                     });
-
-                });
+                }
 
             }
 
