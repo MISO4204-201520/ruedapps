@@ -36,13 +36,16 @@ public class Application extends Controller {
 
     private Boolean[] leerOpcionesAplicacion()  {
 
-        Boolean opciones[] = new Boolean[4];
+        Boolean opciones[] = new Boolean[7];
         int index = 0;
 
         opciones[index++] = this.leerOpcion("derivacion.grupal");
         opciones[index++] = this.leerOpcion("derivacion.gestionAmigos");
         opciones[index++] = this.leerOpcion("derivacion.historico");
         opciones[index++] = this.leerOpcion("derivacion.directorio");
+        opciones[index++] = this.leerOpcion("derivacion.sitios");
+        opciones[index++] = this.leerOpcion("derivacion.alquileres");
+        opciones[index++] = this.leerOpcion("derivacion.notificaciones");
 
         return opciones;
     }

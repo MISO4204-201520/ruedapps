@@ -175,9 +175,10 @@
 
             $scope.consultarutas = function () {
 
+                var urlrutas = $scope.grupal ? '/recorrido/programacion/participante/0' : '/recorrido/programacion/organizador/0';
                 var get = {
                     method: 'get',
-                    url: '/recorrido/programacion/participante/0',
+                    url: urlrutas,
                     headers: {'Content-Type': 'application/json'}
                 };
 

@@ -31,10 +31,10 @@
                     <span>ó</span>
                 </div>
                 <br><br><br>
-                <button ng-show="facebook" class="btn btn-block btn-social btn-facebook" ng-click="authenticate('facebook')">
+                <button ng-if="facebook" class="btn btn-block btn-social btn-facebook" ng-click="authenticate('facebook')">
                     <span class="fa fa-facebook"></span> Inicia sesión con Facebook
                 </button>
-                <button ng-show="twitter" class="btn btn-block btn-social btn-twitter" ng-click="authenticate('twitter')">
+                <button ng-if="twitter" class="btn btn-block btn-social btn-twitter" ng-click="authenticate('twitter')">
                     <span class="fa fa-twitter"></span> Inicia sesión con Twitter
                 </button>
             </div>
