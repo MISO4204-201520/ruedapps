@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 /*
  * Created by franciscoluisrv on 11/14/2015.
  */
-@Feature(nombre = "ReporteMetricas")
 public class ReporteMetricaDistancia implements IReporte {
     @Override
     public List ConsultarReporte(Date fechaInicio, Date fechaFin, long id) {
