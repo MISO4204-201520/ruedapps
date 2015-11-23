@@ -3,8 +3,12 @@
  */
 (function() {
     var ruedapp = angular.module('ruedapp');
-    ruedapp.controller('notificacionesController', ['$scope', '$rootScope', '$location', '$http',
-        function ($scope, $rootScope, $location, $http) {
+    ruedapp.controller('notificacionesController', ['$scope', '$rootScope', '$location', '$http', 'APP_CONFIG',
+        function ($scope, $rootScope, $location, $http, APP_CONFIG) {
+
+            // Detecta si las rutas grupales están activas en la configuración
+            $scope.grupal = APP_CONFIG.grupal;
+
             // No hay alertas iniciales
             $scope.alerts = [];
 
@@ -13,7 +17,11 @@
              */
             $scope.consultaNotificaciones = function () {
                 consultaRutasHoy();
-                consultaRutasInvitado();
+
+                // Esto solo va si hay rutas grupales
+                if ($scope.grupal) {
+                    consultaRutasInvitado();
+                }
             };
 
             $scope.closeAlert = function (index) {

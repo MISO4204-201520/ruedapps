@@ -44,7 +44,7 @@ POST          /recorrido/programacion/ciclista/:id                 controllers.r
 GET           /recorrido/programacion/:id                          controllers.ruta.RutaController.ConsultaProgramacionRuta(id: Long)
 GET           /recorrido/programacion/organizador/:id              controllers.ruta.RutaController.ListaProgramacionRutaPorOrganizador(id: Long)
 GET           /recorrido/programacion/participante/:id             controllers.ruta.RutaGrupalController.ListaProgramacionRutaPorParticipante(id: Long)
-GET           /recorrido/programacion/notifinvitado/:id            controllers.ruta.RutaController.ListaProgramacionRutaPorInvitado(id: Long)
+GET        /recorrido/programacion/notifinvitado/:id        controllers.ruta.RutaGrupalController.ListaProgramacionRutaPorInvitado(id: Long)
 GET           /recorrido/programacion/notifhoy/:id                 controllers.ruta.RutaController.ListaProgramacionRutaPorParticipanteHoy(id: Long)
 POST          /recorrido/:id                                       controllers.ruta.RutaController.SaveRecorrido(id: Long)
 

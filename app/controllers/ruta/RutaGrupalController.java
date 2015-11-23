@@ -107,4 +107,18 @@ public class RutaGrupalController extends RutaController {
             return Results.notFound("Programacion recorrido participante no encontrada");
         }
     }
+
+    // Metodo para notificaciones - solo es valido para rutas grupales
+    public Result ListaProgramacionRutaPorInvitado(long id) {
+        if (id == 0) {
+            id = Long.valueOf(session().get("loggedUser"));
+        }
+
+        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("participantes.id", id).findList();
+        if (programacionRecorrido != null) {
+            return Results.ok(Json.toJson(programacionRecorrido));
+        } else {
+            return Results.notFound("Programacion recorrido invitado no encontrada");
+        }
+    }
 }

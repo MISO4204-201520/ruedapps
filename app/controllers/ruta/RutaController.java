@@ -3,7 +3,10 @@ package controllers.ruta;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import models.perfil.Ciclista;
-import models.ruta.*;
+import models.ruta.ProgramacionRuta;
+import models.ruta.Recorrido;
+import models.ruta.Ruta;
+import models.ruta.Ubicacion;
 import models.ruta.desplazamiento.Desplazamiento;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -192,21 +195,7 @@ public class RutaController extends Controller {
         return programacionRuta;
     }
 
-    // Metodos para notificaciones
-
-    public Result ListaProgramacionRutaPorInvitado(long id) {
-        if (id == 0) {
-            id = Long.valueOf(session().get("loggedUser"));
-        }
-
-        List<ProgramacionRuta> programacionRecorrido = Ebean.find(ProgramacionRuta.class).where().eq("participantes.id", id).findList();
-        if (programacionRecorrido != null) {
-            return Results.ok(Json.toJson(programacionRecorrido));
-        } else {
-            return Results.notFound("Programacion recorrido invitado no encontrada");
-        }
-    }
-
+    // Metodo para notificaciones - aplica tanto para individuales como grupales
     public Result ListaProgramacionRutaPorParticipanteHoy(long id) {
         if (id == 0) {
             id = Long.valueOf(session().get("loggedUser"));
